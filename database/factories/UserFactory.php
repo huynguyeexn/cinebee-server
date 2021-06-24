@@ -3,7 +3,10 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory
@@ -23,11 +26,18 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
+            'fullname' => $this->faker->name(),
+            'phone' => $this->faker->phoneNumber(),
+            'address' => $this->faker->address(),
+            'id_card' => $this->faker->uuid(),
+            'birthday' => $this->faker->date('Y-m-d', '2000/1/1'),
+            'sex' => array_rand(["male", "female"]),
+            'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make('Abc@12345'),
             'remember_token' => Str::random(10),
+            'role_id' => UserRole::select('id')->inRandomOrder()->first(),
         ];
     }
 

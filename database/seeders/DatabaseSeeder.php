@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        UserRole::insert(['name' => 'admin', 'created_at' => now(), 'updated_at' => now()]);
+        UserRole::insert(['name' => 'staff', 'created_at' => now(), 'updated_at' => now()]);
+        UserRole::insert(['name' => 'manager', 'created_at' => now(), 'updated_at' => now()]);
+
+        User::factory(20)->create();
     }
 }

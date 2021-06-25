@@ -39,7 +39,7 @@ Route::prefix('seat-status')->group(function () {
     Route::get('/', [SeatStatusController::class, 'index']);
 
     // Create new
-    Route::post('/', [SeatStatusController::class, 'create']);
+    Route::post('/', [SeatStatusController::class, 'store']);
 
     // Get by ID
     Route::get('/{id}', [SeatStatusController::class, 'getById'])->whereNumber('id');
@@ -48,14 +48,18 @@ Route::prefix('seat-status')->group(function () {
     Route::get('/{slug}', [SeatStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
     // Update
-    // Route::put('/', [SeatStatusController::class, 'update']);
+    Route::put('/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
+
+    // Route::put('/{id}', function ($id) {
+    //     return $id;
+    // });
 
     // Soft Delete
-    // Route::delete('/delete/{id}', [SeatStatusController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [SeatStatusController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    // Route::delete('/remove/{id}', [SeatStatusController::class, 'remove'])->whereNumber('id');
+    // Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    // Route::put('/restore/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
+    // Route::put('{id}/restore/', [SeatStatusController::class, 'update'])->whereNumber('id');
 });

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-Route::prefix('users')->group(function () {
-});
-
-
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
@@ -31,4 +23,43 @@ Route::prefix('auth')->group(function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('profile', [AuthController::class, 'profile']);
     });
+});
+
+
+/**
+ * REST API - Seat Status
+ *
+ * Date: 24/06/2021
+ * Time: 09:20 PM
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('seat-status')->group(function () {
+
+    // Get list
+    Route::get('/', [SeatStatusController::class, 'index']);
+
+    // Create new
+    Route::post('/', [SeatStatusController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [SeatStatusController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    Route::get('/{slug}', [SeatStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    Route::put('/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
+
+    // Route::put('/{id}', function ($id) {
+    //     return $id;
+    // });
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [SeatStatusController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    // Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    // Route::put('{id}/restore/', [SeatStatusController::class, 'update'])->whereNumber('id');
 });

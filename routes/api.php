@@ -38,6 +38,10 @@ Route::prefix('seat-status')->group(function () {
     // Get list
     Route::get('/', [SeatStatusController::class, 'index']);
 
+
+    // Get deleted list
+    Route::get('/deleted', [SeatStatusController::class, 'deleted']);
+
     // Create new
     Route::post('/', [SeatStatusController::class, 'store']);
 
@@ -50,16 +54,12 @@ Route::prefix('seat-status')->group(function () {
     // Update
     Route::put('/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
 
-    // Route::put('/{id}', function ($id) {
-    //     return $id;
-    // });
-
     // Soft Delete
     Route::delete('{id}/delete/', [SeatStatusController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    // Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    // Route::put('{id}/restore/', [SeatStatusController::class, 'update'])->whereNumber('id');
+    Route::patch('{id}/restore/', [SeatStatusController::class, 'restore'])->whereNumber('id');
 });

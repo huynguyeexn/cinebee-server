@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,7 +26,6 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-
 /**
  * REST API - Seat Status
  *
@@ -37,7 +37,6 @@ Route::prefix('seat-status')->group(function () {
 
     // Get list
     Route::get('/', [SeatStatusController::class, 'index']);
-
 
     // Get deleted list
     Route::get('/deleted', [SeatStatusController::class, 'deleted']);
@@ -62,4 +61,41 @@ Route::prefix('seat-status')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [SeatStatusController::class, 'restore'])->whereNumber('id');
+});
+
+/**
+ * REST API - Room Status
+ *
+ * Date: 26/06/2021
+ * Time: 11:10 AM
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('room-status')->group(function () {
+
+    // Get list
+    Route::get('/', [RoomStatusController::class, 'index']);
+
+    // Get deleted list
+    // Route::get('/deleted', [RoomStatusController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [RoomStatusController::class, 'store']);
+
+    // Get by ID
+    // Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    // Route::get('/{slug}', [RoomStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    // Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    // Route::delete('{id}/delete/', [RoomStatusController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    // Route::delete('{id}/remove/', [RoomStatusController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    // Route::patch('{id}/restore/', [RoomStatusController::class, 'restore'])->whereNumber('id');
 });

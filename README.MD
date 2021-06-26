@@ -12,7 +12,7 @@
 composer install
 php artisan key:generate
 php artisan cache:clear
-php artisan config:cache
+php artisan cache:clear
 php artisan migrate --seed
 php artisan serve
 
@@ -44,10 +44,10 @@ git merge branch_con
 ---
 
 **🐾 Trình tự tạo module**
-=> Route
 => Model
 => Migrate
 => Seed, Factory (nếu cần)
+=> Route
 => Controller
 => Resources
 => Form Validation

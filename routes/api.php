@@ -105,9 +105,9 @@ Route::prefix('room-status')->group(function () {
 /**
  * REST API - Cinema Status
  *
- * Date: 26/06/2021
- * Time: 11:10 AM
- * @author  HUi <huynguyeexn@gmail.com>
+ * Date: 28/06/2021
+ * Time: 10:10 AM
+ * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
  */
 Route::prefix('cinema-status')->group(function () {
 

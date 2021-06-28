@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CinemaStatusController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
@@ -98,4 +99,42 @@ Route::prefix('room-status')->group(function () {
 
     // Restore
     // Route::patch('{id}/restore/', [RoomStatusController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Cinema Status
+ *
+ * Date: 26/06/2021
+ * Time: 11:10 AM
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('cinema-status')->group(function () {
+
+    // Get list
+    Route::get('/', [CinemaStatusController::class, 'index']);
+
+    // Get deleted list
+    //Route::get('/deleted', [CinemaStatusController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CinemaStatusController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [CinemaStatusController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    //Route::get('/{slug}', [CinemaStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    Route::put('/{id}', [CinemaStatusController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    //Route::delete('{id}/delete/', [CinemaStatusController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    //Route::delete('{id}/remove/', [CinemaStatusController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    //Route::patch('{id}/restore/', [CinemaStatusController::class, 'restore'])->whereNumber('id');
 });

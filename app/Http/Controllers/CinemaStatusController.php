@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CinemaStatus\ListRequest;
 use App\Http\Requests\CinemaStatus\StoreRequest;
 use App\Http\Requests\CinemaStatus\UpdateRequest;
 use App\Models\CinemaStatus;
-use Illuminate\Http\Request;
 
 class CinemaStatusController extends Controller
 {
@@ -14,7 +14,7 @@ class CinemaStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ListRequest $request)
     {
         //
 
@@ -57,24 +57,17 @@ class CinemaStatusController extends Controller
         ];
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreRequest $request)
     {
         //
-        return CinemaStatus::create($request->only('name'));
+        $data = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ];
+        return CinemaStatus::create($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\CinemaStatus  $cinemaStatus
-     * @return \Illuminate\Http\Response
-     */
+
     public function getById(CinemaStatus $cinemaStatus, $id)
     {
         //
@@ -87,38 +80,79 @@ class CinemaStatusController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CinemaStatus  $cinemaStatus
-     * @return \Illuminate\Http\Response
-     */
+    public function getBySlug(CinemaStatus $cinemaStatus, $slug)
+    {
+        //
+        return $cinemaStatus->where('slug', 'like', $slug)->firstOrFail();
+    }
+
+
     public function update(UpdateRequest $request, CinemaStatus $cinemaStatus, $id)
     {
         //
         try{
             $data = [
                 'name' => $request->name,
+                'slug' => $request->slug,
             ];
-            return tap($cinemaStatus->findOrFail($id)->update($data));
+            return tap($cinemaStatus->findOrFail($id))->update($data);
         }catch (\Throwable $th) {
             return response()->json([
-                'message' => 'Can be update!',
-                'errors' => ['update' => 'Can be update!'],
+                'message' => 'Can not be update!',
+                'errors' => ['update' => 'Can not be update!'],
             ], 500);
         }
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CinemaStatus  $cinemaStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CinemaStatus $cinemaStatus)
+
+    public function delete(CinemaStatus $cinemaStatus, $id)
     {
         //
+        try{
+            $record = tap($cinemaStatus->findOrFail($id))->delete();
+            if($record){
+                return response([
+                    'message' => 'Your Cinema Status has been move to trash!',
+                    'data' => $record,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+
+    public function remove(CinemaStatus $cinemaStatus, $id)
+    {
+        //
+        try{
+            $record = tap($cinemaStatus->onlyTrashed()->findOrFail($id))->forceDelete();
+            if ($record){
+                return response([
+                    'message' => 'Your Cinema Status has been move from trash!',
+                    'data' => $record,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+
+    public function restore(CinemaStatus $cinemaStatus, $id)
+    {
+        //
+        try{
+            $record = tap($cinemaStatus->onlyTrashed()->findOrFail($id))->restore();
+            if($record){
+                return response([
+                    'message' => 'Your Cinema Status has been restore!',
+                    'data' => $record,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

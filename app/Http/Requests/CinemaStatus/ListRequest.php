@@ -3,8 +3,9 @@
 namespace App\Http\Requests\CinemaStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class ListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +26,11 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|string',
-            'slug' => 'unique:cinema_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
+            'q' => 'string',
+            'sort_by' => 'string',
+            'sort_type' => [Rule::in(['desc', 'asc'])],
+            'page' => 'numeric|min:1',
+            'per_page' => 'numeric|min:1|max:100',
         ];
     }
 }

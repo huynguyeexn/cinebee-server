@@ -22,8 +22,10 @@ class CinemaStatusFactory extends Factory
      */
     public function definition()
     {
+        $name_slug = $this->faker->sentence($this->faker->numberBetween(1, 5), true);
         return [
-            'name' => Str::random(10)
+            'name' => $name_slug,
+            'slug' => Str::slug($name_slug)
         ];
     }
 }

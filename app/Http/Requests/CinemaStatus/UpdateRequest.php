@@ -26,6 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             //
             'name' => 'string|required',
+            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:cinema_statuses,slug,$this->id"
         ];
     }
 }

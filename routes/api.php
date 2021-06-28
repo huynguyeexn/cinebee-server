@@ -124,17 +124,17 @@ Route::prefix('cinema-status')->group(function () {
     Route::get('/{id}', [CinemaStatusController::class, 'getById'])->whereNumber('id');
 
     // Get by slug
-    //Route::get('/{slug}', [CinemaStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+    Route::get('/{slug}', [CinemaStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
     // Update
     Route::put('/{id}', [CinemaStatusController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    //Route::delete('{id}/delete/', [CinemaStatusController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [CinemaStatusController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    //Route::delete('{id}/remove/', [CinemaStatusController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove/', [CinemaStatusController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    //Route::patch('{id}/restore/', [CinemaStatusController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore/', [CinemaStatusController::class, 'restore'])->whereNumber('id');
 });

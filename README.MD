@@ -2,6 +2,7 @@
 
 #### Branch
 - Dev
+- Production
 
 #### 🚨 Thao tác sau khi Pull code lần đầu
 

@@ -38,7 +38,6 @@ class ProjectInit extends Command
     public function handle()
     {
         try {
-            $this->call('key:generate');
             $this->call('cache:clear');
             $this->call('cache:clear');
             $this->call('migrate:fresh');

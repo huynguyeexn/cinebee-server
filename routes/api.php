@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CinemaStatusController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
@@ -103,38 +103,38 @@ Route::prefix('room-status')->group(function () {
 
 
 /**
- * REST API - Cinema Status
+ * REST API - Seat Status
  *
- * Date: 28/06/2021
- * Time: 10:10 AM
+ * Date: 30/06/2021
+ * Time: 11:10 AM
  * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
  */
-Route::prefix('cinema-status')->group(function () {
+Route::prefix('item')->group(function () {
 
     // Get list
-    Route::get('/', [CinemaStatusController::class, 'index']);
+    Route::get('/', [ItemController::class, 'index']);
 
     // Get deleted list
-    //Route::get('/deleted', [CinemaStatusController::class, 'deleted']);
+    Route::get('/deleted', [ItemController::class, 'deleted']);
 
     // Create new
-    Route::post('/', [CinemaStatusController::class, 'store']);
+    Route::post('/', [ItemController::class, 'store']);
 
     // Get by ID
-    Route::get('/{id}', [CinemaStatusController::class, 'getById'])->whereNumber('id');
+    Route::get('/{id}', [ItemController::class, 'getById'])->whereNumber('id');
 
     // Get by slug
-    Route::get('/{slug}', [CinemaStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+    Route::get('/{slug}', [ItemController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
     // Update
-    Route::put('/{id}', [CinemaStatusController::class, 'update'])->whereNumber('id');
+    Route::put('/{id}', [ItemController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    Route::delete('{id}/delete/', [CinemaStatusController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [ItemController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    Route::delete('{id}/remove/', [CinemaStatusController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove/', [ItemController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    Route::patch('{id}/restore/', [CinemaStatusController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore/', [ItemController::class, 'restore'])->whereNumber('id');
 });

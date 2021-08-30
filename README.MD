@@ -1,7 +1,8 @@
 ## Đọc kỹ hướng dẫn sử dụng trước khi dùng
 
-#### Branch
-- Dev
+### Branch
+
+-   Dev
 
 #### 🚨 Thao tác sau khi Pull code lần đầu
 

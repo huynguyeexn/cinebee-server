@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RoomStatus\StoreRequest;
 use App\Models\RoomStatus;
 use Illuminate\Http\Request;
-
+/**
+ * @OA\Info(title="My First API", version="0.1")
+ */
 class RoomStatusController extends Controller
 {
+    public function Mytest(Request $request){
+        echo json_encode(['q'=>$request->q]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -41,8 +46,6 @@ class RoomStatusController extends Controller
         }
 
         $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
-
-
 
         return $data;
     }

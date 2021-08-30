@@ -1,5 +1,9 @@
 ## Đọc kỹ hướng dẫn sử dụng trước khi dùng
 
+#### Branch
+- Dev
+- Production
+
 #### 🚨 Thao tác sau khi Pull code lần đầu
 
 ---

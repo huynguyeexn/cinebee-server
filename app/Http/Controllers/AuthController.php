@@ -17,10 +17,14 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'fullname' => 'required|string|between:2,100',
-            'username' => 'required|string|unique:users,username|between:3,100',
-            'email' => 'required|email|unique:users,email|max:100',
-            'password' => 'required|string|confirmed|min:8',
+            // 'fullname' => 'required|string|between:2,100',
+            // 'username' => 'required|string|unique:users,username|between:3,100',
+            // 'email' => 'required|email|unique:users,email|max:100',
+            // 'password' => 'required|string|confirmed|min:8',
+            'fullname' => 'required|string',
+            'username' => 'required|string',
+            'email' => 'required',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -42,11 +46,8 @@ class AuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required',
-            'password' => 'required|min:8|string'
+            'password' => 'required|string'
         ]);
-
-
-
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
@@ -54,7 +55,6 @@ class AuthController extends Controller
         if (!$token = JWTAuth::attempt($validator->validate())) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->createNewToken($token);
     }
 

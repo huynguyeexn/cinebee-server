@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
@@ -98,4 +99,42 @@ Route::prefix('room-status')->group(function () {
 
     // Restore
     // Route::patch('{id}/restore/', [RoomStatusController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Seat Status
+ *
+ * Date: 30/06/2021
+ * Time: 11:10 AM
+ * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
+ */
+Route::prefix('item')->group(function () {
+
+    // Get list
+    Route::get('/', [ItemController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [ItemController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [ItemController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [ItemController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    Route::get('/{slug}', [ItemController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    Route::put('/{id}', [ItemController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [ItemController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [ItemController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [ItemController::class, 'restore'])->whereNumber('id');
 });

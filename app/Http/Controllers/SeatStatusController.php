@@ -164,7 +164,7 @@ class SeatStatusController extends Controller
     {
         try {
             $record = tap($seatStatus->onlyTrashed()->findOrFail($id))->forceDelete();
-            if ($record) {
+            if($record) {
                 return response([
                     'message' => 'Your Seat Status has been remove from trash!',
                     'data' => $record,

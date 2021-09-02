@@ -15,6 +15,6 @@ class RoomStatusSeed extends Seeder
     public function run()
     {
         //
-        RoomStatus::factory(10)->create();
+        RoomStatus::factory(50)->create();
     }
 }

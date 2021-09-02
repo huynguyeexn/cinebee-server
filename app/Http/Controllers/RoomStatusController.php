@@ -3,24 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomStatus\StoreRequest;
+use App\Http\Requests\RoomStatus\ListRequest;
 use App\Models\RoomStatus;
 use Illuminate\Http\Request;
-/**
- * @OA\Info(title="My First API", version="0.1")
- */
+
 class RoomStatusController extends Controller
 {
-    public function Mytest(Request $request){
-        echo json_encode(['q'=>$request->q]);
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ListRequest $request)
     {
-        //
+        /**
+         * @OA\Get(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status",
+         *   summary="RoomStatus index",
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Items per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort items by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort items type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
         $query = RoomStatus::query();
 
         $search = $request->q ?? NULL;
@@ -41,7 +81,7 @@ class RoomStatusController extends Controller
         }
 
         if ($sort_by) {
-            // order by ('name') desc;
+            // Example: order by ('name') desc;
             $query->orderBy($sort_by, $sort_type);
         }
 
@@ -58,10 +98,26 @@ class RoomStatusController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
-        $data = [
-            'name' => $request->only('name')
-        ];
+        /**
+         * @OA\Post(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status",
+         *   summary="Store new room status",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name"},
+         *       @OA\Property(property="name", type="string"),
+         *       example={"name": "Name of Room status"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+
         return RoomStatus::create($request->only('name'));
     }
 

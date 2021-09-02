@@ -3,8 +3,9 @@
 namespace App\Http\Requests\RoomStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class ListRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +26,14 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|string|unique:room_statuses,name'
+            'q' => 'nullable|string|',
+            'page' => 'nullable|numeric',
+            'per_page' => 'nullable|numeric|min:0',
+            'sort_by' => 'nullable|string',
+            'sort_type' => [
+                'nullable',
+                Rule::in(['asc', 'desc']),
+            ],
         ];
     }
 }

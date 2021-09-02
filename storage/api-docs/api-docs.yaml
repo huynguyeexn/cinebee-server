@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: 'Cinebee API'
+  description: 'Cinema management system'
+  contact:
+    email: admin@admin.com
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+paths:
+  /api/room-status:
+    get:
+      tags:
+        - RoomStatus
+      summary: 'RoomStatus index'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    post:
+      tags:
+        - RoomStatus
+      summary: 'Store new room status'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+              type: string
+            example:
+              name: 'Name of Room status'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+security:
+  - []

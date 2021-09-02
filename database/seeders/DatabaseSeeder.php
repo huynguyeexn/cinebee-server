@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             SeatStatusSeed::class,
             UserRoleSeed::class,
-            UserSeed::class
+            UserSeed::class,
+            RoomStatusSeed::class
         ]);
     }
 }

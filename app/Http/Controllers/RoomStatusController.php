@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RoomStatus\StoreRequest;
 use App\Http\Requests\RoomStatus\ListRequest;
+use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
 use Illuminate\Http\Request;
 
@@ -117,7 +118,6 @@ class RoomStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-
         return RoomStatus::create($request->only('name'));
     }
 
@@ -139,9 +139,41 @@ class RoomStatusController extends Controller
      * @param  \App\Models\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RoomStatus $roomStatus)
+    public function update(UpdateRequest $request, RoomStatus $roomStatus, $id)
     {
-        //
+        /**
+         * @OA\Put(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}",
+         *   summary="Update a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name"},
+         *       @OA\Property(property="name", type="string"),
+         *       example={"name": "Name of Room status"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        try {
+            $data = [
+                'name' => $request->name,
+            ];
+            return tap($roomStatus->findOrFail($id))->update($data);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -150,8 +182,28 @@ class RoomStatusController extends Controller
      * @param  \App\Models\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomStatus $roomStatus)
+    public function delete(RoomStatus $roomStatus, $id)
     {
-        //
+        /**
+         * @OA\Delete(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}/delete",
+         *   summary="Delete a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        try {
+            return tap($roomStatus->findOrFail($id))->delete();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

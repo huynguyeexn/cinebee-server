@@ -76,29 +76,14 @@ Route::prefix('room-status')->group(function () {
     // Get list
     Route::get('/', [RoomStatusController::class, 'index']);
 
-    // Get deleted list
-    // Route::get('/deleted', [RoomStatusController::class, 'deleted']);
-
     // Create new
     Route::post('/', [RoomStatusController::class, 'store']);
 
-    // Get by ID
-    // Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
-
-    // Get by slug
-    // Route::get('/{slug}', [RoomStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
-
     // Update
-    // Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
+    Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
 
-    // Soft Delete
-    // Route::delete('{id}/delete/', [RoomStatusController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    // Route::delete('{id}/remove/', [RoomStatusController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    // Route::patch('{id}/restore/', [RoomStatusController::class, 'restore'])->whereNumber('id');
+    // Delete
+    Route::delete('{id}/delete', [RoomStatusController::class, 'delete'])->whereNumber('id');
 });
 
 
@@ -109,8 +94,7 @@ Route::prefix('room-status')->group(function () {
  * Time: 11:10 AM
  * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
  */
-Route::prefix('item')->group(function () {
-
+Route::prefix('items')->group(function () {
     // Get list
     Route::get('/', [ItemController::class, 'index']);
 

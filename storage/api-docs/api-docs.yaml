@@ -56,6 +56,195 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+    post:
+      tags:
+        - Item
+      summary: 'Store new Item'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Name of Item'
+              slug: name-of-item
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/items/deleted:
+    get:
+      tags:
+        - Item
+      summary: 'List deleted items'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/items/{slug}':
+    get:
+      tags:
+        - Item
+      summary: 'Get item by slug'
+      parameters:
+        -
+          name: slug
+          in: path
+          description: 'Item slug'
+          required: true
+          schema:
+            type: string
+          example: name-of-item
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/items/{id}':
+    put:
+      tags:
+        - Item
+      summary: 'Update a Item'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Name of Item'
+              slug: name-of-item
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/items/{id}/delete':
+    delete:
+      tags:
+        - Item
+      summary: 'Delete a room status'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/items/{id}/remove':
+    delete:
+      tags:
+        - Item
+      summary: 'Remove Item from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/items/{id}/restore':
+    patch:
+      tags:
+        - Item
+      summary: 'Restore Item from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
   /api/room-status:
     get:
       tags:

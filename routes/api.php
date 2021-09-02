@@ -114,11 +114,11 @@ Route::prefix('items')->group(function () {
     Route::put('/{id}', [ItemController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    Route::delete('{id}/delete/', [ItemController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete', [ItemController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    Route::delete('{id}/remove/', [ItemController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove', [ItemController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    Route::patch('{id}/restore/', [ItemController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore', [ItemController::class, 'restore'])->whereNumber('id');
 });

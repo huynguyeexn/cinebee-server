@@ -117,9 +117,7 @@ class RoomStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $data = [
-            'name' => $request->only('name')
-        ];
+
         return RoomStatus::create($request->only('name'));
     }
 

@@ -73,4 +73,15 @@ class Handler extends ExceptionHandler
 
         return response()->json($e->validator->errors()->getMessages(), 422);
     }
+
+    public function render($request, Throwable $exception)
+    {
+        // Force to application/json rendering on API calls
+        if ($request->is('api*')) {
+            // set Accept request header to application/json
+            $request->headers->set('Accept', 'application/json');
+        }
+
+        return parent::render($request, $exception);
+    }
 }

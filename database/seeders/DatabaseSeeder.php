@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            ItemSeed::class,
+            RoomStatusSeed::class,
             SeatStatusSeed::class,
             UserRoleSeed::class,
             UserSeed::class,
-            RoomStatusSeed::class
         ]);
     }
 }

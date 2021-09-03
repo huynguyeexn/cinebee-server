@@ -139,7 +139,24 @@ class ItemController extends Controller
 
     public function getById(Item $item, $id)
     {
-        //
+        /**
+         * @OA\Get(
+         *   tags={"Item"},
+         *   path="/api/items/{id}",
+         *   summary="Get item by id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Item id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
         try {
             return $item->findOrFail($id);
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {

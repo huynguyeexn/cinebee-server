@@ -24,7 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'string|required',
+            'name' => 'string|required',
             'slug' => 'unique:seat_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
         ];
     }

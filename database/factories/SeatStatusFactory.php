@@ -24,7 +24,7 @@ class SeatStatusFactory extends Factory
     {
         $status = $this->faker->sentence($this->faker->numberBetween(1, 5), true);
         return [
-            'status' => $status,
+            'name' => $status,
             'slug' => Str::slug($status),
         ];
     }

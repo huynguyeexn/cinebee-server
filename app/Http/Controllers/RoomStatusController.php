@@ -6,10 +6,20 @@ use App\Http\Requests\RoomStatus\StoreRequest;
 use App\Http\Requests\RoomStatus\ListRequest;
 use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
-use Illuminate\Http\Request;
+use App\Repositories\RoomStatus\RoomStatusRepositoryInterface;
 
 class RoomStatusController extends Controller
 {
+    /**
+     * @var RoomStatusRepositoryInterface
+     */
+    protected $roomStatusRepo;
+
+    public function __construct(RoomStatusRepositoryInterface $roomStatusRepo)
+    {
+        $this->roomStatusRepo = $roomStatusRepo;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -62,33 +72,10 @@ class RoomStatusController extends Controller
          *
          * )
          */
-        $query = RoomStatus::query();
 
-        $search = $request->q ?? NULL;
-        $page = $request->page ?? 1;
-        $per_page = $request->per_page ?? 10;
-        $sort_by = $request->sort_by ?? NULL;
-        $sort_type = $request->sort_type ?? 'asc';
+        $roomStatus = $this->roomStatusRepo->getList($request);
 
-        if ($sort_by !== NULL && !columnExists(RoomStatus::class, $sort_by)) {
-            return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
-            ], 422);
-        }
-
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
-        }
-
-        if ($sort_by) {
-            // Example: order by ('name') desc;
-            $query->orderBy($sort_by, $sort_type);
-        }
-
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
-
-        return $data;
+        return $roomStatus;
     }
 
     /**
@@ -118,18 +105,9 @@ class RoomStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return RoomStatus::create($request->only('name'));
-    }
+        $attributes = $request->only('name');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RoomStatus  $roomStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RoomStatus $roomStatus)
-    {
-        //
+        return $this->roomStatusRepo->store($attributes);
     }
 
     /**
@@ -166,14 +144,10 @@ class RoomStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        try {
-            $data = [
-                'name' => $request->name,
-            ];
-            return tap($roomStatus->findOrFail($id))->update($data);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        $attributes = [
+            'name' => $request->name,
+        ];
+        return $this->roomStatusRepo->update($id, $attributes);
     }
 
     /**
@@ -182,7 +156,7 @@ class RoomStatusController extends Controller
      * @param  \App\Models\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function delete(RoomStatus $roomStatus, $id)
+    public function delete($id)
     {
         /**
          * @OA\Delete(
@@ -200,10 +174,6 @@ class RoomStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        try {
-            return tap($roomStatus->findOrFail($id))->delete();
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return $this->roomStatusRepo->delete($id);
     }
 }

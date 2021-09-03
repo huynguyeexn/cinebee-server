@@ -45,33 +45,12 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (MethodNotAllowedHttpException $e, $request) {
-            return response()->json([
-                'message' => '404 not found'
-            ], 404);
+            return response(null, 404);
         });
-
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
-            return response()->json([
-                'message' => '404 not found'
-            ], 404);
+            return response(null, 404);
         });
-    }
-
-    /**
-     * Create a response object from the given validation exception.
-     *
-     * @param  \Illuminate\Validation\ValidationException  $e
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function convertValidationExceptionToResponse(ValidationException $e, $request)
-    {
-        if ($e->response) {
-            return $e->response;
-        }
-
-        return response()->json($e->validator->errors()->getMessages(), 422);
     }
 
     public function render($request, Throwable $exception)

@@ -86,7 +86,6 @@ Route::prefix('room-status')->group(function () {
     Route::delete('{id}/delete', [RoomStatusController::class, 'delete'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Seat Status
  *

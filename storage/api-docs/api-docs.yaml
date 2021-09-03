@@ -84,6 +84,62 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+  '/api/items/{id}':
+    get:
+      tags:
+        - Item
+      summary: 'Get item by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Item id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    put:
+      tags:
+        - Item
+      summary: 'Update a Item'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Name of Item'
+              slug: name-of-item
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
   /api/items/deleted:
     get:
       tags:
@@ -145,42 +201,6 @@ paths:
           schema:
             type: string
           example: name-of-item
-      responses:
-        200:
-          description: OK
-        401:
-          description: Unauthorized
-        404:
-          description: 'Not Found'
-  '/api/items/{id}':
-    put:
-      tags:
-        - Item
-      summary: 'Update a Item'
-      parameters:
-        -
-          name: id
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              required:
-                - name
-                - slug
-              properties:
-                name:
-                  type: string
-                slug:
-                  type: string
-              type: string
-            example:
-              name: 'Name of Item'
-              slug: name-of-item
       responses:
         200:
           description: OK
@@ -353,6 +373,262 @@ paths:
       tags:
         - RoomStatus
       summary: 'Delete a room status'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/seat-status:
+    get:
+      tags:
+        - SeatStatus
+      summary: 'List Seat Status'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    post:
+      tags:
+        - SeatStatus
+      summary: 'Store new Seat Status'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Status of seat'
+              slug: status-of-seat
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/seat-status/deleted:
+    get:
+      tags:
+        - SeatStatus
+      summary: 'List Seat Status'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/seat-status/{id}':
+    get:
+      tags:
+        - SeatStatus
+      summary: 'Get Seat Status by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Item id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    put:
+      tags:
+        - SeatStatus
+      summary: 'Update a Seat Status'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Status of seat'
+              slug: status-of-seat
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/seat-status/{slug}':
+    get:
+      tags:
+        - SeatStatus
+      summary: 'Get Seat Status by slug'
+      parameters:
+        -
+          name: slug
+          in: path
+          description: 'Status slug'
+          required: true
+          schema:
+            type: string
+          example: status-of-seat
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/seat-status/{id}/delete':
+    delete:
+      tags:
+        - SeatStatus
+      summary: 'Delete a room status'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/seat-status/{id}/remove':
+    delete:
+      tags:
+        - SeatStatus
+      summary: 'Remove Seat Status from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/seat-status/{id}/restore':
+    patch:
+      tags:
+        - SeatStatus
+      summary: 'Restore Seat Status from trash'
       parameters:
         -
           name: id

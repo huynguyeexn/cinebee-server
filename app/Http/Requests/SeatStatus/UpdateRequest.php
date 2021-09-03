@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             //
-            'status' => 'string|required',
+            'name' => 'string|required',
             'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:seat_statuses,slug,$this->id"
         ];
     }

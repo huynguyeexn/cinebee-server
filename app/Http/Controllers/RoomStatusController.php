@@ -7,12 +7,11 @@ use App\Http\Requests\RoomStatus\ListRequest;
 use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
 use App\Repositories\RoomStatus\RoomStatusRepositoryInterface;
-use Illuminate\Http\Request;
 
 class RoomStatusController extends Controller
 {
     /**
-     * @var RoomStatusRepositoryInterface|\App\Repositories\RoomStatus\
+     * @var RoomStatusRepositoryInterface
      */
     protected $roomStatusRepo;
 

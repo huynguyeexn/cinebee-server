@@ -15,7 +15,7 @@ class CreateSeatStatusesTable extends Migration
     {
         Schema::create('seat_statuses', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
+            $table->string('name');
             $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();

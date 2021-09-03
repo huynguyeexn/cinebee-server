@@ -11,7 +11,7 @@ class SeatStatus extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'status',
+        'name',
         'slug'
     ];
 

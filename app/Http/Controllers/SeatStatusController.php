@@ -11,7 +11,11 @@ class SeatStatusController extends Controller
 {
     public function index(ListRequest $request)
     {
-        $query = SeatStatus::query();
+        //
+
+        $model = new SeatStatus();
+
+        $query = $model->query();
 
         // Get request params
         $search = $request->q ?? NULL;
@@ -21,7 +25,7 @@ class SeatStatusController extends Controller
         $per_page = $request->per_page ?? 10;
 
         // Check column exists
-        if ($sort_by !== NULL && !columnExists(SeatStatus::class, $sort_by)) {
+        if ($sort_by !== NULL && !columnExists($model, $sort_by)) {
             // Return errors when not exists
             return response()->json([
                 'message' => 'The given data was invalid!',
@@ -34,6 +38,7 @@ class SeatStatusController extends Controller
         }
 
         if ($sort_by) {
+            // Example: order by ('name') desc;
             $query->orderBy($sort_by, $sort_type ? $sort_type : 'asc');
         }
 
@@ -164,7 +169,7 @@ class SeatStatusController extends Controller
     {
         try {
             $record = tap($seatStatus->onlyTrashed()->findOrFail($id))->forceDelete();
-            if($record) {
+            if ($record) {
                 return response([
                     'message' => 'Your Seat Status has been remove from trash!',
                     'data' => $record,

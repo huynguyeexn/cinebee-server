@@ -21,6 +21,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\RoomStatus\RoomStatusRepositoryInterface::class,
             \App\Repositories\RoomStatus\RoomStatusRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Room\RoomRepositoryInterface::class,
+            \App\Repositories\Room\RoomRepository::class,
+        );
     }
 
     /**

@@ -3,30 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\SeatStatus\StoreRequest;
-use App\Http\Requests\SeatStatus\UpdateRequest;
-use App\Models\SeatStatus;
-use App\Repositories\SeatStatus\SeatStatusRepositoryInterface;
+use App\Http\Requests\Room\StoreRequest;
+use App\Http\Requests\Room\UpdateRequest;
+use App\Models\Room;
+use App\Repositories\Room\RoomRepositoryInterface;
+use Illuminate\Http\Request;
 
-class SeatStatusController extends Controller
+class RoomController extends Controller
 {
     /**
-     * @var SeatStatusRepositoryInterface
+     * @var RoomRepositoryInterface
      */
-    protected $seatStatusRepo;
+    protected $roomRepo;
 
-    public function __construct(SeatStatusRepositoryInterface $seatStatusRepo)
+    public function __construct(RoomRepositoryInterface $roomRepo)
     {
-        $this->seatStatusRepo = $seatStatusRepo;
+        $this->roomRepo = $roomRepo;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status",
-         *   summary="List Seat Status",
+         *   tags={"Rooms"},
+         *   path="/api/rooms",
+         *   summary="List Rooms",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -67,16 +73,16 @@ class SeatStatusController extends Controller
          *
          * )
          */
-        return $this->seatStatusRepo->getList($request);
+        return $this->roomRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/deleted",
-         *   summary="List Seat Status Deleted",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/deleted",
+         *   summary="List Room Deleted",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -117,50 +123,21 @@ class SeatStatusController extends Controller
          *
          * )
          */
-        return $this->seatStatusRepo->getDeletedList($request);
-    }
-
-    public function store(StoreRequest $request)
-    {
-        /**
-         * @OA\Post(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status",
-         *   summary="Store new Seat Status",
-         *   @OA\RequestBody(
-         *     required=true,
-         *     @OA\JsonContent(
-         *       type="string",
-         *       required={"name", "slug"},
-         *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       example={"name": "Status of seat", "slug": "status-of-seat"}
-         *     )
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found")
-         * )
-         */
-        $attributes = [
-            'name' => $request->name,
-            'slug' => $request->slug,
-        ];
-        return $this->seatStatusRepo->store($attributes);
+        return $this->roomRepo->getDeletedList($request);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{id}",
-         *   summary="Get Seat Status by id",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}",
+         *   summary="Get Room by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Item id",
+         *      description="Room id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -169,39 +146,58 @@ class SeatStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->seatStatusRepo->getById($id);
+        return $this->roomRepo->getById($id);
     }
 
-    public function getBySlug($slug)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreRequest $request)
     {
         /**
-         * @OA\Get(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{slug}",
-         *   summary="Get Seat Status by slug",
-         *   @OA\Parameter(
-         *      name="slug",
-         *      in="path",
-         *      required=true,
-         *      description="Status slug",
-         *      example="status-of-seat",
-         *     @OA\Schema(type="string"),
+         * @OA\Post(
+         *   tags={"Rooms"},
+         *   path="/api/rooms",
+         *   summary="Store new Rooms",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="room_status_id", type="number"),
+         *       example={"name": "Status of seat", "room_status_id": null}
+         *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
          *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
+         *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->seatStatusRepo->getBySlug($slug);
+        $attributes = [
+            'name' => $request->name,
+            'room_status_id' => $request->room_status_id,
+        ];
+        return $this->roomRepo->store($attributes);
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{id}",
-         *   summary="Update a Seat Status",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}",
+         *   summary="Update a Room",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -212,10 +208,10 @@ class SeatStatusController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "slug"},
+         *       required={"name", "room_status_id"},
          *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       example={"name": "Status of seat", "slug": "status-of-seat"}
+         *       @OA\Property(property="room_status_id", type="string"),
+         *       example={"name": "Status of seat", "room_status_id": "9"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -225,19 +221,25 @@ class SeatStatusController extends Controller
          */
         $attributes = [
             'name' => $request->name,
-            'slug' => $request->slug,
+            'room_status_id' => $request->room_status_id,
         ];
 
-        return $this->seatStatusRepo->update($id, $attributes);
+        return $this->roomRepo->update($id, $attributes);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{id}/delete",
-         *   summary="Delete a room status",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}/delete",
+         *   summary="Delete a Room",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -249,16 +251,16 @@ class SeatStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->seatStatusRepo->delete($id);
+        return $this->roomRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{id}/remove",
-         *   summary="Remove Seat Status from trash",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}/remove",
+         *   summary="Remove Room from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -270,16 +272,16 @@ class SeatStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->seatStatusRepo->remove($id);
+        return $this->roomRepo->remove($id);
     }
 
-    public function restore(SeatStatus $seatStatus, $id)
+    public function restore($id)
     {
         /**
          * @OA\Patch(
-         *   tags={"SeatStatus"},
-         *   path="/api/seat-status/{id}/restore",
-         *   summary="Restore Seat Status from trash",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}/restore",
+         *   summary="Restore Room from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -291,6 +293,6 @@ class SeatStatusController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->seatStatusRepo->restore($id);
+        return $this->roomRepo->restore($id);
     }
 }

@@ -181,7 +181,7 @@ abstract class BaseRepository implements RepositoryInterface
     public function restore($id)
     {
         try {
-            $record = tap($this->model->onlyTrashed()->findOrFail($id))->forceDelete();
+            $record = tap($this->model->onlyTrashed()->findOrFail($id))->restore();
             if ($record) {
                 return response([
                     'message' => 'Your Seat Status has been restore!',

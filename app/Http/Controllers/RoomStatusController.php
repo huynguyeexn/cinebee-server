@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListRequest;
 use App\Http\Requests\RoomStatus\StoreRequest;
-use App\Http\Requests\RoomStatus\ListRequest;
 use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
 use App\Repositories\RoomStatus\RoomStatusRepositoryInterface;
@@ -76,6 +76,29 @@ class RoomStatusController extends Controller
         $roomStatus = $this->roomStatusRepo->getList($request);
 
         return $roomStatus;
+    }
+
+    public function getById($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}",
+         *   summary="Get Room Status by id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Item id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->roomStatusRepo->getById($id);
     }
 
     /**

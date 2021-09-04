@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Item\ItemRequest;
-use App\Http\Requests\Item\ListRequest;
 use App\Http\Requests\Item\UpdateRequest;
+use App\Http\Requests\ListRequest;
 use App\Models\Item;
 
 

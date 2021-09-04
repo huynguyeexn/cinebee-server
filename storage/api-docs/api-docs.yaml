@@ -265,6 +265,240 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+  /api/rooms:
+    get:
+      tags:
+        - Rooms
+      summary: 'List Rooms'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    post:
+      tags:
+        - Rooms
+      summary: 'Store new Rooms'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                room_status_id:
+                  type: number
+              type: string
+            example:
+              name: 'Status of seat'
+              room_status_id: null
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/rooms/deleted:
+    get:
+      tags:
+        - Rooms
+      summary: 'List Room Deleted'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'Items per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort items by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort items type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/rooms/{id}':
+    get:
+      tags:
+        - Rooms
+      summary: 'Get Room by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Room id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    put:
+      tags:
+        - Rooms
+      summary: 'Update a Room'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - room_status_id
+              properties:
+                name:
+                  type: string
+                room_status_id:
+                  type: string
+              type: string
+            example:
+              name: 'Status of seat'
+              room_status_id: '9'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/rooms/{id}/delete':
+    delete:
+      tags:
+        - Rooms
+      summary: 'Delete a Room'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/rooms/{id}/remove':
+    delete:
+      tags:
+        - Rooms
+      summary: 'Remove Room from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/rooms/{id}/restore':
+    patch:
+      tags:
+        - Rooms
+      summary: 'Restore Room from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
   /api/room-status:
     get:
       tags:
@@ -337,6 +571,26 @@ paths:
         404:
           description: 'Not Found'
   '/api/room-status/{id}':
+    get:
+      tags:
+        - RoomStatus
+      summary: 'Get Room Status by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Item id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
     put:
       tags:
         - RoomStatus
@@ -466,7 +720,7 @@ paths:
     get:
       tags:
         - SeatStatus
-      summary: 'List Seat Status'
+      summary: 'List Seat Status Deleted'
       parameters:
         -
           name: q

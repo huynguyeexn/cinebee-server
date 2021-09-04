@@ -337,6 +337,26 @@ paths:
         404:
           description: 'Not Found'
   '/api/room-status/{id}':
+    get:
+      tags:
+        - RoomStatus
+      summary: 'Get Room Status by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Item id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
     put:
       tags:
         - RoomStatus

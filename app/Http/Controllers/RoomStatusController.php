@@ -78,6 +78,29 @@ class RoomStatusController extends Controller
         return $roomStatus;
     }
 
+    public function getById($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}",
+         *   summary="Get Room Status by id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Item id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->roomStatusRepo->getById($id);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

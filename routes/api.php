@@ -76,6 +76,9 @@ Route::prefix('room-status')->group(function () {
     // Get list
     Route::get('/', [RoomStatusController::class, 'index']);
 
+    // Get by ID
+    Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
+
     // Create new
     Route::post('/', [RoomStatusController::class, 'store']);
 

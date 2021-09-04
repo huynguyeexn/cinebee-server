@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\RoomStatus;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -35,5 +35,9 @@ class ListRequest extends FormRequest
                 Rule::in(['asc', 'desc']),
             ],
         ];
+    }
+
+    public function passedValidation()
+    {
     }
 }

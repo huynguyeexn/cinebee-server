@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListRequest;
 use App\Http\Requests\RoomStatus\StoreRequest;
-use App\Http\Requests\RoomStatus\ListRequest;
 use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
 use App\Repositories\RoomStatus\RoomStatusRepositoryInterface;

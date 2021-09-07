@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', '127.0.0.1'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Clockwork\Support\Laravel\ClockworkServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -232,6 +233,8 @@ return [
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+
+        'Clockwork' => Clockwork\Support\Laravel\Facade::class,
     ],
 
 ];

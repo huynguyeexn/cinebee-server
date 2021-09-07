@@ -8,6 +8,7 @@ use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\GenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,36 @@ Route::prefix('actors')->group(function () {
  
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+});
+/**
+ * REST API - genre
+ *  long add 06-09-2021
+ */
+Route::prefix('genres')->group(function () {
+    Route::get('/',[GenreController::class,'index']);
+     // Get deleted list
+     Route::get('/deleted', [GenreController::class, 'deleted']);
+
+     // Create new
+     Route::post('/', [GenreController::class, 'store']);
+ 
+     // Get by ID
+     Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
+ 
+     // Get by slug
+     Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+ 
+     // Update
+     Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
+ 
+     // Soft Delete
+     Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
+ 
+     // Hard Delete
+     Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
+ 
+    // Restore
+    Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
 });
 /**
  * REST API - Seat Status

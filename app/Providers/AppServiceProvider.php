@@ -34,6 +34,11 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Actor\ActorRepositoryInterface::class,
             \App\Repositories\Actor\ActorRepository::class
         );
+        // long add 06-09-2021
+        $this->app->singleton(
+            \App\Repositories\Genre\GenreRepositoryInterface::class,
+            \App\Repositories\Genre\GenreRepository::class
+        );
     }
 
     /**

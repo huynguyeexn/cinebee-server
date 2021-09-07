@@ -274,6 +274,265 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+  /api/genres/:
+    get:
+      tags:
+        - genre
+      summary: 'List genre'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'genre per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort genre by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort genre type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/genres/deleted:
+    get:
+      tags:
+        - genre
+      summary: 'List genre Deleted'
+      parameters:
+        -
+          name: q
+          in: query
+          description: 'Search query'
+          schema:
+            type: string
+        -
+          name: page
+          in: query
+          description: Page
+          schema:
+            type: number
+          example: '1'
+        -
+          name: per_page
+          in: query
+          description: 'genres per page'
+          schema:
+            type: number
+          example: '10'
+        -
+          name: sort_by
+          in: query
+          description: 'Sort genres by'
+          schema:
+            type: string
+          example: updated_at
+        -
+          name: sort_type
+          in: query
+          description: 'Sort genres type [''asc'', ''desc'']'
+          schema:
+            type: string
+          example: desc
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  /api/genres:
+    post:
+      tags:
+        - genre
+      summary: 'Store new genre'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+                - avatar
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: hanhdong
+              slug: hanh-dong
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/genres/{id}':
+    get:
+      tags:
+        - genre
+      summary: 'Get genre by id'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'genre id'
+          required: true
+          schema:
+            type: number
+          example: '21'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+    put:
+      tags:
+        - genre
+      summary: 'Update a genre'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - slug
+                - avatar
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: kinhdi
+              slug: kinh-di
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/genres/{slug}':
+    get:
+      tags:
+        - genre
+      summary: 'Get genre by slug'
+      parameters:
+        -
+          name: slug
+          in: path
+          description: 'genres slug'
+          required: true
+          schema:
+            type: string
+          example: genre
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/genres/{id}/delete':
+    delete:
+      tags:
+        - genre
+      summary: 'Delete a genre'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/genres/{id}/remove':
+    delete:
+      tags:
+        - genre
+      summary: 'Remove genre from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
+  '/api/genres/{id}/restore':
+    patch:
+      tags:
+        - genre
+      summary: 'Restore genre from trash'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
   /api/items:
     get:
       tags:

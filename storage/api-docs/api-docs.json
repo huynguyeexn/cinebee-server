@@ -13,6 +13,393 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/actors/": {
+            "get": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "List actor",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "actor per page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort actor by",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "updated_at"
+                    },
+                    {
+                        "name": "sort_type",
+                        "in": "query",
+                        "description": "Sort actor type ['asc', 'desc']",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/deleted": {
+            "get": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "List Actor Deleted",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Actors per page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort actors by",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "updated_at"
+                    },
+                    {
+                        "name": "sort_type",
+                        "in": "query",
+                        "description": "Sort actors type ['asc', 'desc']",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors": {
+            "post": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Store new actor",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "slug",
+                                    "avatar"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "avatar": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "string"
+                            },
+                            "example": {
+                                "name": "hailong",
+                                "slug": "hai-long",
+                                "avatar": "anh_cua_toi.jpg"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/{id}": {
+            "get": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Get actor by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "actor id",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "21"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Update a Actor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "slug",
+                                    "avatar"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "slug": {
+                                        "type": "string"
+                                    },
+                                    "avatar": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "string"
+                            },
+                            "example": {
+                                "name": "longhai",
+                                "slug": "long-hai",
+                                "avatar": "anh_moi_doi.png"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/{slug}": {
+            "get": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Get Actor by slug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "actors slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "actor"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Delete a Actor",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/{id}/remove": {
+            "delete": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Remove Actor from trash",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/actors/{id}/restore": {
+            "patch": {
+                "tags": [
+                    "Actor"
+                ],
+                "summary": "Restore actor from trash",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/api/items": {
             "get": {
                 "tags": [

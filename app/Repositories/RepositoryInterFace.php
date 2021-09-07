@@ -70,4 +70,7 @@ interface RepositoryInterface
      * @return mixed
      */
     public function restore($id);
+
+    public function getListAGD(Request $request);
+    public function getDeletedListAGD(Request $request);
 }

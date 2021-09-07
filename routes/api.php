@@ -7,6 +7,7 @@ use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,36 @@ Route::prefix('auth')->group(function () {
         Route::get('profile', [AuthController::class, 'profile']);
     });
 });
+/**
+ * REST API - actor
+ *  long add 06-09-2021
+ */
+Route::prefix('actors')->group(function () {
+    Route::get('/',[ActorController::class,'index']);
+     // Get deleted list
+     Route::get('/deleted', [ActorController::class, 'deleted']);
 
+     // Create new
+     Route::post('/', [ActorController::class, 'store']);
+ 
+     // Get by ID
+     Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
+ 
+     // Get by slug
+     Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+ 
+     // Update
+     Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
+ 
+     // Soft Delete
+     Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
+ 
+     // Hard Delete
+     Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
+ 
+    // Restore
+    Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+});
 /**
  * REST API - Seat Status
  *

@@ -224,7 +224,7 @@ class ActorController extends Controller
         $attributes = [
             'fullname' => $request->name,
             'slug' => $request->slug,
-            'avatar'
+            'avatar'=> $request->avatar
         ];
 
         return $this->ActocRepo->update($id, $attributes);

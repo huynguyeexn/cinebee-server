@@ -2,8 +2,8 @@
 // long add 06-09-2021
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CinemaStatus\StoreRequest;
-use App\Http\Requests\CinemaStatus\UpdateRequest;
+use App\Http\Requests\Actor\StoreRequest;
+use App\Http\Requests\Actor\UpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Models\Actor;
 use App\Repositories\Actor\ActorRepositoryInterface;

@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
 use Illuminate\Http\Request;
-use App\Http\Requests\RoomStatus\StoreRequest;
-use App\Http\Requests\RoomStatus\UpdateRequest;
+use App\Http\Requests\Genre\StoreRequest;
+use App\Http\Requests\Genre\UpdateRequest;
 use App\Repositories\Genre\GenreRepositoryInterface;
 
 class GenreController extends Controller

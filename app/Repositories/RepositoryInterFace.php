@@ -71,6 +71,5 @@ interface RepositoryInterface
      */
     public function restore($id);
 
-    public function getListAGD(Request $request);
-    public function getDeletedListAGD(Request $request);
+    
 }

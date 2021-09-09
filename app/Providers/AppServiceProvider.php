@@ -29,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Seat\SeatRepositoryInterface::class,
             \App\Repositories\Seat\SeatRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\EmployeeRole\EmployeeRoleRepositoryInterface::class,
+            \App\Repositories\EmployeeRole\EmployeeRoleRepository::class,
+        );
     }
 
     /**

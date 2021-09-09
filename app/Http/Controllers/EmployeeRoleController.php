@@ -2,183 +2,295 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeeRole;
+use App\Http\Requests\ListRequest;
 use App\Http\Requests\EmployeeRole\StoreRequest;
-use App\Http\Requests\EmployeeRole\ListRequest;
 use App\Http\Requests\EmployeeRole\UpdateRequest;
+use App\Models\EmployeeRole;
+use App\Repositories\EmployeeRole\EmployeeRoleRepositoryInterface;
 
 class EmployeeRoleController extends Controller
 {
+    /**
+     * @var EmployeeRoleRepositoryInterface
+     */
+    protected $employeeRoleRepo;
+
+    public function __construct(EmployeeRoleRepositoryInterface $employeeRoleRepo)
+    {
+        $this->employeeRoleRepo = $employeeRoleRepo;
+    }
 
     public function index(ListRequest $request)
     {
-        $query = EmployeeRole::query();
-
-        $search = $request->q ?? NULL;
-        $page = $request->page ?? 1;
-        $per_page = $request->per_page ?? 10;
-        $sort_by = $request->sort_by ?? NULL;
-        $sort_type = $request->sort_type ?? 'asc';
-
-        if ($sort_by !== NULL && !columnExists(EmployeeRole::class, $sort_by)) {
-            return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
-            ], 422);
-        }
-
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
-        }
-
-        if ($sort_by) {
-            // order by ('name') desc;
-            $query->orderBy($sort_by, $sort_type);
-        }
-
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
-
-        return $data;
+        /**
+         * @OA\Get(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role",
+         *   summary="List Employee Role",
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Items per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort items by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort items type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+        return $this->employeeRoleRepo->getList($request);
     }
-
 
     public function deleted(ListRequest $request)
     {
-        $query = EmployeeRole::onlyTrashed();
-
-        // Get request params
-        $search = $request->q ?? NULL;
-        $sort_by = $request->sort_by ?? NULL;
-        $sort_type = $request->sort_type ?? NULL;
-        $page = $request->page ?? 1;
-        $per_page = $request->per_page ?? 10;
-
-        // Check column exists
-        if ($sort_by !== NULL && !columnExists(EmployeeRole::class, $sort_by)) {
-            // Return errors when not exists
-            return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
-            ], 422);
-        }
-
-        if ($search) {
-            $query->where('status', 'like', "%$search%")->orWhere('slug', 'like', "%$search%");
-        }
-
-        if ($sort_by) {
-            $query->orderBy($sort_by, $sort_type ? $sort_type : 'asc');
-        }
-
-        $total = $query->count();
-
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
-
-        return [
-            'data' => $data,
-            'total' => $total,
-            'query' => $search,
-            'sort_by' => $sort_by,
-            'sort_type' => $sort_type,
-            'page' => $page,
-            'per_page' => $per_page,
-            'last_page' => ceil($total / $per_page),
-        ];
+        /**
+         * @OA\Get(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/deleted",
+         *   summary="List Employee Role Deleted",
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Items per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort items by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort items type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+        return $this->employeeRoleRepo->getDeletedList($request);
     }
-
 
     public function store(StoreRequest $request)
     {
-        $data = [
-            'name' => $request->only('name'),
-            'slug' => $request->only('slug')
+        /**
+         * @OA\Post(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role",
+         *   summary="Store new Employee Role",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name", "slug"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="slug", type="string"),
+         *       example={"name": "Nhân Viên", "slug": "nhan-vien"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'name' => $request->name,
+            'slug' => $request->slug,
         ];
-        return EmployeeRole::create($data);
+        return $this->employeeRoleRepo->store($attributes);
     }
 
-
-    public function getById(EmployeeRole $employeeRole, $id)
+    public function getById($id)
     {
-        try {
-            return  $employeeRole->findorfail($id);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response([
-                'message' => '404 not found'
-            ], 404);
-        }
+        /**
+         * @OA\Get(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{id}",
+         *   summary="Get Employee Role by id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Item id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->employeeRoleRepo->getById($id);
     }
 
-
-    public function getBySlug(EmployeeRole $employeeRole, $slug)
+    public function getBySlug($slug)
     {
-        return $employeeRole->where('slug', 'like', $slug)->firstOrFail();
+        /**
+         * @OA\Get(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{slug}",
+         *   summary="Get Employee Role by slug",
+         *   @OA\Parameter(
+         *      name="slug",
+         *      in="path",
+         *      required=true,
+         *      description="Employee Role slug",
+         *      example="employee-role",
+         *     @OA\Schema(type="string"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->employeeRoleRepo->getBySlug($slug);
     }
 
-
-    public function update(EmployeeRole $employeeRole, UpdateRequest $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        try {
-            $data = [
-                'status' => $request->status,
-                'slug' => $request->slug,
-            ];
+        /**
+         * @OA\Put(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{id}",
+         *   summary="Update a Employee Role",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name", "slug"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="slug", type="string"),
+         *       example={"name": "Nhân Viên", "slug": "nhan-vien"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+        ];
 
-            return tap($employeeRole->findOrFail($id))->update($data);
-        } catch (\Throwable $th) {
-            return response()->json([
-                'message' => 'Can be update!',
-                'errors' => ['update' => 'Can be update!']
-            ], 500);
-        }
+        return $this->employeeRoleRepo->update($id, $attributes);
     }
 
-
-    public function delete(EmployeeRole $employeeRole, $id)
+    public function delete($id)
     {
-        try {
-            $record = tap($employeeRole->findOrFail($id))->delete();
-            if ($record) {
-                return response([
-                    'message' => 'Your Seat Status has been move to trash!',
-                    'data' => $record,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        /**
+         * @OA\Delete(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{id}/delete",
+         *   summary="Delete a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->employeeRoleRepo->delete($id);
     }
 
-
-    public function remove(EmployeeRole $employeeRole, $id)
+    public function remove($id)
     {
-        try {
-            $record = tap($employeeRole->onlyTrashed()->findOrFail($id))->forceDelete();
-            if ($record) {
-                return response([
-                    'message' => 'Your Seat Status has been remove from trash!',
-                    'data' => $record,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        /**
+         * @OA\Delete(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{id}/remove",
+         *   summary="Remove Employee Role from trash",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->employeeRoleRepo->remove($id);
     }
-
 
     public function restore(EmployeeRole $employeeRole, $id)
     {
-        try {
-            $record = tap($employeeRole->onlyTrashed()->findOrFail($id))->restore();
-            if ($record) {
-                return response([
-                    'message' => 'Your Seat Status has been restore!',
-                    'data' => $record,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        /**
+         * @OA\Patch(
+         *   tags={"EmployeeRole"},
+         *   path="/api/employee-role/{id}/restore",
+         *   summary="Restore Employee Role from trash",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->employeeRoleRepo->restore($id);
     }
-
-
 }

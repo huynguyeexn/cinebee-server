@@ -24,8 +24,8 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => 'string|required',
-            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:seat_statuses,slug,$this->id"
+            'name' => 'string|required',
+            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:employee_roles,slug,$this->id"
         ];
     }
 }

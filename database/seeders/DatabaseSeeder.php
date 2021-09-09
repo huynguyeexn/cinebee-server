@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             SeatStatusSeed::class,
             UserRoleSeed::class,
             UserSeed::class,
+            RoomSeeder::class,
+            SeatSeeder::class
         ]);
     }
 }

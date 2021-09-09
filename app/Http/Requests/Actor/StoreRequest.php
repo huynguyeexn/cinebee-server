@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
         return [
             'fullname' => 'required|string',
             'avatar' => 'required|string',
-            'slug' => 'unique:cinema_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
+            'slug' => 'unique:actor,slug|string|required|regex:/^[a-z0-9-]+$/'
         ];
     }
 }

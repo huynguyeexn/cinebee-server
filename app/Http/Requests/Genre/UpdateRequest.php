@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => 'string|required',
-            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:items,slug,$this->id"
+            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:genre,slug,$this->id"
         ];
     }
 }

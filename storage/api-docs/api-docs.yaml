@@ -114,11 +114,11 @@ paths:
           application/json:
             schema:
               required:
-                - name
+                - fullname
                 - slug
                 - avatar
               properties:
-                name:
+                fullname:
                   type: string
                 slug:
                   type: string
@@ -126,7 +126,7 @@ paths:
                   type: string
               type: string
             example:
-              name: hailong
+              fullname: hailong
               slug: hai-long
               avatar: anh_cua_toi.jpg
       responses:
@@ -174,11 +174,11 @@ paths:
           application/json:
             schema:
               required:
-                - name
+                - fullname
                 - slug
                 - avatar
               properties:
-                name:
+                fullname:
                   type: string
                 slug:
                   type: string
@@ -186,7 +186,7 @@ paths:
                   type: string
               type: string
             example:
-              name: longhai
+              fullname: longhai
               slug: long-hai
               avatar: anh_moi_doi.png
       responses:

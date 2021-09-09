@@ -126,11 +126,11 @@ class ActorController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "slug","avatar"},
-         *       @OA\Property(property="name", type="string"),
+         *       required={"fullname", "slug","avatar"},
+         *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="slug", type="string"),
          *       @OA\Property(property="avatar", type="string"),
-         *       example={"name": "hailong", "slug": "hai-long","avatar":"anh_cua_toi.jpg"}
+         *       example={"fullname": "hailong", "slug": "hai-long","avatar":"anh_cua_toi.jpg"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -139,7 +139,7 @@ class ActorController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->name,
+            'fullname' => $request->fullname,
             'slug' => $request->slug,
             'avatar'=>$request->avatar
         ];
@@ -209,11 +209,11 @@ class ActorController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "slug","avatar"},
-         *       @OA\Property(property="name", type="string"),
+         *       required={"fullname", "slug","avatar"},
+         *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="slug", type="string"),
          *       @OA\Property(property="avatar", type="string"),
-         *       example={"name": "longhai", "slug": "long-hai","avatar":"anh_moi_doi.png"}
+         *       example={"fullname": "longhai", "slug": "long-hai","avatar":"anh_moi_doi.png"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -222,7 +222,7 @@ class ActorController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->name,
+            'fullname' => $request->fullname,
             'slug' => $request->slug,
             'avatar'=> $request->avatar
         ];

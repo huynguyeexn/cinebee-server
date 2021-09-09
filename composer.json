@@ -37,6 +37,19 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
+        },
+        "classmap": [
+            "app/commands",
+            "app/controllers",
+            "app/models",
+            "app/database/migrations",
+            "app/database/seeds",
+            "app/tests/TestCase.php",
+            "app/helpers",
+            "app/Repositories"
+        ],
+        "psr-0": {
+            "Repositories": "app/"
         }
     },
     "autoload-dev": {

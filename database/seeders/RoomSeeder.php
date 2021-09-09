@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\RoomStatus;
+use App\Models\Room;
 use Illuminate\Database\Seeder;
 
-class RoomStatusSeed extends Seeder
+class RoomSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class RoomStatusSeed extends Seeder
     public function run()
     {
         //
-        RoomStatus::factory(50)->create();
+        Room::factory(10)->create();
     }
 }

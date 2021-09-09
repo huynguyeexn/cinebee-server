@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\SeatStatus;
+namespace App\Http\Requests\RoomStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
-            'slug' => 'unique:seat_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
+            //
+            'name' => "required|string|unique:room_statuses,name,$this->id,id"
         ];
     }
 }

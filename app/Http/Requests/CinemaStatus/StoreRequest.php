@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\SeatStatus;
+namespace App\Http\Requests\CinemaStatus;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,8 +24,9 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
-            'slug' => 'unique:seat_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
+            //
+            'name' => 'required|string',
+            'slug' => 'unique:cinema_statuses,slug|string|required|regex:/^[a-z0-9-]+$/'
         ];
     }
 }

@@ -6,16 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SeatStatus extends Model
+class Room extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'slug'
+        "name",
+        "room_status_id"
     ];
 
     protected $hidden = [
-        'deleted_at'
+        'delete_at'
     ];
+
+    public function roomSatus()
+    {
+        return $this->belongsto(RoomStatus::class);
+    }
 }

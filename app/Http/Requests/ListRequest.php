@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\SeatStatus;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -26,11 +26,14 @@ class ListRequest extends FormRequest
     {
         return [
             //
-            'q' => 'string',
-            'sort_by' => 'string',
-            'sort_type' => [Rule::in(['desc', 'asc'])],
-            'page' => 'numeric|min:1',
-            'per_page' => 'numeric|min:1|max:100',
+            'q' => 'nullable|string|',
+            'page' => 'nullable|numeric',
+            'per_page' => 'nullable|numeric|min:0',
+            'sort_by' => 'nullable|string',
+            'sort_type' => [
+                'nullable',
+                Rule::in(['asc', 'desc']),
+            ],
         ];
     }
 

@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
+use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
 use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
@@ -32,8 +34,6 @@ Route::prefix('auth')->group(function () {
 /**
  * REST API - Seat Status
  *
- * Date: 26/06/2021
- * Time: 11:10 AM
  * @author  HUi <huynguyeexn@gmail.com>
  */
 Route::prefix('seat-status')->group(function () {
@@ -69,8 +69,6 @@ Route::prefix('seat-status')->group(function () {
 /**
  * REST API - Room Status
  *
- * Date: 26/06/2021
- * Time: 11:10 AM
  * @author  HUi <huynguyeexn@gmail.com>
  */
 Route::prefix('room-status')->group(function () {
@@ -78,41 +76,25 @@ Route::prefix('room-status')->group(function () {
     // Get list
     Route::get('/', [RoomStatusController::class, 'index']);
 
-    // Get deleted list
-    // Route::get('/deleted', [RoomStatusController::class, 'deleted']);
+    // Get by ID
+    Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
 
     // Create new
     Route::post('/', [RoomStatusController::class, 'store']);
 
-    // Get by ID
-    // Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
-
-    // Get by slug
-    // Route::get('/{slug}', [RoomStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
-
     // Update
-    // Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
+    Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
 
-    // Soft Delete
-    // Route::delete('{id}/delete/', [RoomStatusController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    // Route::delete('{id}/remove/', [RoomStatusController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    // Route::patch('{id}/restore/', [RoomStatusController::class, 'restore'])->whereNumber('id');
+    // Delete
+    Route::delete('{id}/delete', [RoomStatusController::class, 'delete'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Seat Status
  *
- * Date: 30/06/2021
- * Time: 11:10 AM
  * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
  */
-Route::prefix('item')->group(function () {
-
+Route::prefix('items')->group(function () {
     // Get list
     Route::get('/', [ItemController::class, 'index']);
 
@@ -132,13 +114,45 @@ Route::prefix('item')->group(function () {
     Route::put('/{id}', [ItemController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    Route::delete('{id}/delete/', [ItemController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete', [ItemController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    Route::delete('{id}/remove/', [ItemController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove', [ItemController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    Route::patch('{id}/restore/', [ItemController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore', [ItemController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Seat Status
+ *
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('seats')->group(function () {
+    // Get list
+    Route::get('/', [SeatController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [SeatController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [SeatController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [SeatController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [SeatController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete', [SeatController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove', [SeatController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
 });
 
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Item;
+namespace App\Http\Requests\Room;
 
+use App\Models\RoomStatus;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class ListRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,13 @@ class ListRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(RoomStatus $roomStatus)
     {
+        $roomStatusName = $roomStatus->getTable();
         return [
             //
-            'q' => 'string',
-            'sort_by' => 'string',
-            'sort_type' => [Rule::in('desc', 'asc')],
-            'page' => 'numeric|min:1',
-            'per_page' => 'numeric|min:1|max:100',
+            "name" => "required|string|max:50|unique:rooms,name",
+            "room_status_id" => "exists:$roomStatusName,id"
         ];
     }
 }

@@ -12,4 +12,9 @@ class RoomStatus extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function rooms()
+    {
+        $this->hasMany(Room::class);
+    }
 }

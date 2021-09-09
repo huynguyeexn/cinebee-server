@@ -2,54 +2,103 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListRequest;
 use App\Http\Requests\RoomStatus\StoreRequest;
+use App\Http\Requests\RoomStatus\UpdateRequest;
 use App\Models\RoomStatus;
-use Illuminate\Http\Request;
-/**
- * @OA\Info(title="My First API", version="0.1")
- */
+use App\Repositories\RoomStatus\RoomStatusRepositoryInterface;
+
 class RoomStatusController extends Controller
 {
-    public function Mytest(Request $request){
-        echo json_encode(['q'=>$request->q]);
+    /**
+     * @var RoomStatusRepositoryInterface
+     */
+    protected $roomStatusRepo;
+
+    public function __construct(RoomStatusRepositoryInterface $roomStatusRepo)
+    {
+        $this->roomStatusRepo = $roomStatusRepo;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(ListRequest $request)
     {
-        //
-        $query = RoomStatus::query();
+        /**
+         * @OA\Get(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status",
+         *   summary="RoomStatus index",
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Items per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort items by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort items type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
 
-        $search = $request->q ?? NULL;
-        $page = $request->page ?? 1;
-        $per_page = $request->per_page ?? 10;
-        $sort_by = $request->sort_by ?? NULL;
-        $sort_type = $request->sort_type ?? 'asc';
+        $roomStatus = $this->roomStatusRepo->getList($request);
 
-        if ($sort_by !== NULL && !columnExists(RoomStatus::class, $sort_by)) {
-            return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
-            ], 422);
-        }
+        return $roomStatus;
+    }
 
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
-        }
-
-        if ($sort_by) {
-            // order by ('name') desc;
-            $query->orderBy($sort_by, $sort_type);
-        }
-
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
-
-
-
-        return $data;
+    public function getById($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}",
+         *   summary="Get Room Status by id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Item id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->roomStatusRepo->getById($id);
     }
 
     /**
@@ -60,22 +109,28 @@ class RoomStatusController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        //
-        $data = [
-            'name' => $request->only('name')
-        ];
-        return RoomStatus::create($request->only('name'));
-    }
+        /**
+         * @OA\Post(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status",
+         *   summary="Store new room status",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name"},
+         *       @OA\Property(property="name", type="string"),
+         *       example={"name": "Name of Room status"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = $request->only('name');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RoomStatus  $roomStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RoomStatus $roomStatus)
-    {
-        //
+        return $this->roomStatusRepo->store($attributes);
     }
 
     /**
@@ -85,9 +140,37 @@ class RoomStatusController extends Controller
      * @param  \App\Models\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RoomStatus $roomStatus)
+    public function update(UpdateRequest $request, RoomStatus $roomStatus, $id)
     {
-        //
+        /**
+         * @OA\Put(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}",
+         *   summary="Update a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name"},
+         *       @OA\Property(property="name", type="string"),
+         *       example={"name": "Name of Room status"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'name' => $request->name,
+        ];
+        return $this->roomStatusRepo->update($id, $attributes);
     }
 
     /**
@@ -96,8 +179,24 @@ class RoomStatusController extends Controller
      * @param  \App\Models\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomStatus $roomStatus)
+    public function delete($id)
     {
-        //
+        /**
+         * @OA\Delete(
+         *   tags={"RoomStatus"},
+         *   path="/api/room-status/{id}/delete",
+         *   summary="Delete a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->roomStatusRepo->delete($id);
     }
 }

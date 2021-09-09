@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\SeatStatus;
+use App\Models\Room;
+use App\Models\RoomStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
-class SeatStatusFactory extends Factory
+class RoomFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = SeatStatus::class;
+    protected $model = Room::class;
 
     /**
      * Define the model's default state.
@@ -22,10 +22,12 @@ class SeatStatusFactory extends Factory
      */
     public function definition()
     {
-        $status = $this->faker->sentence($this->faker->numberBetween(1, 5), true);
+        $status_id = RoomStatus::inRandomOrder()->first();
+        $name = "Phòng chiếu " . $this->faker->numberBetween(1, 100);
         return [
-            'name' => $status,
-            'slug' => Str::slug($status),
+            //
+            'name' => $name,
+            'room_status_id' => $status_id
         ];
     }
 }

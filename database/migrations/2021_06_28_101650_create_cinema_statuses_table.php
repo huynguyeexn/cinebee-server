@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSeatStatusesTable extends Migration
+class CreateCinemaStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateSeatStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('seat_statuses', function (Blueprint $table) {
+        Schema::create('cinema_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('slug')->unique();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ class CreateSeatStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('seat_statuses');
+        Schema::dropIfExists('cinema_statuses');
     }
 }

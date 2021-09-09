@@ -15,6 +15,6 @@ class RoomStatus extends Model
 
     public function rooms()
     {
-        $this->hasMany(Room::class);
+        return $this->hasMany(Room::class);
     }
 }

@@ -966,6 +966,27 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+  '/api/rooms/{id}/seats':
+    get:
+      tags:
+        - Rooms
+      summary: 'Get Seat of Room'
+      parameters:
+        -
+          name: id
+          in: path
+          description: 'Room id'
+          required: true
+          schema:
+            type: number
+          example: '9'
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: 'Not Found'
   '/api/rooms/{id}/delete':
     delete:
       tags:

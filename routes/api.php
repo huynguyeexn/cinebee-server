@@ -183,6 +183,42 @@ Route::prefix('items')->group(function () {
 });
 
 
+
+/**
+ * REST API -Room
+ *
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('rooms')->group(function () {
+    // Get list
+    Route::get('/', [RoomController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [RoomController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [RoomController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [RoomController::class, 'getById'])->whereNumber('id');
+
+
+    // Get Seat of room
+    Route::get('/{id}/seats', [RoomController::class, 'getSeats'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [RoomController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete', [RoomController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove', [RoomController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore', [RoomController::class, 'restore'])->whereNumber('id');
+});
+
 /**
  * REST API - Seat Status
  *

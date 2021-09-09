@@ -23,4 +23,10 @@ class Room extends Model
     {
         return $this->belongsto(RoomStatus::class);
     }
+
+
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
 }

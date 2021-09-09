@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
+use App\Http\Requests\Seat\StoreRequest;
+use App\Http\Requests\Seat\UpdateRequest;
 use App\Models\Seat;
 use App\Repositories\Seat\SeatRepositoryInterface;
 use Illuminate\Http\Request;
@@ -17,11 +19,6 @@ class SeatController extends Controller
         $this->seatRepo = $seatRepo;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(ListRequest $request)
     {
         /**
@@ -71,7 +68,6 @@ class SeatController extends Controller
          */
         return $this->seatRepo->getList($request);
     }
-
 
     public function deleted(ListRequest $request)
     {
@@ -123,13 +119,7 @@ class SeatController extends Controller
         return $this->seatRepo->getDeletedList($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         //
         /**
@@ -165,7 +155,6 @@ class SeatController extends Controller
         return $this->seatRepo->store($attributes);
     }
 
-
     public function getById($id)
     {
         /**
@@ -189,14 +178,7 @@ class SeatController extends Controller
         return $this->seatRepo->getById($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Seat  $seat
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
@@ -280,7 +262,7 @@ class SeatController extends Controller
         return $this->seatRepo->remove($id);
     }
 
-    public function restore(Seat $seatStatus, $id)
+    public function restore($id)
     {
         /**
          * @OA\Patch(

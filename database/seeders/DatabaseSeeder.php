@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             RoomSeeder::class,
             SeatSeeder::class,
             ActorSeed::class,
+            GenreSeed::class
         ]);
     }
 }

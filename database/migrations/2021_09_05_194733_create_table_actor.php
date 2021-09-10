@@ -15,8 +15,8 @@ class CreateTableActor extends Migration
     {
         Schema::create('actor', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname',50);
-            $table->string('avatar',255);
+            $table->string('name', 50);
+            $table->string('avatar', 255);
             $table->timestamps();
         });
     }

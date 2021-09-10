@@ -17,7 +17,8 @@ class ActorController extends Controller
         $this->ActocRepo = $ActocRepo;
     }
 
-    public function index(ListRequest $request){
+    public function index(ListRequest $request)
+    {
         /**
          * @OA\Get(
          *   tags={"Actor"},
@@ -63,7 +64,7 @@ class ActorController extends Controller
          *
          * )
          */
-       return $this->ActocRepo->getListAGD($request);
+        return $this->ActocRepo->getList($request);
     }
     public function deleted(ListRequest $request)
     {
@@ -112,7 +113,7 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getDeletedListAGD($request);
+        return $this->ActocRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
@@ -141,7 +142,7 @@ class ActorController extends Controller
         $attributes = [
             'fullname' => $request->fullname,
             'slug' => $request->slug,
-            'avatar'=>$request->avatar
+            'avatar' => $request->avatar
         ];
         return $this->ActocRepo->store($attributes);
     }
@@ -224,7 +225,7 @@ class ActorController extends Controller
         $attributes = [
             'fullname' => $request->fullname,
             'slug' => $request->slug,
-            'avatar'=> $request->avatar
+            'avatar' => $request->avatar
         ];
 
         return $this->ActocRepo->update($id, $attributes);

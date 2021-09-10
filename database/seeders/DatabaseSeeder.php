@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             UserRoleSeed::class,
             UserSeed::class,
             RoomSeeder::class,
-            SeatSeeder::class
+            SeatSeeder::class,
+            EmployeeRoleSeed::class
         ]);
     }
 }

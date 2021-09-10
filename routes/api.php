@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
+use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -187,4 +189,39 @@ Route::prefix('seats')->group(function () {
 
     // Restore
     Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Employee Role
+ *
+ * Date: 08/09/2021
+ * Time: 13:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('employee-role')->group(function () {
+
+    // Get list
+    Route::get('/', [EmployeeRoleController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [EmployeeRoleController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [EmployeeRoleController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
 });

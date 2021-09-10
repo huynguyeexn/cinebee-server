@@ -17,4 +17,9 @@ class Seat extends Model
         "room_id",
         "seat_status_id",
     ];
+
+    public function room()
+    {
+        return $this->belongsto(RoomStatus::class);
+    }
 }

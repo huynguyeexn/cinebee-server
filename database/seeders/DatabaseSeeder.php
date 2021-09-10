@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\EmployeeRole;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +21,7 @@ class DatabaseSeeder extends Seeder
             UserSeed::class,
             RoomSeeder::class,
             SeatSeeder::class,
-            EmployeeRole::class
+            EmployeeRoleSeed::class
         ]);
     }
 }

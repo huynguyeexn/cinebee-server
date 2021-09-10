@@ -144,7 +144,6 @@ class EmployeeRoleController extends Controller
          */
         $attributes = [
             'name' => $request->name,
-            'slug' => $request->slug,
         ];
         return $this->employeeRoleRepo->store($attributes);
     }
@@ -170,29 +169,6 @@ class EmployeeRoleController extends Controller
          * )
          */
         return $this->employeeRoleRepo->getById($id);
-    }
-
-    public function getBySlug($slug)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{slug}",
-         *   summary="Get Employee Role by slug",
-         *   @OA\Parameter(
-         *      name="slug",
-         *      in="path",
-         *      required=true,
-         *      description="Employee Role slug",
-         *      example="employee-role",
-         *     @OA\Schema(type="string"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->employeeRoleRepo->getBySlug($slug);
     }
 
     public function update(UpdateRequest $request, $id)
@@ -225,7 +201,6 @@ class EmployeeRoleController extends Controller
          */
         $attributes = [
             'name' => $request->name,
-            'slug' => $request->slug,
         ];
 
         return $this->employeeRoleRepo->update($id, $attributes);

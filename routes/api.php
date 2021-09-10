@@ -213,9 +213,6 @@ Route::prefix('employee-role')->group(function () {
     // Get by ID
     Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
 
-    // Get by slug
-    Route::get('/{slug}', [EmployeeRoleController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
-
     // Update
     Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
 

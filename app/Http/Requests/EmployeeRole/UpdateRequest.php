@@ -24,8 +24,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
-            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:employee_roles,slug,$this->id"
+            'name' => 'string|required'
         ];
     }
 }

@@ -24,8 +24,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'string|required',
-            'slug' => 'unique:employee_roles,slug|string|required|regex:/^[a-z0-9-]+$/'
+            'name' => 'string|required'
         ];
     }
 }

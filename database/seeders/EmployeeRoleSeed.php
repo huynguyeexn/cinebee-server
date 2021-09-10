@@ -15,13 +15,11 @@ class EmployeeRoleSeed extends Seeder
      */
     public function run()
     {
-        DB::table('employee_role')->insert([
+        DB::table('employee_roles')->insert([
             'name' => 'Nhân Viên',
-            'slug' => 'nhan-vien',
         ]);
-        DB::table('employee_role')->insert([
+        DB::table('employee_roles')->insert([
             'name' => 'Quản Lý',
-            'slug' => 'quan-ly',
         ]);
     }
 }

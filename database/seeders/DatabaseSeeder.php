@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    private $failures = 0;
     /**
      * Seed the application's database.
      *
@@ -21,6 +22,8 @@ class DatabaseSeeder extends Seeder
             UserSeed::class,
             RoomSeeder::class,
             SeatSeeder::class,
+            ActorSeed::class,
+            GenreSeed::class
             EmployeeRoleSeed::class
         ]);
     }

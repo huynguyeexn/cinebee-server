@@ -14,6 +14,7 @@ yarn-error.log
 .env
 .env.backup
 /storage/clockwork
+/storage/api-docs
 
 
 # dependencies

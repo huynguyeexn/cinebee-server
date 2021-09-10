@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             SeatSeeder::class,
             ActorSeed::class,
             GenreSeed::class
+            EmployeeRoleSeed::class
         ]);
     }
 }

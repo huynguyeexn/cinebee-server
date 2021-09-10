@@ -31,21 +31,33 @@ paths:
         -
           name: per_page
           in: query
+<<<<<<< HEAD
           description: 'actor per page'
+=======
+          description: 'Items per page'
+>>>>>>> dev
           schema:
             type: number
           example: '10'
         -
           name: sort_by
           in: query
+<<<<<<< HEAD
           description: 'Sort actor by'
+=======
+          description: 'Sort items by'
+>>>>>>> dev
           schema:
             type: string
           example: updated_at
         -
           name: sort_type
           in: query
+<<<<<<< HEAD
           description: 'Sort actor type [''asc'', ''desc'']'
+=======
+          description: 'Sort items type [''asc'', ''desc'']'
+>>>>>>> dev
           schema:
             type: string
           example: desc
@@ -56,6 +68,7 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   /api/actors/deleted:
     get:
       tags:
@@ -168,12 +181,19 @@ paths:
           required: true
           schema:
             type: string
+=======
+    post:
+      tags:
+        - EmployeeRole
+      summary: 'Store new Employee Role'
+>>>>>>> dev
       requestBody:
         required: true
         content:
           application/json:
             schema:
               required:
+<<<<<<< HEAD
                 - fullname
                 - slug
                 - avatar
@@ -314,6 +334,19 @@ paths:
           schema:
             type: string
           example: desc
+=======
+                - name
+                - slug
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+              type: string
+            example:
+              name: 'Nhân Viên'
+              slug: nhan-vien
+>>>>>>> dev
       responses:
         200:
           description: OK
@@ -321,11 +354,19 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   /api/genres/deleted:
     get:
       tags:
         - genre
       summary: 'List genre Deleted'
+=======
+  /api/employee-role/deleted:
+    get:
+      tags:
+        - EmployeeRole
+      summary: 'List Employee Role Deleted'
+>>>>>>> dev
       parameters:
         -
           name: q
@@ -343,21 +384,33 @@ paths:
         -
           name: per_page
           in: query
+<<<<<<< HEAD
           description: 'genres per page'
+=======
+          description: 'Items per page'
+>>>>>>> dev
           schema:
             type: number
           example: '10'
         -
           name: sort_by
           in: query
+<<<<<<< HEAD
           description: 'Sort genres by'
+=======
+          description: 'Sort items by'
+>>>>>>> dev
           schema:
             type: string
           example: updated_at
         -
           name: sort_type
           in: query
+<<<<<<< HEAD
           description: 'Sort genres type [''asc'', ''desc'']'
+=======
+          description: 'Sort items type [''asc'', ''desc'']'
+>>>>>>> dev
           schema:
             type: string
           example: desc
@@ -368,6 +421,7 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   /api/genres:
     post:
       tags:
@@ -403,11 +457,22 @@ paths:
       tags:
         - genre
       summary: 'Get genre by id'
+=======
+  '/api/employee-role/{id}':
+    get:
+      tags:
+        - EmployeeRole
+      summary: 'Get Employee Role by id'
+>>>>>>> dev
       parameters:
         -
           name: id
           in: path
+<<<<<<< HEAD
           description: 'genre id'
+=======
+          description: 'Item id'
+>>>>>>> dev
           required: true
           schema:
             type: number
@@ -421,8 +486,13 @@ paths:
           description: 'Not Found'
     put:
       tags:
+<<<<<<< HEAD
         - genre
       summary: 'Update a genre'
+=======
+        - EmployeeRole
+      summary: 'Update a Employee Role'
+>>>>>>> dev
       parameters:
         -
           name: id
@@ -438,7 +508,10 @@ paths:
               required:
                 - name
                 - slug
+<<<<<<< HEAD
                 - avatar
+=======
+>>>>>>> dev
               properties:
                 name:
                   type: string
@@ -446,8 +519,13 @@ paths:
                   type: string
               type: string
             example:
+<<<<<<< HEAD
               name: kinhdi
               slug: kinh-di
+=======
+              name: 'Nhân Viên'
+              slug: nhan-vien
+>>>>>>> dev
       responses:
         200:
           description: OK
@@ -455,20 +533,36 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   '/api/genres/{slug}':
     get:
       tags:
         - genre
       summary: 'Get genre by slug'
+=======
+  '/api/employee-role/{slug}':
+    get:
+      tags:
+        - EmployeeRole
+      summary: 'Get Employee Role by slug'
+>>>>>>> dev
       parameters:
         -
           name: slug
           in: path
+<<<<<<< HEAD
           description: 'genres slug'
           required: true
           schema:
             type: string
           example: genre
+=======
+          description: 'Employee Role slug'
+          required: true
+          schema:
+            type: string
+          example: employee-role
+>>>>>>> dev
       responses:
         200:
           description: OK
@@ -476,11 +570,19 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   '/api/genres/{id}/delete':
     delete:
       tags:
         - genre
       summary: 'Delete a genre'
+=======
+  '/api/employee-role/{id}/delete':
+    delete:
+      tags:
+        - EmployeeRole
+      summary: 'Delete a room status'
+>>>>>>> dev
       parameters:
         -
           name: id
@@ -495,11 +597,19 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   '/api/genres/{id}/remove':
     delete:
       tags:
         - genre
       summary: 'Remove genre from trash'
+=======
+  '/api/employee-role/{id}/remove':
+    delete:
+      tags:
+        - EmployeeRole
+      summary: 'Remove Employee Role from trash'
+>>>>>>> dev
       parameters:
         -
           name: id
@@ -514,11 +624,19 @@ paths:
           description: Unauthorized
         404:
           description: 'Not Found'
+<<<<<<< HEAD
   '/api/genres/{id}/restore':
     patch:
       tags:
         - genre
       summary: 'Restore genre from trash'
+=======
+  '/api/employee-role/{id}/restore':
+    patch:
+      tags:
+        - EmployeeRole
+      summary: 'Restore Employee Role from trash'
+>>>>>>> dev
       parameters:
         -
           name: id

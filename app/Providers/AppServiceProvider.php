@@ -41,6 +41,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Genre\GenreRepositoryInterface::class,
             \App\Repositories\Genre\GenreRepository::class
         );
+        $this->app->singleton(
+            \App\Repositories\EmployeeRole\EmployeeRoleRepositoryInterface::class,
+            \App\Repositories\EmployeeRole\EmployeeRoleRepository::class,
+        );
     }
 
     /**
@@ -51,8 +55,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        if (App::environment() === "production") {
-            URL::forceScheme("https");
-        }
     }
 }

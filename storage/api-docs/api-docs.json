@@ -40,7 +40,11 @@
                     {
                         "name": "per_page",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "actor per page",
+=======
+                        "description": "Items per page",
+>>>>>>> dev
                         "schema": {
                             "type": "number"
                         },
@@ -49,7 +53,11 @@
                     {
                         "name": "sort_by",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "Sort actor by",
+=======
+                        "description": "Sort items by",
+>>>>>>> dev
                         "schema": {
                             "type": "string"
                         },
@@ -58,7 +66,11 @@
                     {
                         "name": "sort_type",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "Sort actor type ['asc', 'desc']",
+=======
+                        "description": "Sort items type ['asc', 'desc']",
+>>>>>>> dev
                         "schema": {
                             "type": "string"
                         },
@@ -76,6 +88,7 @@
                         "description": "Not Found"
                     }
                 }
+<<<<<<< HEAD
             }
         },
         "/api/actors/deleted": {
@@ -238,33 +251,57 @@
                         }
                     }
                 ],
+=======
+            },
+            "post": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Store new Employee Role",
+>>>>>>> dev
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
+<<<<<<< HEAD
                                     "fullname",
                                     "slug",
                                     "avatar"
                                 ],
                                 "properties": {
                                     "fullname": {
+=======
+                                    "name",
+                                    "slug"
+                                ],
+                                "properties": {
+                                    "name": {
+>>>>>>> dev
                                         "type": "string"
                                     },
                                     "slug": {
                                         "type": "string"
+<<<<<<< HEAD
                                     },
                                     "avatar": {
                                         "type": "string"
+=======
+>>>>>>> dev
                                     }
                                 },
                                 "type": "string"
                             },
                             "example": {
+<<<<<<< HEAD
                                 "fullname": "longhai",
                                 "slug": "long-hai",
                                 "avatar": "anh_moi_doi.png"
+=======
+                                "name": "Nhân Viên",
+                                "slug": "nhan-vien"
+>>>>>>> dev
                             }
                         }
                     }
@@ -282,6 +319,7 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/actors/{slug}": {
             "get": {
                 "tags": [
@@ -406,6 +444,14 @@
                     "genre"
                 ],
                 "summary": "List genre",
+=======
+        "/api/employee-role/deleted": {
+            "get": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "List Employee Role Deleted",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "q",
@@ -427,7 +473,11 @@
                     {
                         "name": "per_page",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "genre per page",
+=======
+                        "description": "Items per page",
+>>>>>>> dev
                         "schema": {
                             "type": "number"
                         },
@@ -436,7 +486,11 @@
                     {
                         "name": "sort_by",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "Sort genre by",
+=======
+                        "description": "Sort items by",
+>>>>>>> dev
                         "schema": {
                             "type": "string"
                         },
@@ -445,7 +499,11 @@
                     {
                         "name": "sort_type",
                         "in": "query",
+<<<<<<< HEAD
                         "description": "Sort genre type ['asc', 'desc']",
+=======
+                        "description": "Sort items type ['asc', 'desc']",
+>>>>>>> dev
                         "schema": {
                             "type": "string"
                         },
@@ -465,6 +523,7 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/genres/deleted": {
             "get": {
                 "tags": [
@@ -582,11 +641,23 @@
                     "genre"
                 ],
                 "summary": "Get genre by id",
+=======
+        "/api/employee-role/{id}": {
+            "get": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Get Employee Role by id",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+<<<<<<< HEAD
                         "description": "genre id",
+=======
+                        "description": "Item id",
+>>>>>>> dev
                         "required": true,
                         "schema": {
                             "type": "number"
@@ -608,9 +679,15 @@
             },
             "put": {
                 "tags": [
+<<<<<<< HEAD
                     "genre"
                 ],
                 "summary": "Update a genre",
+=======
+                    "EmployeeRole"
+                ],
+                "summary": "Update a Employee Role",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "id",
@@ -628,8 +705,12 @@
                             "schema": {
                                 "required": [
                                     "name",
+<<<<<<< HEAD
                                     "slug",
                                     "avatar"
+=======
+                                    "slug"
+>>>>>>> dev
                                 ],
                                 "properties": {
                                     "name": {
@@ -642,8 +723,13 @@
                                 "type": "string"
                             },
                             "example": {
+<<<<<<< HEAD
                                 "name": "kinhdi",
                                 "slug": "kinh-di"
+=======
+                                "name": "Nhân Viên",
+                                "slug": "nhan-vien"
+>>>>>>> dev
                             }
                         }
                     }
@@ -661,22 +747,39 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/genres/{slug}": {
             "get": {
                 "tags": [
                     "genre"
                 ],
                 "summary": "Get genre by slug",
+=======
+        "/api/employee-role/{slug}": {
+            "get": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Get Employee Role by slug",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "slug",
                         "in": "path",
+<<<<<<< HEAD
                         "description": "genres slug",
+=======
+                        "description": "Employee Role slug",
+>>>>>>> dev
                         "required": true,
                         "schema": {
                             "type": "string"
                         },
+<<<<<<< HEAD
                         "example": "genre"
+=======
+                        "example": "employee-role"
+>>>>>>> dev
                     }
                 ],
                 "responses": {
@@ -692,12 +795,21 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/genres/{id}/delete": {
             "delete": {
                 "tags": [
                     "genre"
                 ],
                 "summary": "Delete a genre",
+=======
+        "/api/employee-role/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Delete a room status",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "id",
@@ -721,12 +833,21 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/genres/{id}/remove": {
             "delete": {
                 "tags": [
                     "genre"
                 ],
                 "summary": "Remove genre from trash",
+=======
+        "/api/employee-role/{id}/remove": {
+            "delete": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Remove Employee Role from trash",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "id",
@@ -750,12 +871,21 @@
                 }
             }
         },
+<<<<<<< HEAD
         "/api/genres/{id}/restore": {
             "patch": {
                 "tags": [
                     "genre"
                 ],
                 "summary": "Restore genre from trash",
+=======
+        "/api/employee-role/{id}/restore": {
+            "patch": {
+                "tags": [
+                    "EmployeeRole"
+                ],
+                "summary": "Restore Employee Role from trash",
+>>>>>>> dev
                 "parameters": [
                     {
                         "name": "id",

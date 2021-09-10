@@ -1,12 +1,16 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
+use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActorController;
+use App\Http\Controllers\GenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +32,66 @@ Route::prefix('auth')->group(function () {
         Route::get('profile', [AuthController::class, 'profile']);
     });
 });
+/**
+ * REST API - actor
+ *  long add 06-09-2021
+ */
+Route::prefix('actors')->group(function () {
+    Route::get('/',[ActorController::class,'index']);
+     // Get deleted list
+     Route::get('/deleted', [ActorController::class, 'deleted']);
 
+     // Create new
+     Route::post('/', [ActorController::class, 'store']);
+ 
+     // Get by ID
+     Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
+ 
+     // Get by slug
+     Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+ 
+     // Update
+     Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
+ 
+     // Soft Delete
+     Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
+ 
+     // Hard Delete
+     Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
+ 
+    // Restore
+    Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+});
+/**
+ * REST API - genre
+ *  long add 06-09-2021
+ */
+Route::prefix('genres')->group(function () {
+    Route::get('/',[GenreController::class,'index']);
+     // Get deleted list
+     Route::get('/deleted', [GenreController::class, 'deleted']);
+
+     // Create new
+     Route::post('/', [GenreController::class, 'store']);
+ 
+     // Get by ID
+     Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
+ 
+     // Get by slug
+     Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+ 
+     // Update
+     Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
+ 
+     // Soft Delete
+     Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
+ 
+     // Hard Delete
+     Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
+ 
+    // Restore
+    Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
+});
 /**
  * REST API - Seat Status
  *
@@ -187,4 +250,39 @@ Route::prefix('seats')->group(function () {
 
     // Restore
     Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Employee Role
+ *
+ * Date: 08/09/2021
+ * Time: 13:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('employee-role')->group(function () {
+
+    // Get list
+    Route::get('/', [EmployeeRoleController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [EmployeeRoleController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [EmployeeRoleController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
 });

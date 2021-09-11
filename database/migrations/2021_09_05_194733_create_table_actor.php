@@ -13,7 +13,7 @@ class CreateTableActor extends Migration
      */
     public function up()
     {
-        Schema::create('actor', function (Blueprint $table) {
+        Schema::create('actors', function (Blueprint $table) {
             $table->id();
             $table->string('name', 50);
             $table->string('avatar', 255);

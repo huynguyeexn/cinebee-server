@@ -13,10 +13,10 @@ class CreateTableAgeRating extends Migration
      */
     public function up()
     {
-        Schema::create('age_rating', function (Blueprint $table) {
+        Schema::create('age_ratings', function (Blueprint $table) {
             $table->id();
-            $table->string('name',50);
-            $table->tinyInteger('age');
+            $table->string('name', 50);
+            $table->string('description', 50);
             $table->timestamps();
         });
     }

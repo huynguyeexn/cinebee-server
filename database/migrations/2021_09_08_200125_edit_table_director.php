@@ -13,7 +13,7 @@ class EditTableDirector extends Migration
      */
     public function up()
     {
-        Schema::table('director', function (Blueprint $table) {
+        Schema::table('directors', function (Blueprint $table) {
             $table->string('slug')->nullable()->unique();
             $table->softDeletes();
         });

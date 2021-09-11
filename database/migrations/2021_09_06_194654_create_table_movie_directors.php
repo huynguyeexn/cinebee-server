@@ -15,13 +15,13 @@ class CreateTableMovieDirectors extends Migration
     {
         Schema::create('movie_directors', function (Blueprint $table) {
             $table->foreignId('movie_id')
-            ->constrained('movie')
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->foreignId('director_id')
-            ->constrained('director')
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->timestamps();
         });
     }

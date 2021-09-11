@@ -16,11 +16,11 @@ class CreateTableMovieActors extends Migration
         Schema::create('movie_actors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('movie_id')
-                ->constrained('movie')
+                ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->foreignId('actor_id')
-                ->constrained('actor')
+                ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->timestamps();

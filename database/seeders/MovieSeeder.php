@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Room;
+use App\Models\Movie;
 use Exception;
 use Illuminate\Database\Seeder;
 
-class RoomSeeder extends Seeder
+class MovieSeeder extends Seeder
 {
     private $failures = 0;
     /**
@@ -18,9 +18,8 @@ class RoomSeeder extends Seeder
     {
         //
         try {
-            Room::factory(20)->create();
+            Movie::factory(10)->create();
         } catch (Exception $e) {
-
             if ($this->failures > 5) {
                 print_r("Seeder Error. Failure count for current entity: " . $this->failures);
                 return;

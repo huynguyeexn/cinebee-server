@@ -49,6 +49,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Employee\EmployeeRepositoryInterface::class,
             \App\Repositories\Employee\EmployeeRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\AgeRating\AgeRatingRepositoryInterface::class,
+            \App\Repositories\AgeRating\AgeRatingRepository::class,
+        );
     }
 
     /**

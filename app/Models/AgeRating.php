@@ -6,14 +6,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Genre extends Model
+class AgeRating extends Model
 {
     use HasFactory, SoftDeletes;
+
     protected $fillable = [
-        'name',
-        'slug'
+        "name",
+        "description"
     ];
-    protected $hidden = [
-        'deleted_at'
-    ];
+
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
 }

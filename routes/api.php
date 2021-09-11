@@ -338,8 +338,12 @@ Route::prefix('age-ratings')->group(function () {
     // Get list
     Route::get('/', [AgeRatingController::class, 'index']);
 
+
     // Get deleted list
     Route::get('/deleted', [AgeRatingController::class, 'deleted']);
+
+    // Get list movies of age rating
+    Route::get('/{id}/movies', [AgeRatingController::class, 'movies']);
 
     // Create new
     Route::post('/', [AgeRatingController::class, 'store']);

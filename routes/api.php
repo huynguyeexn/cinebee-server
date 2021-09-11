@@ -293,13 +293,13 @@ Route::prefix('employee-role')->group(function () {
 
 
 /**
- * REST API - Employee Role
+ * REST API - Director
  *
- * Date: 08/09/2021
- * Time: 13:00 AM
+ * Date: 11/09/2021
+ * Time: 09:00 AM
  * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
  */
-Route::prefix('director')->group(function () {
+Route::prefix('directors')->group(function () {
 
     // Get list
     Route::get('/', [DirectorController::class, 'index']);

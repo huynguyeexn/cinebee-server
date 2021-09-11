@@ -13,7 +13,7 @@ class EditTableActor extends Migration
      */
     public function up()
     {
-        Schema::table('actor', function (Blueprint $table) {
+        Schema::table('actors', function (Blueprint $table) {
             $table->string('slug')->nullable()->unique();
             $table->softDeletes();
         });

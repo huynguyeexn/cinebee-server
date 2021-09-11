@@ -27,12 +27,12 @@ class UpdateRequest extends FormRequest
         $employeeRoleName = $employeeRole->getTable();
         return [
             'fullname' => "required|string|min:3|max:30",
-            'username' => "required|string|min:3|max:30",
+            'username' => "required|string|min:3|max:30|unique:employees,username,$this->id,id",
             'password' => "required|string|min:8|max:30",
-            'phone'    => "required|numeric||regex:/^0[0-9]{9,10}/",
-            'email'    => "required|email|regex:/^.+@.+$/i|",
-            'address'  => "required|string|max:100|",
-            'id_card'  => "required",
+            'phone'    => "required|string|unique:employees,phone,$this->id,id|regex:/^0[0-9]{9,10}/",
+            'email'    => "required|email|regex:/^.+@.+$/i|unique:employees,email,$this->id,id",
+            'address'  => "required|string|max:100",
+            'id_card'  => "required|string|unique:employees,id_card,$this->id,id",
             'birthday' => "required|date",
             'sex'      => "required",
             'employee_role_id' => "exists:$employeeRoleName,id",

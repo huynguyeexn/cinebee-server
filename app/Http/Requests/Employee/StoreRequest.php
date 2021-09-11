@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'fullname' => "required|string|min:3|max:30",
             'username' => "required|string|min:3|max:30|unique:employees,username",
             'password' => "required|string|min:8|max:30|",
-            'phone'    => "required|numeric|unique:employees,phone|regex:/^0[0-9]{9,10}/",
+            'phone'    => "required|string|unique:employees,phone|regex:/^0[0-9]{9,10}/",
             'email'    => "required|email|regex:/^.+@.+$/i|unique:employees,email",
             'address'  => "required|string|max:100|",
             'birthday' => "required|date",

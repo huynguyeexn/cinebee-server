@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Repositories\Room;
+namespace App\Repositories\AgeRating;
 
-use App\Models\Room;
+use App\Models\AgeRating;
+
 use App\Repositories\BaseRepository;
 
-class RoomRepository extends BaseRepository implements RoomRepositoryInterface
+class AgeRatingRepository extends BaseRepository implements AgeRatingRepositoryInterface
 {
     public function getModel()
     {
-        return Room::class;
+        return AgeRating::class;
     }
-    public function getSeats($id)
+    public function getMovies($id)
     {
-        $data = $this->model->findOrFail($id)->seats;
+        $data = $this->model->findOrFail($id)->movies;
         $count = $data->count();
         return response()->json([
             'data' => $data,

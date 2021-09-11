@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Movie;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,9 +23,13 @@ class DatabaseSeeder extends Seeder
             UserSeed::class,
             RoomSeeder::class,
             SeatSeeder::class,
+            EmployeeRoleSeed::class,
+            EmployeeSeed::class,
             ActorSeed::class,
             GenreSeed::class,
-            EmployeeRoleSeed::class
+            EmployeeRoleSeed::class,
+            AgeRatingSeeder::class,
+            MovieSeeder::class,
         ]);
     }
 }

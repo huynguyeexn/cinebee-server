@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Room;
+use App\Models\Employee;
 use Exception;
 use Illuminate\Database\Seeder;
 
-class RoomSeeder extends Seeder
+class EmployeeSeed extends Seeder
 {
     private $failures = 0;
     /**
@@ -16,9 +16,8 @@ class RoomSeeder extends Seeder
      */
     public function run()
     {
-        //
         try {
-            Room::factory(20)->create();
+            Employee::factory(50)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

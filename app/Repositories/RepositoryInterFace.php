@@ -70,6 +70,4 @@ interface RepositoryInterface
      * @return mixed
      */
     public function restore($id);
-
-    
 }

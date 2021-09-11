@@ -11,6 +11,7 @@ use App\Http\Controllers\SeatStatusController;
 use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
 
 /*
@@ -38,28 +39,28 @@ Route::prefix('auth')->group(function () {
  *  long add 06-09-2021
  */
 Route::prefix('actors')->group(function () {
-    Route::get('/',[ActorController::class,'index']);
-     // Get deleted list
-     Route::get('/deleted', [ActorController::class, 'deleted']);
+    Route::get('/', [ActorController::class, 'index']);
+    // Get deleted list
+    Route::get('/deleted', [ActorController::class, 'deleted']);
 
-     // Create new
-     Route::post('/', [ActorController::class, 'store']);
- 
-     // Get by ID
-     Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
- 
-     // Get by slug
-     Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
- 
-     // Update
-     Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
- 
-     // Soft Delete
-     Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
- 
-     // Hard Delete
-     Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
- 
+    // Create new
+    Route::post('/', [ActorController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
+
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
 });
@@ -68,28 +69,28 @@ Route::prefix('actors')->group(function () {
  *  long add 06-09-2021
  */
 Route::prefix('genres')->group(function () {
-    Route::get('/',[GenreController::class,'index']);
-     // Get deleted list
-     Route::get('/deleted', [GenreController::class, 'deleted']);
+    Route::get('/', [GenreController::class, 'index']);
+    // Get deleted list
+    Route::get('/deleted', [GenreController::class, 'deleted']);
 
-     // Create new
-     Route::post('/', [GenreController::class, 'store']);
- 
-     // Get by ID
-     Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
- 
-     // Get by slug
-     Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
- 
-     // Update
-     Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
- 
-     // Soft Delete
-     Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
- 
-     // Hard Delete
-     Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
- 
+    // Create new
+    Route::post('/', [GenreController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
+
+    // Get by slug
+    Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Update
+    Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
+
     // Restore
     Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
 });
@@ -321,4 +322,40 @@ Route::prefix('employee')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Age Rating
+ *
+ * Date: 11/09/2021
+ * Time: 18:00
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('age-ratings')->group(function () {
+
+    // Get list
+    Route::get('/', [AgeRatingController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [AgeRatingController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [AgeRatingController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [AgeRatingController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [AgeRatingController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [AgeRatingController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [AgeRatingController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
 });

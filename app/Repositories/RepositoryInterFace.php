@@ -10,7 +10,7 @@ interface RepositoryInterface
      * Get List
      * @return mixed
      */
-    public function getList(Request $request);
+    public function getList(Request $request = null);
 
     /**
      * Get Deleted List

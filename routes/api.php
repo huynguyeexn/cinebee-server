@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -330,7 +331,7 @@ Route::prefix('employee')->group(function () {
  * REST API - Age Rating
  *
  * Date: 11/09/2021
- * Time: 18:00
+ * Time: 14:00
  * @author  HUi <huynguyeexn@gmail.com>
  */
 Route::prefix('age-ratings')->group(function () {
@@ -362,4 +363,39 @@ Route::prefix('age-ratings')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movies
+ *
+ * Date: 11/09/2021
+ * Time: 15:00
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('movies')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
 });

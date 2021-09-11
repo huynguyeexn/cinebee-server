@@ -66,6 +66,7 @@ class ActorController extends Controller
          */
         return $this->ActocRepo->getList($request);
     }
+
     public function deleted(ListRequest $request)
     {
         /**

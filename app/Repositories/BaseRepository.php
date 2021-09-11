@@ -24,7 +24,7 @@ abstract class BaseRepository implements RepositoryInterface
         );
     }
 
-    public function getList(Request $request)
+    public function getList(Request $request = null)
     {
         $model = $this->model;
         $query = $model::query();

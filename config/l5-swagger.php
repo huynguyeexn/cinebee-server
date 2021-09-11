@@ -1,5 +1,4 @@
 <?php
-
 return [
     'default' => 'default',
     'documentations' => [
@@ -177,8 +176,7 @@ return [
                         ],
                     ],
                 ],
-                */
-            ],
+                */],
             'security' => [
                 /*
                  * Examples of Securities
@@ -191,8 +189,7 @@ return [
                     ],
 
                     'passport' => []
-                    */
-                ],
+                    */],
             ],
         ],
 

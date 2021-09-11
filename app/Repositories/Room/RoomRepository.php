@@ -13,7 +13,7 @@ class RoomRepository extends BaseRepository implements RoomRepositoryInterface
     }
     public function getSeats($id)
     {
-        $data = $this->model->find($id)->seats;
+        $data = $this->model->findOrFail($id)->seats;
         $count = $data->count();
         return response()->json([
             'data' => $data,

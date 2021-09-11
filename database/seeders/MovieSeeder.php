@@ -18,7 +18,7 @@ class MovieSeeder extends Seeder
     {
         //
         try {
-            Movie::factory(10)->create();
+            Movie::factory(20)->create();
         } catch (Exception $e) {
             if ($this->failures > 5) {
                 print_r("Seeder Error. Failure count for current entity: " . $this->failures);

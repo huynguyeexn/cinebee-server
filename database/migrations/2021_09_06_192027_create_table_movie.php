@@ -17,12 +17,12 @@ class CreateTableMovie extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('trailer');
-            $table->string('thumbnail');
-            $table->integer('likes');
-            $table->text('description');
-            $table->dateTime('release_date');
-            $table->integer('running_time');
+            $table->string('trailer')->nullable();
+            $table->string('thumbnail')->nullable();
+            $table->integer('likes')->default(0);
+            $table->text('description')->nullable();
+            $table->dateTime('release_date')->nullable();
+            $table->integer('running_time')->nullable();
             $table->foreignId('age_rating_id')
                 ->nullable()
                 ->constrained()

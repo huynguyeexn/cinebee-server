@@ -13,6 +13,430 @@
         "version": "1.0.0"
     },
     "paths": {
+        "/api/employee": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "List Employee",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort items by",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "updated_at"
+                    },
+                    {
+                        "name": "sort_type",
+                        "in": "query",
+                        "description": "Sort items type ['asc', 'desc']",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Store new Employee",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "username",
+                                    "password",
+                                    "phone",
+                                    "email",
+                                    "address",
+                                    "id_card",
+                                    "birthday",
+                                    "sex",
+                                    "employee_role_id"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "number"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "id_card": {
+                                        "type": "uuid"
+                                    },
+                                    "birthday": {
+                                        "type": "date"
+                                    },
+                                    "sex": {
+                                        "type": "string"
+                                    },
+                                    "employee_role_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "string"
+                            },
+                            "example": {
+                                "fullname": "Leonie Maggio",
+                                "username": "Leonie",
+                                "password": "Leonie123",
+                                "phone": "346.997.2035",
+                                "email": "Leonie@gmail.com",
+                                "address": "77864 Morissette Coves Port Deontae, MT 45009",
+                                "id_card": "",
+                                "birthday": "1993-03-26",
+                                "sex": "2",
+                                "employee_role_id": "1"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/employee/deleted": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "List Employee Deleted",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Search query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "10"
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort items by",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "updated_at"
+                    },
+                    {
+                        "name": "sort_type",
+                        "in": "query",
+                        "description": "Sort items type ['asc', 'desc']",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/employee/{id}": {
+            "get": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Get Employee by id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Item id",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        },
+                        "example": "21"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Update a Employee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "fullname",
+                                    "username",
+                                    "password",
+                                    "phone",
+                                    "email",
+                                    "address",
+                                    "id_card",
+                                    "birthday",
+                                    "sex",
+                                    "employee_role_id"
+                                ],
+                                "properties": {
+                                    "fullname": {
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "number"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    },
+                                    "id_card": {
+                                        "type": "uuid"
+                                    },
+                                    "birthday": {
+                                        "type": "date"
+                                    },
+                                    "sex": {
+                                        "type": "string"
+                                    },
+                                    "employee_role_id": {
+                                        "type": "number"
+                                    }
+                                },
+                                "type": "string"
+                            },
+                            "example": {
+                                "fullname": "Leonie Maggio",
+                                "username": "Leonie",
+                                "password": "Leonie123",
+                                "phone": "346.997.2035",
+                                "email": "Leonie@gmail.com",
+                                "address": "77864 Morissette Coves Port Deontae, MT 45009",
+                                "id_card": "",
+                                "bithday": "1993-03-26",
+                                "sex": "male",
+                                "employee_role_id": "1"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/employee/{id}/delete": {
+            "delete": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Delete a Employee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/employee/{id}/remove": {
+            "delete": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Remove Employee from trash",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/api/employee/{id}/restore": {
+            "patch": {
+                "tags": [
+                    "Employee"
+                ],
+                "summary": "Restore Employee from trash",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/api/employee-role": {
             "get": {
                 "tags": [
@@ -257,37 +681,6 @@
                         }
                     }
                 },
-                "responses": {
-                    "200": {
-                        "description": "OK"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/api/employee-role/{slug}": {
-            "get": {
-                "tags": [
-                    "EmployeeRole"
-                ],
-                "summary": "Get Employee Role by slug",
-                "parameters": [
-                    {
-                        "name": "slug",
-                        "in": "path",
-                        "description": "Employee Role slug",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "employee-role"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "description": "OK"

@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             UserSeed::class,
             RoomSeeder::class,
             SeatSeeder::class,
-            EmployeeRoleSeed::class
+            EmployeeRoleSeed::class,
+            EmployeeSeed::class,
         ]);
     }
 }

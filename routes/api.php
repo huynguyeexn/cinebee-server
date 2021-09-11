@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
@@ -224,4 +225,39 @@ Route::prefix('employee-role')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Employee
+ *
+ * Date: 10/09/2021
+ * Time: 18:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('employee')->group(function () {
+
+    // Get list
+    Route::get('/', [EmployeeController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [EmployeeController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [EmployeeController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [EmployeeController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [EmployeeController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [EmployeeController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [EmployeeController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
 });

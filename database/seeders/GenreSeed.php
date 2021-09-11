@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Genre;
 use Exception;
+use Illuminate\Database\Seeder;
 
-class UserSeed extends Seeder
+class GenreSeed extends Seeder
 {
     private $failures = 0;
     /**
@@ -18,7 +18,7 @@ class UserSeed extends Seeder
     {
         //
         try {
-            User::factory(50)->create();
+            Genre::factory(50)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

@@ -45,6 +45,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\EmployeeRole\EmployeeRoleRepositoryInterface::class,
             \App\Repositories\EmployeeRole\EmployeeRoleRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Director\DirectorRepositoryInterface::class,
+            \App\Repositories\Director\DirectorRepository::class,
+        );
     }
 
     /**

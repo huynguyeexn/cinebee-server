@@ -10,6 +10,7 @@ use App\Http\Controllers\SeatStatusController;
 use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\GenreController;
 
 /*
@@ -43,22 +44,22 @@ Route::prefix('actors')->group(function () {
 
      // Create new
      Route::post('/', [ActorController::class, 'store']);
- 
+
      // Get by ID
      Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
- 
+
      // Get by slug
      Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
- 
+
      // Update
      Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
- 
+
      // Soft Delete
      Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
- 
+
      // Hard Delete
      Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
- 
+
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
 });
@@ -73,22 +74,22 @@ Route::prefix('genres')->group(function () {
 
      // Create new
      Route::post('/', [GenreController::class, 'store']);
- 
+
      // Get by ID
      Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
- 
+
      // Get by slug
      Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
- 
+
      // Update
      Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
- 
+
      // Soft Delete
      Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
- 
+
      // Hard Delete
      Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
- 
+
     // Restore
     Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
 });
@@ -285,4 +286,39 @@ Route::prefix('employee-role')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Employee Role
+ *
+ * Date: 08/09/2021
+ * Time: 13:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('director')->group(function () {
+
+    // Get list
+    Route::get('/', [DirectorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [DirectorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [DirectorController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [DirectorController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [DirectorController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [DirectorController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [DirectorController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [DirectorController::class, 'restore'])->whereNumber('id');
 });

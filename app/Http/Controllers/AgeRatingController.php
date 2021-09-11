@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AgeRating\StoreRequest;
+use App\Http\Requests\AgeRating\UpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Models\AgeRating;
 use App\Repositories\AgeRating\AgeRatingRepositoryInterface;
@@ -130,7 +132,7 @@ class AgeRatingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
@@ -166,7 +168,7 @@ class AgeRatingController extends Controller
      * @param  \App\Models\AgeRating  $ageRating
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(

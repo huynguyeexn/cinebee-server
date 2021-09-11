@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
@@ -11,7 +12,9 @@ use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -321,4 +324,112 @@ Route::prefix('director')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [DirectorController::class, 'restore'])->whereNumber('id');
+});
+/**
+ * REST API - Employee
+ *
+ * Date: 10/09/2021
+ * Time: 18:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('employee')->group(function () {
+
+    // Get list
+    Route::get('/', [EmployeeController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [EmployeeController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [EmployeeController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [EmployeeController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [EmployeeController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [EmployeeController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [EmployeeController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Age Rating
+ *
+ * Date: 11/09/2021
+ * Time: 14:00
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('age-ratings')->group(function () {
+
+    // Get list
+    Route::get('/', [AgeRatingController::class, 'index']);
+
+
+    // Get deleted list
+    Route::get('/deleted', [AgeRatingController::class, 'deleted']);
+
+    // Get list movies of age rating
+    Route::get('/{id}/movies', [AgeRatingController::class, 'movies']);
+
+    // Create new
+    Route::post('/', [AgeRatingController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [AgeRatingController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [AgeRatingController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [AgeRatingController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [AgeRatingController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movies
+ *
+ * Date: 11/09/2021
+ * Time: 15:00
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+Route::prefix('movies')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
 });

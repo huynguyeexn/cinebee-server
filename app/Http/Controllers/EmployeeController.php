@@ -1,29 +1,35 @@
 <?php
-// long add 06-09-2021
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Actor\StoreRequest;
-use App\Http\Requests\Actor\UpdateRequest;
+use App\Http\Requests\Employee\StoreRequest;
+use App\Http\Requests\Employee\UpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Models\Actor;
-use App\Repositories\Actor\ActorRepositoryInterface;
+use App\Models\Employee;
+use App\Repositories\Employee\EmployeeRepositoryInterface;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\This;
+use Ramsey\Uuid\Nonstandard\Uuid;
 
-class ActorController extends Controller
+class EmployeeController extends Controller
 {
-    protected $ActocRepo;
-    public function __construct(ActorRepositoryInterface $ActocRepo)
+    /**
+     * @var EmployeeRepositoryInterface
+     */
+    protected $employeeRepo;
+
+    public function __construct(EmployeeRepositoryInterface $employeeRepo)
     {
-        $this->ActocRepo = $ActocRepo;
+        $this->employeeRepo = $employeeRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/",
-         *   summary="List actor",
+         *   tags={"Employee"},
+         *   path="/api/employee",
+         *   summary="List Employee",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -40,21 +46,21 @@ class ActorController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="actor per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actor by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actor type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -64,16 +70,16 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getList($request);
+        return $this->employeeRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/deleted",
-         *   summary="List Actor Deleted",
+         *   tags={"Employee"},
+         *   path="/api/employee/deleted",
+         *   summary="List Employee Deleted",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -90,21 +96,21 @@ class ActorController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Actors per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actors by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actors type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -114,25 +120,43 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getDeletedList($request);
+        return $this->employeeRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Actor"},
-         *   path="/api/actors",
-         *   summary="Store new actor",
+         *   tags={"Employee"},
+         *   path="/api/employee",
+         *   summary="Store new Employee",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"fullname", "slug","avatar"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "sex", "employee_role_id"},
          *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       @OA\Property(property="avatar", type="string"),
-         *       example={"fullname": "hailong", "slug": "hai-long","avatar":"anh_cua_toi.jpg"}
+         *       @OA\Property(property="username", type="string"),
+         *       @OA\Property(property="password", type="string"),
+         *       @OA\Property(property="phone",    type="number"),
+         *       @OA\Property(property="email",    type="string"),
+         *       @OA\Property(property="address",  type="string"),
+         *       @OA\Property(property="id_card",  type="uuid"),
+         *       @OA\Property(property="birthday", type="date"),
+         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property="employee_role_id", type="number"),
+         *       example={
+         *          "fullname": "Leonie Maggio",
+         *          "username": "Leonie",
+         *          "password": "Leonie123",
+         *          "phone": "346.997.2035",
+         *          "email": "Leonie@gmail.com",
+         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
+         *          "id_card": "1234-1234-1234-1234",
+         *          "birthday": "1993-03-26",
+         *          "sex": "2",
+         *          "employee_role_id": "1",
+         *       }
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -142,24 +166,31 @@ class ActorController extends Controller
          */
         $attributes = [
             'fullname' => $request->fullname,
-            'slug' => $request->slug,
-            'avatar' => $request->avatar
+            'username' => $request->username,
+            'password' => $request->password,
+            'phone'    => $request->phone,
+            'email'    => $request->email,
+            'address'  => $request->address,
+            'id_card'  => Uuid::uuid4(),
+            'birthday' => $request->birthday,
+            'sex'      => $request->sex,
+            'employee_role_id' => $request->employee_role_id,
         ];
-        return $this->ActocRepo->store($attributes);
+        return $this->employeeRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}",
-         *   summary="Get actor by id",
+         *   tags={"Employee"},
+         *   path="/api/employee/{id}",
+         *   summary="Get Employee by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="actor id",
+         *      description="Item id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -168,39 +199,16 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->ActocRepo->getById($id);
-    }
-
-    public function getBySlug($slug)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/{slug}",
-         *   summary="Get Actor by slug",
-         *   @OA\Parameter(
-         *      name="slug",
-         *      in="path",
-         *      required=true,
-         *      description="actors slug",
-         *      example="actor",
-         *     @OA\Schema(type="string"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->ActocRepo->getBySlug($slug);
+        return $this->employeeRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}",
-         *   summary="Update a Actor",
+         *   tags={"Employee"},
+         *   path="/api/employee/{id}",
+         *   summary="Update a Employee",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -211,11 +219,29 @@ class ActorController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"fullname", "slug","avatar"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "sex", "employee_role_id"},
          *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       @OA\Property(property="avatar", type="string"),
-         *       example={"fullname": "longhai", "slug": "long-hai","avatar":"anh_moi_doi.png"}
+         *       @OA\Property(property="username", type="string"),
+         *       @OA\Property(property="password", type="string"),
+         *       @OA\Property(property="phone",    type="number"),
+         *       @OA\Property(property="email",    type="string"),
+         *       @OA\Property(property="address",  type="string"),
+         *       @OA\Property(property="id_card",  type="uuid"),
+         *       @OA\Property(property="birthday", type="date"),
+         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property="employee_role_id", type="number"),
+         *        example={
+         *          "fullname": "Leonie Maggio",
+         *          "username": "Leonie",
+         *          "password": "Leonie123",
+         *          "phone": "346.997.2035",
+         *          "email": "Leonie@gmail.com",
+         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
+         *          "id_card": "",
+         *          "bithday": "1993-03-26",
+         *          "sex": "male",
+         *          "employee_role_id": "1",
+         *       }
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -225,20 +251,27 @@ class ActorController extends Controller
          */
         $attributes = [
             'fullname' => $request->fullname,
-            'slug' => $request->slug,
-            'avatar' => $request->avatar
+            'username' => $request->username,
+            'password' => $request->password,
+            'phone'    => $request->phone,
+            'email'    => $request->email,
+            'address'  => $request->address,
+            'id_card'  => $request->id_card,
+            'bithday'  => $request->bithday,
+            'sex'      => $request->sex,
+            'employee_role_id' => $request->employee_role_id,
         ];
 
-        return $this->ActocRepo->update($id, $attributes);
+        return $this->employeeRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/delete",
-         *   summary="Delete a Actor",
+         *   tags={"Employee"},
+         *   path="/api/employee/{id}/delete",
+         *   summary="Delete a Employee",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -250,16 +283,16 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->delete($id);
+        return $this->employeeRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/remove",
-         *   summary="Remove Actor from trash",
+         *   tags={"Employee"},
+         *   path="/api/employee/{id}/remove",
+         *   summary="Remove Employee from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -271,16 +304,16 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->remove($id);
+        return $this->employeeRepo->remove($id);
     }
 
-    public function restore($id)
+    public function restore(Employee $employee, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/restore",
-         *   summary="Restore actor from trash",
+         *   tags={"Employee"},
+         *   path="/api/employee/{id}/restore",
+         *   summary="Restore Employee from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -292,6 +325,6 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->restore($id);
+        return $this->employeeRepo->restore($id);
     }
 }

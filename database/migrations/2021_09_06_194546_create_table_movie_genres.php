@@ -14,16 +14,14 @@ class CreateTableMovieGenres extends Migration
     public function up()
     {
         Schema::create('movie_genres', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('movie_id')
-                ->constrained('movie')
+                ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->foreignId('genre_id')
-                ->constrained('genre')
+                ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->timestamps();
         });
     }
 

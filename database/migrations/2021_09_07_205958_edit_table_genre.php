@@ -13,7 +13,7 @@ class EditTableGenre extends Migration
      */
     public function up()
     {
-        Schema::table('genre', function (Blueprint $table) {
+        Schema::table('genres', function (Blueprint $table) {
             $table->string('slug')->nullable()->unique();
             $table->softDeletes();
         });

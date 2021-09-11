@@ -24,7 +24,7 @@ abstract class BaseRepository implements RepositoryInterface
         );
     }
 
-    public function getList(Request $request)
+    public function getList(Request $request = null)
     {
         $model = $this->model;
         $query = $model::query();
@@ -40,8 +40,8 @@ abstract class BaseRepository implements RepositoryInterface
         if ($sort_by !== NULL && !columnExists($model, $sort_by)) {
             // Return errors when not exists
             return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
+                'message' => 'Dữ liệu không hợp lệ!',
+                'errors' => ['sort_by' => 'Dữ liệu sắp xếp không hợp lệ.']
             ], 422);
         }
 
@@ -86,8 +86,8 @@ abstract class BaseRepository implements RepositoryInterface
         if ($sort_by !== NULL && !columnExists($model, $sort_by)) {
             // Return errors when not exists
             return response()->json([
-                'message' => 'The given data was invalid!',
-                'errors' => ['sort_by' => 'The selected sort by is invalid.']
+                'message' => 'Dữ liệu không hợp lệ!',
+                'errors' => ['sort_by' => 'Dữ liệu sắp xếp không hợp lệ.']
             ], 422);
         }
 
@@ -154,7 +154,7 @@ abstract class BaseRepository implements RepositoryInterface
             $record = tap($this->model->findOrFail($id))->delete();
             if ($record) {
                 return response([
-                    'message' => 'Your Seat Status has been move to trash!',
+                    'message' => 'Đã thêm vào thùng rác!',
                     'data' => $record,
                 ], 200);
             }
@@ -169,7 +169,7 @@ abstract class BaseRepository implements RepositoryInterface
             $record = tap($this->model->onlyTrashed()->findOrFail($id))->forceDelete();
             if ($record) {
                 return response([
-                    'message' => 'Your Seat Status has been remove from trash!',
+                    'message' => 'Đã xóa bỏ khỏi thùng rác!',
                     'data' => $record,
                 ], 200);
             }
@@ -184,7 +184,7 @@ abstract class BaseRepository implements RepositoryInterface
             $record = tap($this->model->onlyTrashed()->findOrFail($id))->restore();
             if ($record) {
                 return response([
-                    'message' => 'Your Seat Status has been restore!',
+                    'message' => 'Khôi phục thành công!',
                     'data' => $record,
                 ], 200);
             }

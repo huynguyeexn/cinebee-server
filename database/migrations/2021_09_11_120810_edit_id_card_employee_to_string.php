@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EditTableActor extends Migration
+class EditIdCardEmployeeToString extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class EditTableActor extends Migration
      */
     public function up()
     {
-        Schema::table('actors', function (Blueprint $table) {
-            $table->string('slug')->nullable()->unique();
-            $table->softDeletes();
+        Schema::table('employees', function (Blueprint $table) {
+            $table->string('id_card')->change();
         });
     }
 
@@ -26,8 +25,9 @@ class EditTableActor extends Migration
      */
     public function down()
     {
-        Schema::table('actor', function (Blueprint $table) {
+        Schema::table('employees', function (Blueprint $table) {
             //
+            $table->uuid('id_card')->change();
         });
     }
 }

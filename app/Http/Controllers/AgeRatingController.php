@@ -1,29 +1,36 @@
 <?php
-// long add 06-09-2021
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Actor\StoreRequest;
-use App\Http\Requests\Actor\UpdateRequest;
+use App\Http\Requests\AgeRating\StoreRequest;
+use App\Http\Requests\AgeRating\UpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Models\Actor;
-use App\Repositories\Actor\ActorRepositoryInterface;
+use App\Models\AgeRating;
+use App\Repositories\AgeRating\AgeRatingRepositoryInterface;
 use Illuminate\Http\Request;
 
-class ActorController extends Controller
+class AgeRatingController extends Controller
 {
-    protected $ActocRepo;
-    public function __construct(ActorRepositoryInterface $ActocRepo)
+    protected $ageRatingRepo;
+
+    public function __construct(AgeRatingRepositoryInterface $ageRatingRepo)
     {
-        $this->ActocRepo = $ActocRepo;
+        $this->ageRatingRepo = $ageRatingRepo;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(ListRequest $request)
     {
+        //
         /**
          * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/",
-         *   summary="List actor",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings",
+         *   summary="List Age Ratings",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -40,21 +47,21 @@ class ActorController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="actor per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actor by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actor type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -64,16 +71,17 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getList($request);
+        return $this->ageRatingRepo->getList($request);
     }
+
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/deleted",
-         *   summary="List Actor Deleted",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/deleted",
+         *   summary="List Age Ratings Deleted",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -90,21 +98,21 @@ class ActorController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Actors per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actors by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actors type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -114,25 +122,31 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getDeletedList($request);
+        return $this->ageRatingRepo->getDeletedList($request);
     }
 
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Actor"},
-         *   path="/api/actors",
-         *   summary="Store new actor",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings",
+         *   summary="Store new Age Rating",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"fullname", "slug","avatar"},
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       @OA\Property(property="avatar", type="string"),
-         *       example={"fullname": "hailong", "slug": "hai-long","avatar":"anh_cua_toi.jpg"}
+         *       required={"name", "description"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="description", type="string"),
+         *       example={"name": "R-18", "description": "Cấm người dưới 18 tuổi"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -141,66 +155,26 @@ class ActorController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->fullname,
-            'slug' => $request->slug,
-            'avatar' => $request->avatar
+            'name' => $request->name,
+            'description' => $request->description,
         ];
-        return $this->ActocRepo->store($attributes);
+        return $this->ageRatingRepo->store($attributes);
     }
 
-    public function getById($id)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}",
-         *   summary="Get actor by id",
-         *   @OA\Parameter(
-         *      name="id",
-         *      in="path",
-         *      required=true,
-         *      description="actor id",
-         *      example="21",
-         *     @OA\Schema(type="number"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->ActocRepo->getById($id);
-    }
-
-    public function getBySlug($slug)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Actor"},
-         *   path="/api/actors/{slug}",
-         *   summary="Get Actor by slug",
-         *   @OA\Parameter(
-         *      name="slug",
-         *      in="path",
-         *      required=true,
-         *      description="actors slug",
-         *      example="actor",
-         *     @OA\Schema(type="string"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->ActocRepo->getBySlug($slug);
-    }
-
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\AgeRating  $ageRating
+     * @return \Illuminate\Http\Response
+     */
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}",
-         *   summary="Update a Actor",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/{id}",
+         *   summary="Store new Age Rating",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -211,11 +185,10 @@ class ActorController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"fullname", "slug","avatar"},
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="slug", type="string"),
-         *       @OA\Property(property="avatar", type="string"),
-         *       example={"fullname": "longhai", "slug": "long-hai","avatar":"anh_moi_doi.png"}
+         *       required={"name", "description"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="description", type="string"),
+         *       example={"name": "R-18", "description": "Cấm người dưới 18 tuổi"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -224,21 +197,25 @@ class ActorController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->fullname,
-            'slug' => $request->slug,
-            'avatar' => $request->avatar
+            'name' => $request->name,
+            'description' => $request->description,
         ];
-
-        return $this->ActocRepo->update($id, $attributes);
+        return $this->ageRatingRepo->update($id, $attributes);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\AgeRating  $ageRating
+     * @return \Illuminate\Http\Response
+     */
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/delete",
-         *   summary="Delete a Actor",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/{id}/delete",
+         *   summary="Delete a Age Rating",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -250,16 +227,17 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->delete($id);
+        return $this->ageRatingRepo->delete($id);
     }
+
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/remove",
-         *   summary="Remove Actor from trash",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/{id}/remove",
+         *   summary="Remove Age Rating from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -271,16 +249,16 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->remove($id);
+        return $this->ageRatingRepo->remove($id);
     }
 
     public function restore($id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Actor"},
-         *   path="/api/actors/{id}/restore",
-         *   summary="Restore actor from trash",
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/{id}/restore",
+         *   summary="Restore Age Rating from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -292,6 +270,62 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->restore($id);
+        return $this->ageRatingRepo->restore($id);
+    }
+
+    public function movies($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"AgeRating"},
+         *   path="/api/age-ratings/{id}/movies",
+         *   summary="List Movie of Age Ratings",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Items per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort items by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort items type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+        return $this->ageRatingRepo->getMovies($id);
     }
 }

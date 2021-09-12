@@ -8,13 +8,14 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
-use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\MovieDirectorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -432,4 +433,39 @@ Route::prefix('movies')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movie Director
+ *
+ * Date: 11/09/2021
+ * Time: 23:00
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-directors')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieDirectorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieDirectorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieDirectorController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieDirectorController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieDirectorController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieDirectorController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieDirectorController::class, 'restore'])->whereNumber('id');
 });

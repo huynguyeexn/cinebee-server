@@ -73,6 +73,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\MovieActor\MovieActorRepositoryInterface::class,
             \App\Repositories\MovieActor\MovieActorRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\CustomerType\CustomerTypeRepositoryInterface::class,
+            \App\Repositories\CustomerType\CustomerTypeRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\Customer\CustomerRepositoryInterface::class,
+            \App\Repositories\Customer\CustomerRepository::class,
+        );
     }
 
     /**

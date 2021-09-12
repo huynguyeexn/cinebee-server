@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Employee extends Model
+class Customer extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -17,18 +17,17 @@ class Employee extends Model
         'phone',
         'email',
         'address',
-        'id_card',
         'birthday',
         'sex',
-        'employee_role_id',
+        'customer_type_id',
     ];
 
     protected $hidden = [
         'deleted_at'
     ];
 
-    public function employeeRoles()
+    public function customerTypes()
     {
-        return $this->belongsto(EmployeeRole::class);
+        return $this->belongsto(CustomerType::class);
     }
 }

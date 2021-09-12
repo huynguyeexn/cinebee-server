@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
@@ -539,4 +541,78 @@ Route::prefix('movie-actors')->group(function () {
 
     // Hard Delete
     Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Customer Type
+ *
+ * Date: 12/09/2021
+ * Time: 23:30 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('customer-types')->group(function () {
+
+    // Get list
+    Route::get('/', [CustomerTypeController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [CustomerTypeController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CustomerTypeController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [CustomerTypeController::class, 'getById'])->whereNumber('id');
+
+    // Get Customers of Customer Type
+    Route::get('/{id}/customers', [CustomerTypeController::class, 'customers'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [CustomerTypeController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CustomerTypeController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [CustomerTypeController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [CustomerTypeController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 12/09/2021
+ * Time: 23:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('customers')->group(function () {
+
+    // Get list
+    Route::get('/', [CustomerController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [CustomerController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CustomerController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [CustomerController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [CustomerController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CustomerController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [CustomerController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });

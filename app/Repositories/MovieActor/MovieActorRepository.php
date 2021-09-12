@@ -26,13 +26,4 @@ class MovieActorRepository extends BaseRepository implements MovieActorRepositor
             throw $th;
         }
     }
-
-    public function getByActor($id)
-    {
-        try {
-            return  $this->model->findorfail($id)->;
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
 }

@@ -165,13 +165,13 @@ class MovieActorController extends Controller
      * @param  \App\Models\MovieActor  $movieActor
      * @return \Illuminate\Http\Response
      */
-    public function getByActor($id)
+    public function getById($id)
     {
         /**
          * @OA\Get(
          *   tags={"Movie Actors"},
          *   path="/api/movie-actors/{id}",
-         *   summary="Get Movie Actors by actor",
+         *   summary="Get Movie Actors by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
@@ -185,7 +185,7 @@ class MovieActorController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->movieActorRepo->getByActor($id);
+        return $this->movieActorRepo->getById($id);
     }
 
     /**

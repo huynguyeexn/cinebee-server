@@ -6,5 +6,4 @@ use App\Repositories\RepositoryInterface;
 
 interface MovieActorRepositoryInterface extends RepositoryInterface
 {
-    public function getByActor($id);
 }

@@ -294,4 +294,55 @@ class ActorController extends Controller
          */
         return $this->ActocRepo->restore($id);
     }
+
+    public function movies($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Actor"},
+         *   path="/api/actors/",
+         *   summary="List actor",
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="actor per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort actor by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort actor type ['asc', 'desc']",
+         *      example="desc",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->ActocRepo->getMovies($id);
+    }
 }

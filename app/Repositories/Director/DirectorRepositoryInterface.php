@@ -6,5 +6,5 @@ use App\Repositories\RepositoryInterface;
 
 interface DirectorRepositoryInterface extends RepositoryInterface
 {
-    //
+    public function getMovies($id);
 }

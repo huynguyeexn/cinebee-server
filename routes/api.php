@@ -56,6 +56,9 @@ Route::prefix('actors')->group(function () {
      // Get by slug
      Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
+     // Get Movie of actor
+     Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+
      // Update
      Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
 
@@ -85,6 +88,9 @@ Route::prefix('genres')->group(function () {
 
      // Get by slug
      Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+     // Get Movie of genre
+     Route::get('/{id}/movies', [GenreController::class, 'movies'])->whereNumber('id');
 
      // Update
      Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
@@ -315,6 +321,9 @@ Route::prefix('directors')->group(function () {
     // Get by ID
     Route::get('/{id}', [DirectorController::class, 'getById'])->whereNumber('id');
 
+    // Get Movie of director
+    Route::get('/{id}/movies', [DirectorController::class, 'movies'])->whereNumber('id');
+
     // Update
     Route::put('/{id}', [DirectorController::class, 'update'])->whereNumber('id');
 
@@ -422,6 +431,15 @@ Route::prefix('movies')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [MovieController::class, 'getById'])->whereNumber('id');
+
+    // Get genres of movie
+    Route::get('/{id}/genres', [MovieController::class, 'genres'])->whereNumber('id');
+
+    // Get actors of movie
+    Route::get('/{id}/actors', [MovieController::class, 'actors'])->whereNumber('id');
+
+    // Get director of movie
+    Route::get('/{id}/directors', [MovieController::class, 'directors'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');

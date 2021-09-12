@@ -15,7 +15,7 @@ use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
-
+use App\Http\Controllers\MovieGenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -468,4 +468,39 @@ Route::prefix('movie-directors')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [MovieDirectorController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movie Genre
+ *
+ * Date: 12/09/2021
+ * Time: 09:30
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-genres')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieGenreController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieGenreController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieGenreController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieGenreController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieGenreController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieGenreController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieGenreController::class, 'restore'])->whereNumber('id');
 });

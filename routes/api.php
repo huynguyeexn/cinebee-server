@@ -13,6 +13,7 @@ use App\Http\Controllers\ActorController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
@@ -460,14 +461,8 @@ Route::prefix('movie-directors')->group(function () {
     // Update
     Route::put('/{id}', [MovieDirectorController::class, 'update'])->whereNumber('id');
 
-    // Soft Delete
-    Route::delete('{id}/delete/', [MovieDirectorController::class, 'delete'])->whereNumber('id');
-
     // Hard Delete
     Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [MovieDirectorController::class, 'restore'])->whereNumber('id');
 });
 
 
@@ -495,12 +490,32 @@ Route::prefix('movie-genres')->group(function () {
     // Update
     Route::put('/{id}', [MovieGenreController::class, 'update'])->whereNumber('id');
 
-    // Soft Delete
-    Route::delete('{id}/delete/', [MovieGenreController::class, 'delete'])->whereNumber('id');
-
     // Hard Delete
     Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
+});
 
-    // Restore
-    Route::patch('{id}/restore/', [MovieGenreController::class, 'restore'])->whereNumber('id');
+
+/**
+ * REST API - Movie Actors
+ *
+ * Date: 12/09/2021
+ * Time: 11:00
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-actors')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieActorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieActorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieActorController::class, 'store']);
+
+    // Update
+    Route::put('/{id}', [MovieActorController::class, 'update'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
 });

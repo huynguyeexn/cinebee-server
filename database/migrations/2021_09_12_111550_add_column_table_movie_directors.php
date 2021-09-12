@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnTableMovieGenres extends Migration
+class AddColumnTableMovieDirectors extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class AddColumnTableMovieGenres extends Migration
      */
     public function up()
     {
-        Schema::table('movie_genres', function (Blueprint $table) {
+        Schema::table('movie_directors', function (Blueprint $table) {
             $table->id();
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 
@@ -27,10 +25,8 @@ class AddColumnTableMovieGenres extends Migration
      */
     public function down()
     {
-        Schema::table('movie_genres', function (Blueprint $table) {
+        Schema::table('movie_directors', function (Blueprint $table) {
             $table->id();
-            $table->softDeletes();
-            $table->timestamps();
         });
     }
 }

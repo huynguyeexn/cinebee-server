@@ -3,18 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\MovieGenre\StoreRequest;
-use App\Http\Requests\MovieGenre\UpdateRequest;
-use App\Repositories\MovieGenre\MovieGenreRepositoryInterface;
+use App\Http\Requests\MovieActor\StoreRequest;
+use App\Http\Requests\MovieActor\UpdateRequest;
+use App\Repositories\MovieActor\MovieActorRepositoryInterface;
 use Illuminate\Http\Request;
 
-class MovieGenreController extends Controller
+class MovieActorController extends Controller
 {
-    protected $movieGenreRepo;
+    protected $movieActorRepo;
 
-    public function __construct(MovieGenreRepositoryInterface $movieGenreRepo)
+    public function __construct(MovieActorRepositoryInterface $movieActorRepo)
     {
-        $this->movieGenreRepo = $movieGenreRepo;
+        $this->movieActorRepo = $movieActorRepo;
     }
 
     /**
@@ -26,9 +26,9 @@ class MovieGenreController extends Controller
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/",
-         *   summary="List movie Genre",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors/",
+         *   summary="List movie actors",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -69,7 +69,7 @@ class MovieGenreController extends Controller
          *
          * )
          */
-        return $this->movieGenreRepo->getList($request);
+        return $this->movieActorRepo->getList($request);
     }
 
 
@@ -77,9 +77,9 @@ class MovieGenreController extends Controller
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/deleted",
-         *   summary="List Movie Genre Deleted",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors/deleted",
+         *   summary="List Movie Actors Deleted",
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -120,7 +120,7 @@ class MovieGenreController extends Controller
          *
          * )
          */
-        return $this->movieGenreRepo->getDeletedList($request);
+        return $this->movieActorRepo->getDeletedList($request);
     }
 
     /**
@@ -133,17 +133,17 @@ class MovieGenreController extends Controller
     {
         /**
          * @OA\Post(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres",
-         *   summary="Store new Movie Genre",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors",
+         *   summary="Store new Movie Actors",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"movie_id", "genre_id"},
+         *       required={"movie_id", "actor_id"},
          *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="genre_id", type="integer"),
-         *       example={"movie_id": "1", "genre_id": "1"}
+         *       @OA\Property(property="actor_id", type="integer"),
+         *       example={"movie_id": "1", "actor_id": "1"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -153,25 +153,25 @@ class MovieGenreController extends Controller
          */
         $attributes = [
             'movie_id' => $request->movie_id,
-            'genre_id' => $request->genre_id,
+            'actor_id' => $request->actor_id,
         ];
 
-        return $this->movieGenreRepo->store($attributes);
+        return $this->movieActorRepo->store($attributes);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MovieGenre  $movieGenre
+     * @param  \App\Models\MovieActor  $movieActor
      * @return \Illuminate\Http\Response
      */
-    public function getById($id)
+    public function getByActor($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}",
-         *   summary="Get Movie Genre by id",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors/{id}",
+         *   summary="Get Movie Actors by actor",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
@@ -185,23 +185,23 @@ class MovieGenreController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->movieGenreRepo->getById($id);
+        return $this->movieActorRepo->getByActor($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MovieGenre  $movieGenre
+     * @param  \App\Models\MovieActor  $movieActor
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}",
-         *   summary="Update new Movie Genre",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors/{id}",
+         *   summary="Update new Movie Actors",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -212,10 +212,10 @@ class MovieGenreController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"movie_id", "genre_id"},
+         *       required={"movie_id", "actor_id"},
          *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="genre_id", type="integer"),
-         *       example={"movie_id": "1", "genre_id": "1"}
+         *       @OA\Property(property="actor_id", type="integer"),
+         *       example={"movie_id": "1", "actor_id": "1"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -225,19 +225,19 @@ class MovieGenreController extends Controller
          */
         $attributes = [
             'movie_id' => $request->movie_id,
-            'genre_id' => $request->genre_id,
+            'actor_id' => $request->actor_id,
         ];
 
-        return $this->movieGenreRepo->update($id, $attributes);
+        return $this->movieActorRepo->update($id, $attributes);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}/remove",
-         *   summary="Remove Movie Genre",
+         *   tags={"Movie Actors"},
+         *   path="/api/movie-actors/{id}/remove",
+         *   summary="Remove Movie Actors",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -249,6 +249,6 @@ class MovieGenreController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->movieGenreRepo->remove($id);
+        return $this->movieActorRepo->remove($id);
     }
 }

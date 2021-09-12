@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repositories\MovieGenre;
+namespace App\Repositories\MovieActor;
 
-use App\Models\MovieGenre;
+use App\Models\MovieActor;
 use App\Repositories\BaseRepository;
 
-class MovieGenreRepository extends BaseRepository implements MovieGenreRepositoryInterface
+class MovieActorRepository extends BaseRepository implements MovieActorRepositoryInterface
 {
     public function getModel()
     {
-        return MovieGenre::class;
+        return MovieActor::class;
     }
 
     public function remove($id)
@@ -22,6 +22,15 @@ class MovieGenreRepository extends BaseRepository implements MovieGenreRepositor
                     'data' => $record,
                 ], 200);
             }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getByActor($id)
+    {
+        try {
+            return  $this->model->findorfail($id)->;
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -229,35 +229,13 @@ class MovieDirectorController extends Controller
         return $this->movieDirectorRepo->update($id, $attributes);
     }
 
-
-    public function delete($id)
-    {
-        /**
-         * @OA\Delete(
-         *   tags={"Movie Director"},
-         *   path="/api/movie-director/{id}/delete",
-         *   summary="Delete a Movie Director",
-         *   @OA\Parameter(
-         *     name="id",
-         *     in="path",
-         *     required=true,
-         *     @OA\Schema(type="string")
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found")
-         * )
-         */
-        return $this->movieDirectorRepo->delete($id);
-    }
-
     public function remove($id)
     {
         /**
          * @OA\Delete(
          *   tags={"Movie Director"},
          *   path="/api/movie-director/{id}/remove",
-         *   summary="Remove Movie Director from trash",
+         *   summary="Remove Movie Director",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -270,26 +248,5 @@ class MovieDirectorController extends Controller
          * )
          */
         return $this->movieDirectorRepo->remove($id);
-    }
-
-    public function restore($id)
-    {
-        /**
-         * @OA\Patch(
-         *   tags={"Movie Director"},
-         *   path="/api/movie-director/{id}/restore",
-         *   summary="Restore Movie Director from trash",
-         *   @OA\Parameter(
-         *     name="id",
-         *     in="path",
-         *     required=true,
-         *     @OA\Schema(type="string")
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found")
-         * )
-         */
-        return $this->movieDirectorRepo->restore($id);
     }
 }

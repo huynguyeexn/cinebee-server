@@ -69,6 +69,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\MovieGenre\MovieGenreRepositoryInterface::class,
             \App\Repositories\MovieGenre\MovieGenreRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\MovieActor\MovieActorRepositoryInterface::class,
+            \App\Repositories\MovieActor\MovieActorRepository::class,
+        );
     }
 
     /**

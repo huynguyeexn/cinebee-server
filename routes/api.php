@@ -272,7 +272,7 @@ Route::prefix('seats')->group(function () {
  * Time: 13:00 AM
  * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
  */
-Route::prefix('employee-role')->group(function () {
+Route::prefix('employee-roles')->group(function () {
 
     // Get list
     Route::get('/', [EmployeeRoleController::class, 'index']);
@@ -285,6 +285,9 @@ Route::prefix('employee-role')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+
+    // Get Employees of Employee Role
+    Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');

@@ -46,6 +46,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\EmployeeRole\EmployeeRoleRepository::class,
         );
         $this->app->singleton(
+            \App\Repositories\Director\DirectorRepositoryInterface::class,
+            \App\Repositories\Director\DirectorRepository::class,
+        );
+        $this->app->singleton(
             \App\Repositories\Employee\EmployeeRepositoryInterface::class,
             \App\Repositories\Employee\EmployeeRepository::class,
         );
@@ -56,6 +60,26 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\Movie\MovieRepositoryInterface::class,
             \App\Repositories\Movie\MovieRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\MovieDirector\MovieDirectorRepositoryInterface::class,
+            \App\Repositories\MovieDirector\MovieDirectorRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\MovieGenre\MovieGenreRepositoryInterface::class,
+            \App\Repositories\MovieGenre\MovieGenreRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\MovieActor\MovieActorRepositoryInterface::class,
+            \App\Repositories\MovieActor\MovieActorRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\CustomerType\CustomerTypeRepositoryInterface::class,
+            \App\Repositories\CustomerType\CustomerTypeRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\Customer\CustomerRepositoryInterface::class,
+            \App\Repositories\Customer\CustomerRepository::class,
         );
     }
 

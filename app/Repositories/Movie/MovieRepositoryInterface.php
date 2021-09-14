@@ -6,4 +6,7 @@ use App\Repositories\RepositoryInterface;
 
 interface MovieRepositoryInterface extends RepositoryInterface
 {
+    public function getActors($id);
+    public function getGenres($id);
+    public function getDirectors($id);
 }

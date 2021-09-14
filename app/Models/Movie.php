@@ -25,4 +25,20 @@ class Movie extends Model
     {
         return $this->belongsto(AgeRating::class);
     }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class,'movie_genres');
+    }
+
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class,'movie_actors');
+    }
+
+    public function directors()
+    {
+        return $this->belongsToMany(Director::class,'movie_directors');
+    }
+
 }

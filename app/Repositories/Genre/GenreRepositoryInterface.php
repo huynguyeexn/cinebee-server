@@ -7,5 +7,5 @@ use App\Repositories\RepositoryInterface;
 
 interface GenreRepositoryInterface extends RepositoryInterface
 {
-    
+    public function getMovies($id);
 }

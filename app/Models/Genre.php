@@ -16,4 +16,9 @@ class Genre extends Model
     protected $hidden = [
         'deleted_at'
     ];
+
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class,'movie_genres');
+    }
 }

@@ -57,4 +57,20 @@ class EmployeeRoleRepository extends BaseRepository implements EmployeeRoleRepos
             throw $th;
         }
     }
+
+    public function getEmployees($id)
+    {
+        $data = $this->model->findOrFail($id)->employees;
+        $count = $data->count();
+        return response()->json([
+            'data' => $data,
+            'total' => $count,
+            'query' => "",
+            'sort_by' => "",
+            'sort_type' => "",
+            'page' => 1,
+            'per_page' => $count,
+            'last_page' => 1,
+        ], 200);
+    }
 }

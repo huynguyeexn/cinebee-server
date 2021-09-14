@@ -17,4 +17,9 @@ class EmployeeRole extends Model
     protected $hidden = [
         'deleted_at'
     ];
+
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

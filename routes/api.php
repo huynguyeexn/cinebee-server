@@ -45,30 +45,30 @@ Route::prefix('auth')->group(function () {
  *  long add 06-09-2021
  */
 Route::prefix('actors')->group(function () {
-    Route::get('/',[ActorController::class,'index']);
-     // Get deleted list
-     Route::get('/deleted', [ActorController::class, 'deleted']);
+    Route::get('/', [ActorController::class, 'index']);
+    // Get deleted list
+    Route::get('/deleted', [ActorController::class, 'deleted']);
 
-     // Create new
-     Route::post('/', [ActorController::class, 'store']);
+    // Create new
+    Route::post('/', [ActorController::class, 'store']);
 
-     // Get by ID
-     Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
+    // Get by ID
+    Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
 
-     // Get by slug
-     Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+    // Get by slug
+    Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
-     // Get Movie of actor
-     Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+    // Get Movie of actor
+    Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
 
-     // Update
-     Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
+    // Update
+    Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
 
-     // Soft Delete
-     Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
+    // Soft Delete
+    Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
 
-     // Hard Delete
-     Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
+    // Hard Delete
+    Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
 
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
@@ -78,30 +78,30 @@ Route::prefix('actors')->group(function () {
  *  long add 06-09-2021
  */
 Route::prefix('genres')->group(function () {
-    Route::get('/',[GenreController::class,'index']);
-     // Get deleted list
-     Route::get('/deleted', [GenreController::class, 'deleted']);
+    Route::get('/', [GenreController::class, 'index']);
+    // Get deleted list
+    Route::get('/deleted', [GenreController::class, 'deleted']);
 
-     // Create new
-     Route::post('/', [GenreController::class, 'store']);
+    // Create new
+    Route::post('/', [GenreController::class, 'store']);
 
-     // Get by ID
-     Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
+    // Get by ID
+    Route::get('/{id}', [GenreController::class, 'getById'])->whereNumber('id');
 
-     // Get by slug
-     Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+    // Get by slug
+    Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
-     // Get Movie of genre
-     Route::get('/{id}/movies', [GenreController::class, 'movies'])->whereNumber('id');
+    // Get Movie of genre
+    Route::get('/{id}/movies', [GenreController::class, 'movies'])->whereNumber('id');
 
-     // Update
-     Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
+    // Update
+    Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
 
-     // Soft Delete
-     Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
+    // Soft Delete
+    Route::delete('{id}/delete/', [GenreController::class, 'delete'])->whereNumber('id');
 
-     // Hard Delete
-     Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
+    // Hard Delete
+    Route::delete('{id}/remove/', [GenreController::class, 'remove'])->whereNumber('id');
 
     // Restore
     Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
@@ -340,6 +340,9 @@ Route::prefix('directors')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [DirectorController::class, 'restore'])->whereNumber('id');
+
+    // Get Movies
+    Route::patch('{id}/movies/', [DirectorController::class, 'movies'])->whereNumber('id');
 });
 /**
  * REST API - Employee

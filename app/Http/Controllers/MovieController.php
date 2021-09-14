@@ -325,7 +325,13 @@ class MovieController extends Controller
         /**
          * @OA\Get(
          *   tags={"Movies"},
-         *   path="/api/movies/",
+         *   path="/api/movies/{id}/genres",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   summary="List movies",
          *   @OA\Parameter(
          *      name="q",
@@ -376,7 +382,13 @@ class MovieController extends Controller
         /**
          * @OA\Get(
          *   tags={"Movies"},
-         *   path="/api/movies/",
+         *   path="/api/movies/{id}/actors",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   summary="List movies",
          *   @OA\Parameter(
          *      name="q",
@@ -427,7 +439,13 @@ class MovieController extends Controller
         /**
          * @OA\Get(
          *   tags={"Movies"},
-         *   path="/api/movies/",
+         *   path="/api/movies/{id}/directors",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   summary="List movies",
          *   @OA\Parameter(
          *      name="q",

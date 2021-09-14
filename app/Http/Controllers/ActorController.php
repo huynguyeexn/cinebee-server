@@ -300,8 +300,14 @@ class ActorController extends Controller
         /**
          * @OA\Get(
          *   tags={"Actor"},
-         *   path="/api/actors/",
+         *   path="/api/actors/{id}/movies",
          *   summary="List actor",
+         *     @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

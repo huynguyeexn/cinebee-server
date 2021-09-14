@@ -15,7 +15,7 @@ class DirectorController extends Controller
     /**
      * @var DirectorRepositoryInterface
      */
-    protected $directoryRepo;
+    protected $directorRepo;
 
     public function __construct(DirectorRepositoryInterface $directorRepo)
     {
@@ -77,7 +77,7 @@ class DirectorController extends Controller
         /**
          * @OA\Get(
          *   tags={"Director"},
-         *   path="/api/director/deleted",
+         *   path="/api/directors/deleted",
          *   summary="List Director Deleted",
          *   @OA\Parameter(
          *      name="q",
@@ -126,7 +126,7 @@ class DirectorController extends Controller
     {
         /**
          * @OA\Post(
-         *   tags={"Directory"},
+         *   tags={"Director"},
          *   path="/api/director",
          *   summary="Store new Director",
          *   @OA\RequestBody(
@@ -158,7 +158,7 @@ class DirectorController extends Controller
         /**
          * @OA\Get(
          *   tags={"Director"},
-         *   path="/api/director/{id}",
+         *   path="/api/directors/{id}",
          *   summary="Get Director by id",
          *   @OA\Parameter(
          *      name="id",
@@ -181,7 +181,7 @@ class DirectorController extends Controller
         /**
          * @OA\Put(
          *   tags={"Director"},
-         *   path="/api/director/{id}",
+         *   path="/api/directors/{id}",
          *   summary="Update a Director",
          *   @OA\Parameter(
          *     name="id",
@@ -219,7 +219,7 @@ class DirectorController extends Controller
         /**
          * @OA\Delete(
          *   tags={"Director"},
-         *   path="/api/director/{id}/delete",
+         *   path="/api/directors/{id}/delete",
          *   summary="Delete a Director",
          *   @OA\Parameter(
          *     name="id",
@@ -240,7 +240,7 @@ class DirectorController extends Controller
         /**
          * @OA\Delete(
          *   tags={"Director"},
-         *   path="/api/director/{id}/remove",
+         *   path="/api/directors/{id}/remove",
          *   summary="Remove Director from trash",
          *   @OA\Parameter(
          *     name="id",
@@ -261,7 +261,7 @@ class DirectorController extends Controller
         /**
          * @OA\Patch(
          *   tags={"Director"},
-         *   path="/api/director/{id}/restore",
+         *   path="/api/directors/{id}/restore",
          *   summary="Restore Director from trash",
          *   @OA\Parameter(
          *     name="id",
@@ -282,7 +282,13 @@ class DirectorController extends Controller
         /**
          * @OA\Get(
          *   tags={"Director"},
-         *   path="/api/director",
+         *   path="/api/directors/{id}/movies",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   summary="List Director",
          *   @OA\Parameter(
          *      name="q",

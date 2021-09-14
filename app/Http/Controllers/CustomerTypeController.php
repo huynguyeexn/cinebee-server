@@ -272,7 +272,13 @@ class CustomerTypeController extends Controller
         /**
          * @OA\Get(
          *   tags={"Customer Type"},
-         *   path="/api/customer-types",
+         *   path="/api/customer-types/{id}/customers",
+         *       @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   summary="List Customer Type",
          *   @OA\Parameter(
          *      name="q",

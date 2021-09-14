@@ -274,8 +274,14 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Get(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role",
+         *   path="/api/employee-role/{id}/employees",
          *   summary="List Employee Role",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

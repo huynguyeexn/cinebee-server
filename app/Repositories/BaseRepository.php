@@ -27,10 +27,11 @@ abstract class BaseRepository implements RepositoryInterface
     public function getList(Request $request = null)
     {
         $model = $this->model;
-        $query = $model::query();
+        $sql = $model::query();
 
         // Get request params
-        $search = $request->q ?? NULL;
+        $query = $request->q ?? NULL;
+        $search = $request->search ?? "name";
         $page = $request->page ?? 1;
         $per_page = $request->per_page ?? 10;
         $sort_by = $request->sort_by ?? NULL;
@@ -45,23 +46,32 @@ abstract class BaseRepository implements RepositoryInterface
             ], 422);
         }
 
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
+        if ($query !== NULL && $search !== NULL && !columnExists($model, $search)) {
+            // Return errors when not exists
+            return response()->json([
+                'message' => 'Dữ liệu không hợp lệ!',
+                'errors' => ['search' => 'Dữ liệu tìm kiếm không hợp lệ.']
+            ], 422);
+        }
+
+        if ($query && $search) {
+            $sql->where("$search", 'ILIKE', "%$query%");
         }
 
         if ($sort_by) {
             // Example: order by ('name') desc;
-            $query->orderBy($sort_by, $sort_type);
+            $sql->orderBy($sort_by, $sort_type);
         }
 
-        $total = $query->count();
+        $total = $sql->count();
 
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
+        $data = $sql->offset(($page - 1) * $per_page)->limit($per_page)->get();
 
         return [
             'data' => $data,
             'total' => $total,
-            'query' => $search,
+            'search' => $search,
+            'query' => $query,
             'sort_by' => $sort_by,
             'sort_type' => $sort_type,
             'page' => $page,
@@ -73,10 +83,10 @@ abstract class BaseRepository implements RepositoryInterface
     public function getDeletedList(Request $request)
     {
         $model = $this->model;
-        $query = $model::onlyTrashed();
+        $sql = $model::onlyTrashed();
 
         // Get request params
-        $search = $request->q ?? NULL;
+        $query = $request->q ?? NULL;
         $page = $request->page ?? 1;
         $per_page = $request->per_page ?? 10;
         $sort_by = $request->sort_by ?? NULL;
@@ -91,23 +101,23 @@ abstract class BaseRepository implements RepositoryInterface
             ], 422);
         }
 
-        if ($search) {
-            $query->where('name', 'like', "%$search%");
+        if ($query) {
+            $sql->where('name', 'like', "%$query%");
         }
 
         if ($sort_by) {
             // Example: order by ('name') desc;
-            $query->orderBy($sort_by, $sort_type);
+            $sql->orderBy($sort_by, $sort_type);
         }
 
-        $total = $query->count();
+        $total = $sql->count();
 
-        $data = $query->offset(($page - 1) * $per_page)->limit($per_page)->get();
+        $data = $sql->offset(($page - 1) * $per_page)->limit($per_page)->get();
 
         return [
             'data' => $data,
             'total' => $total,
-            'query' => $search,
+            'query' => $query,
             'sort_by' => $sort_by,
             'sort_type' => $sort_type,
             'page' => $page,

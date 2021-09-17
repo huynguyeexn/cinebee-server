@@ -30,8 +30,8 @@ class CustomerFactory extends Factory
             'phone'            => $this->faker->phoneNumber(),
             'email'            => $this->faker->email(),
             'address'          => $this->faker->address(),
-            'birthday'         => $this->faker->date('Y-m-d' , '2000/1/1'),
-            'sex'              => array_rand(['male','female']),
+            'birthday'         => $this->faker->date('Y-m-d', '2000/1/1'),
+            'sex'              => array_rand([0, 1, 2]),
             'customer_type_id' => CustomerType::select('id')->inRandomOrder()->first(),
         ];
     }

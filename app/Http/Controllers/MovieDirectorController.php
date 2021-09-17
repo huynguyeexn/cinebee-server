@@ -28,6 +28,12 @@ class MovieDirectorController extends Controller
          *   path="/api/movie-director",
          *   summary="List Movie Director",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -78,6 +84,12 @@ class MovieDirectorController extends Controller
          *   tags={"Movie Director"},
          *   path="/api/movie-director/deleted",
          *   summary="List Movie Director Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

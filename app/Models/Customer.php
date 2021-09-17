@@ -23,7 +23,8 @@ class Customer extends Model
     ];
 
     protected $hidden = [
-        'deleted_at'
+        'deleted_at',
+        "password"
     ];
 
     public function customerTypes()

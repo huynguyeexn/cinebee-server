@@ -23,6 +23,12 @@ class ItemController extends Controller
          *   path="/api/items",
          *   summary="List items",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -173,6 +179,12 @@ class ItemController extends Controller
          *   tags={"Item"},
          *   path="/api/items/deleted",
          *   summary="List deleted items",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

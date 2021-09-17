@@ -28,6 +28,12 @@ class CustomerTypeController extends Controller
          *   path="/api/customer-types",
          *   summary="List Customer Type",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -77,6 +83,12 @@ class CustomerTypeController extends Controller
          *   tags={"Customer Type"},
          *   path="/api/customer-types/deleted",
          *   summary="List Customer Type Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -280,6 +292,12 @@ class CustomerTypeController extends Controller
          *     @OA\Schema(type="string")
          *   ),
          *   summary="List Customer Type",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

@@ -17,12 +17,12 @@ class CreateTableCustomers extends Migration
             $table->id();
             $table->string('fullname');
             $table->string('username')->unique();
-            $table->string('password')->nullable();
-            $table->char('phone', 20)->unique()->nullable();
-            $table->string('email')->nullable();
+            $table->string('password');
+            $table->string('phone', 20)->unique()->nullable();
+            $table->string('email')->unique()->nullable();
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
-            $table->char('sex', 10)->default('male')->nullable();
+            $table->unsignedTinyInteger('sex')->default(0); // 0 Nam, 1 Nữ, 2 Khác
             $table
                 ->foreignId("customer_type_id")
                 ->nullable()

@@ -25,6 +25,12 @@ class ActorController extends Controller
          *   path="/api/actors/",
          *   summary="List actor",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -74,6 +80,12 @@ class ActorController extends Controller
          *   tags={"Actor"},
          *   path="/api/actors/deleted",
          *   summary="List Actor Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -306,6 +318,12 @@ class ActorController extends Controller
          *     name="id",
          *     in="path",
          *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
          *     @OA\Schema(type="string")
          *   ),
          *   @OA\Parameter(

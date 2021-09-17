@@ -30,6 +30,12 @@ class MovieGenreController extends Controller
          *   path="/api/movie-genres/",
          *   summary="List movie Genre",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -80,6 +86,12 @@ class MovieGenreController extends Controller
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/deleted",
          *   summary="List Movie Genre Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

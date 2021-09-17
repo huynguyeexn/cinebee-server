@@ -29,6 +29,12 @@ class RoomController extends Controller
          *   path="/api/rooms",
          *   summary="List Rooms",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -78,6 +84,12 @@ class RoomController extends Controller
          *   tags={"Rooms"},
          *   path="/api/rooms/deleted",
          *   summary="List Room Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

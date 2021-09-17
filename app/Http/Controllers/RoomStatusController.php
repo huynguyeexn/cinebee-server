@@ -33,6 +33,12 @@ class RoomStatusController extends Controller
          *   path="/api/room-status",
          *   summary="RoomStatus index",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",

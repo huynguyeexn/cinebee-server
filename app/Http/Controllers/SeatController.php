@@ -27,6 +27,12 @@ class SeatController extends Controller
          *   path="/api/seats",
          *   summary="List Seats",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -76,6 +82,12 @@ class SeatController extends Controller
          *   tags={"Seat"},
          *   path="/api/seats/deleted",
          *   summary="List Seat Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

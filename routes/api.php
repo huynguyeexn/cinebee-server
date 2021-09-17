@@ -8,12 +8,17 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\SeatStatusController;
-use App\Models\EmployeeRole;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\MovieDirectorController;
+use App\Http\Controllers\MovieGenreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +58,9 @@ Route::prefix('actors')->group(function () {
     // Get by slug
     Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
+    // Get Movie of actor
+    Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+
     // Update
     Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
 
@@ -82,6 +90,9 @@ Route::prefix('genres')->group(function () {
 
     // Get by slug
     Route::get('/{slug}', [GenreController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Get Movie of genre
+    Route::get('/{id}/movies', [GenreController::class, 'movies'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [GenreController::class, 'update'])->whereNumber('id');
@@ -263,7 +274,7 @@ Route::prefix('seats')->group(function () {
  * Time: 13:00 AM
  * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
  */
-Route::prefix('employee-role')->group(function () {
+Route::prefix('employee-roles')->group(function () {
 
     // Get list
     Route::get('/', [EmployeeRoleController::class, 'index']);
@@ -276,6 +287,9 @@ Route::prefix('employee-role')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+
+    // Get Employees of Employee Role
+    Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
@@ -291,6 +305,45 @@ Route::prefix('employee-role')->group(function () {
 });
 
 
+/**
+ * REST API - Director
+ *
+ * Date: 11/09/2021
+ * Time: 09:00 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('directors')->group(function () {
+
+    // Get list
+    Route::get('/', [DirectorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [DirectorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [DirectorController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [DirectorController::class, 'getById'])->whereNumber('id');
+
+    // Get Movie of director
+    Route::get('/{id}/movies', [DirectorController::class, 'movies'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [DirectorController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [DirectorController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [DirectorController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [DirectorController::class, 'restore'])->whereNumber('id');
+
+    // Get Movies
+    Route::patch('{id}/movies/', [DirectorController::class, 'movies'])->whereNumber('id');
+});
 /**
  * REST API - Employee
  *
@@ -387,6 +440,15 @@ Route::prefix('movies')->group(function () {
     // Get by ID
     Route::get('/{id}', [MovieController::class, 'getById'])->whereNumber('id');
 
+    // Get genres of movie
+    Route::get('/{id}/genres', [MovieController::class, 'genres'])->whereNumber('id');
+
+    // Get actors of movie
+    Route::get('/{id}/actors', [MovieController::class, 'actors'])->whereNumber('id');
+
+    // Get director of movie
+    Route::get('/{id}/directors', [MovieController::class, 'directors'])->whereNumber('id');
+
     // Update
     Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');
 
@@ -398,4 +460,162 @@ Route::prefix('movies')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movie Director
+ *
+ * Date: 11/09/2021
+ * Time: 23:00
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-directors')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieDirectorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieDirectorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieDirectorController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieDirectorController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieDirectorController::class, 'update'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movie Genre
+ *
+ * Date: 12/09/2021
+ * Time: 09:30
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-genres')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieGenreController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieGenreController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieGenreController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieGenreController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieGenreController::class, 'update'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Movie Actors
+ *
+ * Date: 12/09/2021
+ * Time: 11:00
+ * @author DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-actors')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieActorController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieActorController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieActorController::class, 'store']);
+
+    // Update
+    Route::put('/{id}', [MovieActorController::class, 'update'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Customer Type
+ *
+ * Date: 12/09/2021
+ * Time: 23:30 AM
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('customer-types')->group(function () {
+
+    // Get list
+    Route::get('/', [CustomerTypeController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [CustomerTypeController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CustomerTypeController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [CustomerTypeController::class, 'getById'])->whereNumber('id');
+
+    // Get Customers of Customer Type
+    Route::get('/{id}/customers', [CustomerTypeController::class, 'customers'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [CustomerTypeController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CustomerTypeController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [CustomerTypeController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [CustomerTypeController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 12/09/2021
+ * Time: 23:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('customers')->group(function () {
+
+    // Get list
+    Route::get('/', [CustomerController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [CustomerController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CustomerController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [CustomerController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [CustomerController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CustomerController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [CustomerController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });

@@ -26,4 +26,9 @@ class Employee extends Model
     protected $hidden = [
         'deleted_at'
     ];
+
+    public function employeeRoles()
+    {
+        return $this->belongsto(EmployeeRole::class);
+    }
 }

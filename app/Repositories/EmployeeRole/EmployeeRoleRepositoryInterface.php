@@ -6,5 +6,5 @@ use App\Repositories\RepositoryInterface;
 
 interface EmployeeRoleRepositoryInterface extends RepositoryInterface
 {
-    //
+    public function getEmployees($id);
 }

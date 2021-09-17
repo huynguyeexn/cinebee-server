@@ -28,8 +28,14 @@ class DatabaseSeeder extends Seeder
             ActorSeed::class,
             GenreSeed::class,
             EmployeeRoleSeed::class,
+            DirectorSeed::class,
             AgeRatingSeeder::class,
             MovieSeeder::class,
+            MovieDirectorSeed::class,
+            MovieGenreSeed::class,
+            MovieActorSeed::class,
+            CustomerSeed::class,
+            CustomerTypeSeed::class,
         ]);
     }
 }

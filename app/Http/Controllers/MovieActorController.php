@@ -30,6 +30,12 @@ class MovieActorController extends Controller
          *   path="/api/movie-actors/",
          *   summary="List movie actors",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -80,6 +86,12 @@ class MovieActorController extends Controller
          *   tags={"Movie Actors"},
          *   path="/api/movie-actors/deleted",
          *   summary="List Movie Actors Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

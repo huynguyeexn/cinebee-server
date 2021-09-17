@@ -30,6 +30,12 @@ class DirectorController extends Controller
          *   path="/api/director",
          *   summary="List Director",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -79,6 +85,12 @@ class DirectorController extends Controller
          *   tags={"Director"},
          *   path="/api/directors/deleted",
          *   summary="List Director Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -290,6 +302,12 @@ class DirectorController extends Controller
          *     @OA\Schema(type="string")
          *   ),
          *   summary="List Director",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

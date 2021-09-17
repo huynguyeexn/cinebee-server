@@ -23,6 +23,12 @@ class GenreController extends Controller
          *   path="/api/genres/",
          *   summary="List genre",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -71,6 +77,12 @@ class GenreController extends Controller
          *   tags={"Genre"},
          *   path="/api/genres/deleted",
          *   summary="List genre Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -299,6 +311,12 @@ class GenreController extends Controller
          *     name="id",
          *     in="path",
          *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
          *     @OA\Schema(type="string")
          *   ),
          *   @OA\Parameter(

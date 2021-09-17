@@ -28,6 +28,12 @@ class EmployeeRoleController extends Controller
          *   path="/api/employee-role",
          *   summary="List Employee Role",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -77,6 +83,12 @@ class EmployeeRoleController extends Controller
          *   tags={"EmployeeRole"},
          *   path="/api/employee-role/deleted",
          *   summary="List Employee Role Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -280,6 +292,12 @@ class EmployeeRoleController extends Controller
          *     name="id",
          *     in="path",
          *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
          *     @OA\Schema(type="string")
          *   ),
          *   @OA\Parameter(

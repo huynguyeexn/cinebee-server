@@ -31,6 +31,12 @@ class MovieController extends Controller
          *   path="/api/movies/",
          *   summary="List movies",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -81,6 +87,12 @@ class MovieController extends Controller
          *   tags={"Movies"},
          *   path="/api/movies/deleted",
          *   summary="List Movies Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -334,6 +346,12 @@ class MovieController extends Controller
          *   ),
          *   summary="List movies",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -391,6 +409,12 @@ class MovieController extends Controller
          *   ),
          *   summary="List movies",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -447,6 +471,12 @@ class MovieController extends Controller
          *     @OA\Schema(type="string")
          *   ),
          *   summary="List movies",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

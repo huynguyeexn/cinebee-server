@@ -130,12 +130,7 @@ return [
              * @note This option overwrites `paths.excludes`
              * @see \OpenApi\scan
             */
-            'exclude' => [
-                'Http/Controllers/EmployeeController',
-                'Http/Controllers/EmployeeRoleController',
-                'Http/Controllers/CustomerController',
-                'Http/Controllers/CustomerTypeController',
-            ],
+            'exclude' => [],
         ],
 
         /*

@@ -9,7 +9,8 @@ use App\Repositories\Customer\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
-{/**
+{
+    /**
      * @var CustomerRepositoryInterface
      */
     protected $customerRepo;
@@ -26,6 +27,18 @@ class CustomerController extends Controller
          *   tags={"Customers"},
          *   path="/api/customers",
          *   summary="List Customer",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -76,6 +89,12 @@ class CustomerController extends Controller
          *   tags={"Customers"},
          *   path="/api/customers/deleted",
          *   summary="List Customer Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

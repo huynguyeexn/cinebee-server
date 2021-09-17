@@ -31,6 +31,12 @@ class EmployeeController extends Controller
          *   path="/api/employee",
          *   summary="List Employee",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -80,6 +86,12 @@ class EmployeeController extends Controller
          *   tags={"Employee"},
          *   path="/api/employee/deleted",
          *   summary="List Employee Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",

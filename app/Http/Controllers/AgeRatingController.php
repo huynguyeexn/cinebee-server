@@ -32,6 +32,12 @@ class AgeRatingController extends Controller
          *   path="/api/age-ratings",
          *   summary="List Age Ratings",
          *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
          *      name="q",
          *      in="query",
          *      description="Search query",
@@ -82,6 +88,12 @@ class AgeRatingController extends Controller
          *   tags={"AgeRating"},
          *   path="/api/age-ratings/deleted",
          *   summary="List Age Ratings Deleted",
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
          *   @OA\Parameter(
          *      name="q",
          *      in="query",
@@ -284,6 +296,12 @@ class AgeRatingController extends Controller
          *     name="id",
          *     in="path",
          *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
          *     @OA\Schema(type="string")
          *   ),
          *   @OA\Parameter(

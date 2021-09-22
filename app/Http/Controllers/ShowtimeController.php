@@ -297,7 +297,7 @@ class ShowtimeController extends Controller
         /**
          * @OA\Get(
          *   tags={"Showtime"},
-         *   path="/api/showtimes/{id}/employees",
+         *   path="/api/showtimes/{id}/movie-ticket",
          *   summary="List Showtime",
          *   @OA\Parameter(
          *     name="id",

@@ -526,7 +526,7 @@ class MovieController extends Controller
         /**
          * @OA\Get(
          *   tags={"Movies"},
-         *   path="/api/movies/{id}/directors",
+         *   path="/api/movies/{id}/showtimes",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",

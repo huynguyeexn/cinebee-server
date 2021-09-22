@@ -312,15 +312,15 @@ class RoomController extends Controller
     {
         /**
          * @OA\Get(
-         *   tags={"Movies"},
-         *   path="/api/movies/{id}/directors",
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}/showtimes",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
          *     required=true,
          *     @OA\Schema(type="string")
          *   ),
-         *   summary="List movies",
+         *   summary="List Rooms of Showtime",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",

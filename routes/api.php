@@ -19,6 +19,8 @@ use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
+use App\Http\Controllers\MovieTicketController;
+use App\Http\Controllers\ShowtimeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -218,9 +220,11 @@ Route::prefix('rooms')->group(function () {
     // Get by ID
     Route::get('/{id}', [RoomController::class, 'getById'])->whereNumber('id');
 
-
     // Get Seat of room
     Route::get('/{id}/seats', [RoomController::class, 'getSeats'])->whereNumber('id');
+
+    // Get showtime of room
+    Route::get('/{id}/showtimes', [RoomController::class, 'showtimes'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [RoomController::class, 'update'])->whereNumber('id');
@@ -449,6 +453,9 @@ Route::prefix('movies')->group(function () {
     // Get director of movie
     Route::get('/{id}/directors', [MovieController::class, 'directors'])->whereNumber('id');
 
+    // Get showtime of movie
+    Route::get('/{id}/showtimes', [MovieController::class, 'showtimes'])->whereNumber('id');
+
     // Update
     Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');
 
@@ -618,4 +625,79 @@ Route::prefix('customers')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 21/09/2021
+ * Time: 20:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('showtimes')->group(function () {
+
+    // Get list
+    Route::get('/', [ShowtimeController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [ShowtimeController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [ShowtimeController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
+
+    // Get Movie Ticket of Showtime
+    Route::get('/{id}/movie-ticket', [ShowtimeController::class, 'movieTicket'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [ShowtimeController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [ShowtimeController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [ShowtimeController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [ShowtimeController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 21/09/2021
+ * Time: 21:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-tickets')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieTicketController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieTicketController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieTicketController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieTicketController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieTicketController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieTicketController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieTicketController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
 });

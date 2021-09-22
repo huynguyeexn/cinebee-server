@@ -41,4 +41,9 @@ class Movie extends Model
         return $this->belongsToMany(Director::class,'movie_directors');
     }
 
+    public function showtimes()
+    {
+        return $this->hasMany(Showtime::class);
+    }
+
 }

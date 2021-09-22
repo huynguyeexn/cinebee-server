@@ -3,31 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\Room\StoreRequest;
-use App\Http\Requests\Room\UpdateRequest;
-use App\Models\Room;
-use App\Repositories\Room\RoomRepositoryInterface;
+use App\Http\Requests\MovieTicket\StoreRequest;
+use App\Http\Requests\MovieTicket\UpdateRequest;
+use App\Models\MovieTicket;
+use App\Repositories\MovieTicket\MovieTicketRepositoryInterface;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class MovieTicketController extends Controller
 {
     /**
-     * @var RoomRepositoryInterface
+     * @var MovieTicketRepositoryInterface
      */
-    protected $roomRepo;
+    protected $movieTicketRepo;
 
-    public function __construct(RoomRepositoryInterface $roomRepo)
+    public function __construct(MovieTicketRepositoryInterface $movieTicketRepo)
     {
-        $this->roomRepo = $roomRepo;
+        $this->movieTicketRepo = $movieTicketRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms",
-         *   summary="List Rooms",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets",
+         *   summary="List Movie Ticket",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -74,16 +74,16 @@ class RoomController extends Controller
          *
          * )
          */
-        return $this->roomRepo->getList($request);
+        return $this->movieTicketRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/deleted",
-         *   summary="List Room Deleted",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/deleted",
+         *   summary="List Movie Ticket Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -130,21 +130,54 @@ class RoomController extends Controller
          *
          * )
          */
-        return $this->roomRepo->getDeletedList($request);
+        return $this->movieTicketRepo->getDeletedList($request);
+    }
+
+    public function store(StoreRequest $request)
+    {
+        /**
+         * @OA\Post(
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets",
+         *   summary="Store new Movie Ticket",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="showtime_id", type="integer"),
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="price",    type="float"),
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'get_at' => $request->get_at,
+            'showtime_id' => $request->showtime_id,
+            'seat_id' => $request->seat_id,
+            'price'    => $request->price,
+        ];
+        return $this->movieTicketRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}",
-         *   summary="Get Room by id",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}",
+         *   summary="Get Movie Ticket by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Room id",
+         *      description="Item id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -153,69 +186,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->roomRepo->getById($id);
-    }
-
-
-    public function getSeats($id)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/seats",
-         *   summary="Get Seat of Room",
-         *   @OA\Parameter(
-         *      name="id",
-         *      in="path",
-         *      required=true,
-         *      description="Room id",
-         *      example="9",
-         *     @OA\Schema(type="number"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->roomRepo->getSeats($id);
-    }
-
-    public function store(StoreRequest $request)
-    {
-        /**
-         * @OA\Post(
-         *   tags={"Rooms"},
-         *   path="/api/rooms",
-         *   summary="Store new Rooms",
-         *   @OA\RequestBody(
-         *     required=true,
-         *     @OA\JsonContent(
-         *       type="string",
-         *       required={"name"},
-         *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="room_status_id", type="number"),
-         *       example={"name": "Status of seat", "room_status_id": null}
-         *     )
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found")
-         * )
-         */
-        $attributes = [
-            'name' => $request->name,
-            'room_status_id' => $request->room_status_id,
-        ];
-        return $this->roomRepo->store($attributes);
+        return $this->movieTicketRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}",
-         *   summary="Update a Room",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}",
+         *   summary="Update a Movie Ticket",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -226,10 +206,12 @@ class RoomController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "room_status_id"},
-         *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="room_status_id", type="string"),
-         *       example={"name": "Status of seat", "room_status_id": "9"}
+         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="showtime_id", type="integer"),
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="price",    type="float"),
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -238,20 +220,22 @@ class RoomController extends Controller
          * )
          */
         $attributes = [
-            'name' => $request->name,
-            'room_status_id' => $request->room_status_id,
+            'get_at' => $request->get_at,
+            'showtime_id' => $request->showtime_id,
+            'seat_id' => $request->seat_id,
+            'price'    => $request->price,
         ];
 
-        return $this->roomRepo->update($id, $attributes);
+        return $this->movieTicketRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/delete",
-         *   summary="Delete a Room",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/delete",
+         *   summary="Delete a Movie Ticket",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -263,16 +247,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->delete($id);
+        return $this->movieTicketRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/remove",
-         *   summary="Remove Room from trash",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/remove",
+         *   summary="Remove Movie Ticket from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -284,16 +268,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->remove($id);
+        return $this->movieTicketRepo->remove($id);
     }
 
-    public function restore($id)
+    public function restore(MovieTicket $movieTicket, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/restore",
-         *   summary="Restore Room from trash",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/restore",
+         *   summary="Restore Movie Ticket from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -305,69 +289,6 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->restore($id);
-    }
-
-    public function showtimes($id)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Movies"},
-         *   path="/api/movies/{id}/directors",
-         *   @OA\Parameter(
-         *     name="id",
-         *     in="path",
-         *     required=true,
-         *     @OA\Schema(type="string")
-         *   ),
-         *   summary="List movies",
-         *   @OA\Parameter(
-         *      name="search",
-         *      in="query",
-         *      description="Search by",
-         *     @OA\Schema(type="string")
-         *   ),
-         *   @OA\Parameter(
-         *      name="q",
-         *      in="query",
-         *      description="Search query",
-         *     @OA\Schema(type="string")
-         *   ),
-         *     @OA\Parameter(
-         *      name="page",
-         *      in="query",
-         *      description="Page",
-         *      example="1",
-         *     @OA\Schema(type="number")
-         *   ),
-         *     @OA\Parameter(
-         *      name="per_page",
-         *      in="query",
-         *      description="actor per page",
-         *      example="10",
-         *     @OA\Schema(type="number")
-         *   ),
-         *      @OA\Parameter(
-         *      name="sort_by",
-         *      in="query",
-         *      description="Sort actor by",
-         *      example="updated_at",
-         *     @OA\Schema(type="string")
-         *   ),
-         *      @OA\Parameter(
-         *      name="sort_type",
-         *      in="query",
-         *      description="Sort actor type ['asc', 'desc']",
-         *      example="desc",
-         *     @OA\Schema(type="string")
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         *
-         * )
-         */
-
-        return $this->roomRepo->getShowtimes($id);
+        return $this->movieTicketRepo->restore($id);
     }
 }

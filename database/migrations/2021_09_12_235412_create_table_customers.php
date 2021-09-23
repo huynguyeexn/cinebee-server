@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateTableCustomers extends Migration
@@ -14,7 +15,7 @@ class CreateTableCustomers extends Migration
     public function up()
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            $table->id()->startingValue(10000);
             $table->string('fullname');
             $table->string('username')->unique();
             $table->string('password');

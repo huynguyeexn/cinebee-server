@@ -34,7 +34,7 @@ class UpdateRequest extends FormRequest
             'address'  => "required|string|max:100",
             'id_card'  => "required|string|unique:employees,id_card,$this->id,id",
             'birthday' => "required|date",
-            'sex'      => "required",
+            'gender'      => "required",
             'employee_role_id' => "exists:$employeeRoleName,id",
         ];
     }

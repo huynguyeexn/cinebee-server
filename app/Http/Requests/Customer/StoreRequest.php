@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'email'    => "required|email|regex:/^.+@.+$/i|unique:customers,email",
             'address'  => "required|string|max:100|",
             'birthday' => "required|date",
-            'sex'      => "required",
+            'gender'      => "required",
             'customer_type_id' => "exists:$customerTypeName,id",
         ];
     }

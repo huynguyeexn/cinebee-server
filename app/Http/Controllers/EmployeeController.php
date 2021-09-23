@@ -146,7 +146,7 @@ class EmployeeController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "sex", "employee_role_id"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", gender, "employee_role_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
          *       @OA\Property(property="password", type="string"),
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="id_card",  type="uuid"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property=gender, type="string"),
          *       @OA\Property(property="employee_role_id", type="number"),
          *       example={
          *          "fullname": "Leonie Maggio",
@@ -166,7 +166,7 @@ class EmployeeController extends Controller
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "id_card": "1234-1234-1234-1234",
          *          "birthday": "1993-03-26",
-         *          "sex": "2",
+         *          gender: "2",
          *          "employee_role_id": "1",
          *       }
          *     )
@@ -185,7 +185,7 @@ class EmployeeController extends Controller
             'address'  => $request->address,
             'id_card'  => Uuid::uuid4(),
             'birthday' => $request->birthday,
-            'sex'      => $request->sex,
+            'gender'      => $request->gender,
             'employee_role_id' => $request->employee_role_id,
         ];
         return $this->employeeRepo->store($attributes);
@@ -231,7 +231,7 @@ class EmployeeController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "sex", "employee_role_id"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", gender, "employee_role_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
          *       @OA\Property(property="password", type="string"),
@@ -240,7 +240,7 @@ class EmployeeController extends Controller
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="id_card",  type="uuid"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property=gender, type="string"),
          *       @OA\Property(property="employee_role_id", type="number"),
          *        example={
          *          "fullname": "Leonie Maggio",
@@ -251,7 +251,7 @@ class EmployeeController extends Controller
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "id_card": "",
          *          "bithday": "1993-03-26",
-         *          "sex": "male",
+         *          gender: "male",
          *          "employee_role_id": "1",
          *       }
          *     )
@@ -270,7 +270,7 @@ class EmployeeController extends Controller
             'address'  => $request->address,
             'id_card'  => $request->id_card,
             'bithday'  => $request->bithday,
-            'sex'      => $request->sex,
+            'gender'      => $request->gender,
             'employee_role_id' => $request->employee_role_id,
         ];
 

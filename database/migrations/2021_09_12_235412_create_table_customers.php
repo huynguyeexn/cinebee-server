@@ -23,7 +23,7 @@ class CreateTableCustomers extends Migration
             $table->string('email')->unique()->nullable();
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
-            $table->unsignedTinyInteger('sex')->default(0); // 0 Nam, 1 Nữ, 2 Khác
+            $table->unsignedTinyInteger('gender')->default(0); // 0 Nam, 1 Nữ, 2 Khác
             $table
                 ->foreignId("customer_type_id")
                 ->nullable()

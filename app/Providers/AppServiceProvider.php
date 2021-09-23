@@ -81,6 +81,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Customer\CustomerRepositoryInterface::class,
             \App\Repositories\Customer\CustomerRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Showtime\ShowtimeRepositoryInterface::class,
+            \App\Repositories\Showtime\ShowtimeRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\MovieTicket\MovieTicketRepositoryInterface::class,
+            \App\Repositories\MovieTicket\MovieTicketRepository::class,
+        );
     }
 
     /**

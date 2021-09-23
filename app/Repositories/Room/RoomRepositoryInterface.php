@@ -8,4 +8,5 @@ interface RoomRepositoryInterface extends RepositoryInterface
 {
     //
     public function getSeats($id);
+    public function getShowtimes($id);
 }

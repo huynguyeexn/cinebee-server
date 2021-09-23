@@ -3,32 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\MovieGenre\StoreRequest;
-use App\Http\Requests\MovieGenre\UpdateRequest;
-use App\Repositories\MovieGenre\MovieGenreRepositoryInterface;
+use App\Http\Requests\MovieTicket\StoreRequest;
+use App\Http\Requests\MovieTicket\UpdateRequest;
+use App\Models\MovieTicket;
+use App\Repositories\MovieTicket\MovieTicketRepositoryInterface;
 use Illuminate\Http\Request;
 
-class MovieGenreController extends Controller
+class MovieTicketController extends Controller
 {
-    protected $movieGenreRepo;
+    /**
+     * @var MovieTicketRepositoryInterface
+     */
+    protected $movieTicketRepo;
 
-    public function __construct(MovieGenreRepositoryInterface $movieGenreRepo)
+    public function __construct(MovieTicketRepositoryInterface $movieTicketRepo)
     {
-        $this->movieGenreRepo = $movieGenreRepo;
+        $this->movieTicketRepo = $movieTicketRepo;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/",
-         *   summary="List movie Genres",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets",
+         *   summary="List Movie Ticket",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -51,21 +50,21 @@ class MovieGenreController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="actor per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actor by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actor type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -75,17 +74,16 @@ class MovieGenreController extends Controller
          *
          * )
          */
-        return $this->movieGenreRepo->getList($request);
+        return $this->movieTicketRepo->getList($request);
     }
-
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/deleted",
-         *   summary="List Movie Genres Deleted",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/deleted",
+         *   summary="List Movie Ticket Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -108,21 +106,21 @@ class MovieGenreController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Actors per page",
+         *      description="Items per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort actors by",
+         *      description="Sort items by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort actors type ['asc', 'desc']",
+         *      description="Sort items type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -132,30 +130,26 @@ class MovieGenreController extends Controller
          *
          * )
          */
-        return $this->movieGenreRepo->getDeletedList($request);
+        return $this->movieTicketRepo->getDeletedList($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres",
-         *   summary="Store new Movie Genres",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets",
+         *   summary="Store new Movie Ticket",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"movie_id", "genre_id"},
-         *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="genre_id", type="integer"),
-         *       example={"movie_id": "1", "genre_id": "1"}
+         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="showtime_id", type="integer"),
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="price",    type="float"),
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -164,31 +158,26 @@ class MovieGenreController extends Controller
          * )
          */
         $attributes = [
-            'movie_id' => $request->movie_id,
-            'genre_id' => $request->genre_id,
+            'get_at' => $request->get_at,
+            'showtime_id' => $request->showtime_id,
+            'seat_id' => $request->seat_id,
+            'price'    => $request->price,
         ];
-
-        return $this->movieGenreRepo->store($attributes);
+        return $this->movieTicketRepo->store($attributes);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MovieGenre  $movieGenre
-     * @return \Illuminate\Http\Response
-     */
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}",
-         *   summary="Get Movie Genres by id",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}",
+         *   summary="Get Movie Ticket by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Room id",
+         *      description="Item id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -197,23 +186,16 @@ class MovieGenreController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->movieGenreRepo->getById($id);
+        return $this->movieTicketRepo->getById($id);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MovieGenre  $movieGenre
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}",
-         *   summary="Update new Movie Genres",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}",
+         *   summary="Update a Movie Ticket",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -224,10 +206,12 @@ class MovieGenreController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"movie_id", "genre_id"},
-         *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="genre_id", type="integer"),
-         *       example={"movie_id": "1", "genre_id": "1"}
+         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="showtime_id", type="integer"),
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="price",    type="float"),
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -236,20 +220,22 @@ class MovieGenreController extends Controller
          * )
          */
         $attributes = [
-            'movie_id' => $request->movie_id,
-            'genre_id' => $request->genre_id,
+            'get_at' => $request->get_at,
+            'showtime_id' => $request->showtime_id,
+            'seat_id' => $request->seat_id,
+            'price'    => $request->price,
         ];
 
-        return $this->movieGenreRepo->update($id, $attributes);
+        return $this->movieTicketRepo->update($id, $attributes);
     }
 
-    public function remove($id)
+    public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Movie Genres"},
-         *   path="/api/movie-genres/{id}/remove",
-         *   summary="Remove Movie Genres",
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/delete",
+         *   summary="Delete a Movie Ticket",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -261,6 +247,48 @@ class MovieGenreController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->movieGenreRepo->remove($id);
+        return $this->movieTicketRepo->delete($id);
+    }
+
+    public function remove($id)
+    {
+        /**
+         * @OA\Delete(
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/remove",
+         *   summary="Remove Movie Ticket from trash",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->movieTicketRepo->remove($id);
+    }
+
+    public function restore(MovieTicket $movieTicket, $id)
+    {
+        /**
+         * @OA\Patch(
+         *   tags={"Movie Ticket"},
+         *   path="/api/movie-tickets/{id}/restore",
+         *   summary="Restore Movie Ticket from trash",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->movieTicketRepo->restore($id);
     }
 }

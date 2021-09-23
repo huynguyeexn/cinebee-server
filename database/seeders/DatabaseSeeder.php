@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Movie;
+use App\Models\ShowTime;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -36,6 +37,8 @@ class DatabaseSeeder extends Seeder
             MovieActorSeed::class,
             CustomerTypeSeed::class,
             CustomerSeed::class,
+            ShowtimeSeed::class,
+            MovieTicketSeed::class,
         ]);
     }
 }

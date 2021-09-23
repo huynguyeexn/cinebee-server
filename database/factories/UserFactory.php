@@ -30,7 +30,7 @@ class UserFactory extends Factory
             'address' => $this->faker->address(),
             'id_card' => $this->faker->uuid(),
             'birthday' => $this->faker->date('Y-m-d', '2000/1/1'),
-            'sex' => array_rand(["male", "female"]),
+            'gender' => array_rand(["male", "female"]),
             'username' => $this->faker->userName(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),

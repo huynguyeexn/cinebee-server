@@ -19,7 +19,7 @@ class Employee extends Model
         'address',
         'id_card',
         'birthday',
-        'sex',
+        'gender',
         'employee_role_id',
     ];
 

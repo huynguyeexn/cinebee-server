@@ -31,8 +31,8 @@ class EmployeeFactory extends Factory
             'email'            => $this->faker->email(),
             'address'          => $this->faker->address(),
             'id_card'          => $this->faker->uuid(),
-            'birthday'         => $this->faker->date('Y-m-d' , '2000/1/1'),
-            'sex'              => array_rand(['male','female']),
+            'birthday'         => $this->faker->date('Y-m-d', '2000/1/1'),
+            'gender'              => array_rand(['male', 'female']),
             'employee_role_id' => EmployeeRole::select('id')->inRandomOrder()->first(),
         ];
     }

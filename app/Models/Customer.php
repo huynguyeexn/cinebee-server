@@ -18,7 +18,7 @@ class Customer extends Model
         'email',
         'address',
         'birthday',
-        'sex',
+        'gender',
         'customer_type_id',
     ];
 

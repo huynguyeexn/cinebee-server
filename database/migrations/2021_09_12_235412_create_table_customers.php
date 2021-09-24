@@ -19,10 +19,10 @@ class CreateTableCustomers extends Migration
             $table->string('fullname');
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('phone', 20)->unique()->nullable();
+            $table->string('phone')->unique()->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('address')->nullable();
-            $table->date('birthday')->nullable();
+            $table->dateTime('birthday')->nullable();
             $table->unsignedTinyInteger('gender')->default(0); // 0 Nam, 1 Nữ, 2 Khác
             $table
                 ->foreignId("customer_type_id")

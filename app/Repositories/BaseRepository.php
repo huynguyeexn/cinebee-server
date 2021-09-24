@@ -160,13 +160,29 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function store($attributes = [])
     {
-        return $this->model->create($attributes);
+        try {
+            $record =  $this->model->create($attributes);
+            if ($record) {
+                return response([
+                    'message' => 'Nhập dữ liệu thành công!',
+                    'data' => $record,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function update($id, $attributes = [])
     {
         try {
-            return tap($this->model->findOrFail($id))->update($attributes);
+            $record = tap($this->model->findOrFail($id))->update($attributes);
+            if ($record) {
+                return response([
+                    'message' => 'Đã cập nhật dữ liệu!',
+                    'data' => $record,
+                ], 200);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }

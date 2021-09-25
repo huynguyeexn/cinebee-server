@@ -24,7 +24,7 @@ class UpdateInitialUserTable extends Migration
             $table->string('address')->nullable();
             $table->uuid('id_card')->unique()->nullable();
             $table->date('birthday')->nullable();
-            $table->char('sex', 10)->default('male')->nullable();
+            $table->char('gender', 10)->default('male')->nullable();
 
             $table->softDeletes();
         });
@@ -48,7 +48,7 @@ class UpdateInitialUserTable extends Migration
             $table->dropColumn('address');
             $table->dropColumn('id_card');
             $table->dropColumn('birthday');
-            $table->dropColumn('sex');
+            $table->dropColumn('gender');
 
             $table->dropSoftDeletes();
         });

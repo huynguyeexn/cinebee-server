@@ -23,7 +23,7 @@ class CreateTableEmployee extends Migration
             $table->string('address')->nullable();
             $table->uuid('id_card')->unique()->nullable();
             $table->date('birthday')->nullable();
-            $table->char('sex', 10)->default('male')->nullable();
+            $table->char('gender', 10)->default('male')->nullable();
             $table
                 ->foreignId("employee_role_id")
                 ->nullable()

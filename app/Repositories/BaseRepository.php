@@ -69,14 +69,16 @@ abstract class BaseRepository implements RepositoryInterface
 
         return [
             'data' => $data,
-            'total' => $total,
-            'search' => $search,
-            'query' => $query,
-            'sort_by' => $sort_by,
-            'sort_type' => $sort_type,
-            'page' => $page,
-            'per_page' => $per_page,
-            'last_page' => ceil($total / $per_page),
+            'pagination' => [
+                'total' => $total,
+                'search' => $search,
+                'query' => $query,
+                'sort_by' => $sort_by,
+                'sort_type' => $sort_type,
+                'page' => $page,
+                'per_page' => $per_page,
+                'last_page' => ceil($total / $per_page),
+            ]
         ];
     }
 
@@ -87,6 +89,7 @@ abstract class BaseRepository implements RepositoryInterface
 
         // Get request params
         $query = $request->q ?? NULL;
+        $search = $request->search ?? "name";
         $page = $request->page ?? 1;
         $per_page = $request->per_page ?? 10;
         $sort_by = $request->sort_by ?? NULL;
@@ -101,8 +104,16 @@ abstract class BaseRepository implements RepositoryInterface
             ], 422);
         }
 
-        if ($query) {
-            $sql->where('name', 'like', "%$query%");
+        if ($query !== NULL && $search !== NULL && !columnExists($model, $search)) {
+            // Return errors when not exists
+            return response()->json([
+                'message' => 'Dữ liệu không hợp lệ!',
+                'errors' => ['search' => 'Dữ liệu tìm kiếm không hợp lệ.']
+            ], 422);
+        }
+
+        if ($query && $search) {
+            $sql->where("$search", 'ILIKE', "%$query%");
         }
 
         if ($sort_by) {
@@ -116,13 +127,16 @@ abstract class BaseRepository implements RepositoryInterface
 
         return [
             'data' => $data,
-            'total' => $total,
-            'query' => $query,
-            'sort_by' => $sort_by,
-            'sort_type' => $sort_type,
-            'page' => $page,
-            'per_page' => $per_page,
-            'last_page' => ceil($total / $per_page),
+            'pagination' => [
+                'total' => $total,
+                'search' => $search,
+                'query' => $query,
+                'sort_by' => $sort_by,
+                'sort_type' => $sort_type,
+                'page' => $page,
+                'per_page' => $per_page,
+                'last_page' => ceil($total / $per_page),
+            ]
         ];
     }
 
@@ -146,13 +160,29 @@ abstract class BaseRepository implements RepositoryInterface
 
     public function store($attributes = [])
     {
-        return $this->model->create($attributes);
+        try {
+            $record =  $this->model->create($attributes);
+            if ($record) {
+                return response([
+                    'message' => 'Nhập dữ liệu thành công!',
+                    'data' => $record,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function update($id, $attributes = [])
     {
         try {
-            return tap($this->model->findOrFail($id))->update($attributes);
+            $record = tap($this->model->findOrFail($id))->update($attributes);
+            if ($record) {
+                return response([
+                    'message' => 'Đã cập nhật dữ liệu!',
+                    'data' => $record,
+                ], 200);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }

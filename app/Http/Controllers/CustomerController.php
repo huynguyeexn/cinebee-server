@@ -149,7 +149,7 @@ class CustomerController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", "sex", "customer_type_id"},
+         *       required={ "fullname", "username", "password"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
          *       @OA\Property(property="password", type="string"),
@@ -157,7 +157,7 @@ class CustomerController extends Controller
          *       @OA\Property(property="email",    type="string"),
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property="gender", type="string"),
          *       @OA\Property(property="customer_type_id", type="number"),
          *       example={
          *          "fullname": "Leonie Maggio",
@@ -167,7 +167,7 @@ class CustomerController extends Controller
          *          "email": "Leonie@gmail.com",
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "birthday": "1993-03-26",
-         *          "sex": "2",
+         *          "gender": "2",
          *          "customer_type_id": "1",
          *       }
          *     )
@@ -180,12 +180,12 @@ class CustomerController extends Controller
         $attributes = [
             'fullname' => $request->fullname,
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
             'birthday' => $request->birthday,
-            'sex'      => $request->sex,
+            'gender'      => $request->gender,
             'customer_type_id' => $request->customer_type_id,
         ];
         return $this->customerRepo->store($attributes);
@@ -231,15 +231,13 @@ class CustomerController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", "sex", "customer_type_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="password", type="string"),
          *       @OA\Property(property="phone",    type="number"),
          *       @OA\Property(property="email",    type="string"),
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="sex", type="string"),
+         *       @OA\Property(property="gender", type="string"),
          *       @OA\Property(property="customer_type_id", type="integer"),
          *        example={
          *          "fullname": "Leonie Maggio",
@@ -249,8 +247,8 @@ class CustomerController extends Controller
          *          "email": "Leonie@gmail.com",
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "id_card": "",
-         *          "bithday": "1993-03-26",
-         *          "sex": "male",
+         *          "birthday": "1993-03-26",
+         *          "gender": "male",
          *          "customer_type_id": "1",
          *       }
          *     )
@@ -260,15 +258,16 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+        // is_null($request->fullname) ?: $attributes['fullname'] = $request->fullname;
+
         $attributes = [
             'fullname' => $request->fullname,
             'username' => $request->username,
-            'password' => $request->password,
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
-            'bithday'  => $request->bithday,
-            'sex'      => $request->sex,
+            'birthday'  => $request->birthday,
+            'gender'      => $request->gender,
             'customer_type_id' => $request->customer_type_id,
         ];
 

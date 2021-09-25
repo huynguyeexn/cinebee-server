@@ -149,7 +149,7 @@ class CustomerController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", gender, "customer_type_id"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", "gender", "customer_type_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
          *       @OA\Property(property="password", type="string"),
@@ -157,7 +157,7 @@ class CustomerController extends Controller
          *       @OA\Property(property="email",    type="string"),
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property=gender, type="string"),
+         *       @OA\Property(property="gender", type="string"),
          *       @OA\Property(property="customer_type_id", type="number"),
          *       example={
          *          "fullname": "Leonie Maggio",
@@ -167,7 +167,7 @@ class CustomerController extends Controller
          *          "email": "Leonie@gmail.com",
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "birthday": "1993-03-26",
-         *          gender: "2",
+         *          "gender": "2",
          *          "customer_type_id": "1",
          *       }
          *     )
@@ -231,7 +231,7 @@ class CustomerController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", gender, "customer_type_id"},
+         *       required={ "fullname", "username", "password", "phone", "email", "address", "birthday", "gender", "customer_type_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
          *       @OA\Property(property="password", type="string"),
@@ -239,7 +239,7 @@ class CustomerController extends Controller
          *       @OA\Property(property="email",    type="string"),
          *       @OA\Property(property="address",  type="string"),
          *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property=gender, type="string"),
+         *       @OA\Property(property="gender", type="string"),
          *       @OA\Property(property="customer_type_id", type="integer"),
          *        example={
          *          "fullname": "Leonie Maggio",
@@ -250,7 +250,7 @@ class CustomerController extends Controller
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "id_card": "",
          *          "bithday": "1993-03-26",
-         *          gender: "male",
+         *          "gender": "male",
          *          "customer_type_id": "1",
          *       }
          *     )

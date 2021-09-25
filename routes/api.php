@@ -31,15 +31,29 @@ use App\Http\Controllers\MovieGenreController;
 |
 */
 
+
 Route::prefix('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::middleware(['auth:api'])->group(function () {
+// admin 
+Route::group(['middleware' => ['assign.guard:admin']],function ()
+{
+	Route::post('login_admin', [AuthController::class, 'login_admin']);
+    Route::post('register_admin', [AuthController::class, 'register_admin']);
+    Route::middleware(['check.login'])->group(function () {
         Route::get('logout', [AuthController::class, 'logout']);
         Route::get('profile', [AuthController::class, 'profile']);
     });
 });
+// client
+Route::group(['middleware' => ['assign.guard:api']],function ()
+{
+	Route::post('login_user', [AuthController::class, 'login_user']);
+    Route::post('register_user', [AuthController::class, 'register_user']);	
+});
+
+
+   
+});
+
 /**
  * REST API - actor
  *  long add 06-09-2021

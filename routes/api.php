@@ -19,6 +19,9 @@ use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
+use App\Http\Controllers\Admin\AuthAdminController;
+use App\Http\Controllers\Admin\AuthStaffController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,22 +39,31 @@ Route::prefix('auth')->group(function () {
 // admin 
 Route::group(['middleware' => ['assign.guard:admin']],function ()
 {
-	Route::post('login_admin', [AuthController::class, 'login_admin']);
-    Route::post('register_admin', [AuthController::class, 'register_admin']);
-    Route::middleware(['check.login'])->group(function () {
-        Route::get('logout', [AuthController::class, 'logout']);
-        Route::get('profile', [AuthController::class, 'profile']);
+    // login admin
+    Route::group(['prefix'=>'admin'],function () {
+        Route::post('login', [AuthAdminController::class, 'login']);
+        Route::post('register', [AuthAdminController::class, 'register']);
     });
+    // login staff
+    Route::group(['prefix'=>'staff'],function () {
+        Route::post('login', [AuthStaffController::class, 'login']);
+        Route::post('register', [AuthStaffController::class, 'register']);
+    });
+    // profile admin, staff
+    Route::middleware(['check.login'])->group(function () {
+        Route::get('profile', [AuthAdminController::class, 'profile']);
+        Route::get('logout', [AuthAdminController::class,'logout']);
+    });
+  
 });
 // client
-Route::group(['middleware' => ['assign.guard:api']],function ()
-{
-	Route::post('login_user', [AuthController::class, 'login_user']);
-    Route::post('register_user', [AuthController::class, 'register_user']);	
-});
+// Route::group(['middleware' => ['assign.guard:api']],function ()
+// {
+// 	Route::post('login_user', [AuthController::class, 'login_user']);
+//     Route::post('register_user', [AuthController::class, 'register_user']);	
+// });
 
 
-   
 });
 
 /**

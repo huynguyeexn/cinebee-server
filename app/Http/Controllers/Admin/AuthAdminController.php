@@ -1,46 +1,40 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\RegisterRequest;
 use App\Http\Requests\LoginRequest;
-use App\Models\Customer;
 use App\Models\Employee;
-use App\Models\User;
-use App\Models\UserRole;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Contracts\Providers\JWT;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AuthController extends Controller
+class AuthAdminController extends Controller
 {
-    protected $guard_ad;
-    protected $guard_us;
+    protected $guard;
     public function __construct()
     {
-        $this->guard_ad = "admin"; // guard admin
-        // $this->guard_us = "api";  // guard user
+        $this->guard = "admin"; // guard admin
      }
 
     /**
      * @OA\Post(
      *   tags={"Admin"},
-     *   path="/api/auth/register_admin",
-     *   summary="Đăng ký nhân viên, quản lý",
+     *   path="/api/auth/admin/register",
+     *   summary="Đăng ký quản lý",
      *   @OA\RequestBody(
      *    required=true,
      *   @OA\JsonContent(
      *     type="object",
-     *     required={"fullname","email","username","password","address","role","sex"},
+     *     required={"fullname","email","username","password","address","sex"},
      *     @OA\Property(property="fullname", type="string"),
      *     @OA\Property(property="email", type="string"),
      *     @OA\Property(property="username", type="string"),
      *     @OA\Property(property="password", type="string"),
-     *     @OA\Property(property="role", type="string"),
+     *     @OA\Property(property="address", type="string"),
+     *     @OA\Property(property="sex", type="string"),
      *     example={
      *     "fullname":"Họ và tên",
      *     "username":"Tên tài khoản",
@@ -48,7 +42,6 @@ class AuthController extends Controller
      *     "email":"Email",
      *     "address":"Dịa chỉ",
      *     "sex":"Giới tính",
-     *     "employee_role_id":"1 nhân viên, 2 quản lý"
      *     }
      *   )),
      *   @OA\Response(response=200, description="OK"),
@@ -56,12 +49,12 @@ class AuthController extends Controller
      *   @OA\Response(response=404, description="Not Found")
      * )
      */
-    public function register_admin(RegisterRequest $request)
+    public function register(RegisterRequest $request)
     {
-        // 1 quản lý
         $user = Employee::create(array_merge(
             $request->validated(),
-            ['password' => Hash::make($request->password)]
+            ['password' => Hash::make($request->password)],
+            ['employee_role_id' => 1]
         ));
         return response()->json([
             'message' => 'User successfully registered',
@@ -71,20 +64,18 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *   tags={"Admin"},
-     *   path="/api/auth/login_admin",
-     *   summary="Đăng nhập quản lý,nhân viên",
+     *   path="/api/auth/admin/login",
+     *   summary="Đăng nhập quản lý",
      *   @OA\RequestBody(
      *    required=true,
      *   @OA\JsonContent(
      *     type="object",
-     *     required={"username","password","employee_role_id"},
+     *     required={"username","password"},
      *     @OA\Property(property="username", type="string"),
      *     @OA\Property(property="password", type="string"),
-     *     @OA\Property(property="employee_role_id", type="number"),
      *     example={
      *     "username":"Tên tài khoản",
      *     "password":"Mật khẩu",
-     *     "employee_role_id":"1 nhân viên, 2 quản lý"
      *     }
      *   )),
      *   @OA\Response(response=200, description="OK"),
@@ -92,74 +83,41 @@ class AuthController extends Controller
      *   @OA\Response(response=404, description="Not Found")
      * )
      */
-    public function login_admin(LoginRequest $request)
+    public function login(LoginRequest $request)
     {
-        if (!$token = Auth::guard($this->guard_ad)->attempt($request->validated())) {
+        // 2 quản lý
+        if (!$token = Auth::guard($this->guard)->attempt(['username'=>$request->username,
+        'password'=>$request->password,'employee_role_id'=>2])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_in' => JWTAuth::factory()->getTTL() * 60,
-            'user' => Auth::guard($this->guard_ad)->user()
+            'user' => Auth::guard($this->guard)->user()->fullname
         ]);
+        // return ;
     }
-    // khóa tạm thời mục dành cho client
-    // public function register_user(RegisterRequest $request)
-    // {
-    //     // 1 quản lý, 2 nhân viên
-    //     $user = User::create(array_merge(
-    //         $request->validated(),
-    //         ['password' => Hash::make($request->password)]
-    //     ));
-    //     return response()->json([
-    //         'message' => 'User successfully registered',
-    //         'user' => $user
-    //     ], 201);
-    // }
-   
-    // public function login_user(LoginRequest $request)
-    // {
-    //     if (!$token = Auth::guard($this->guard_us)->attempt($request->validate())) {
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-    //     }
-    //     return response()->json([
-    //         'access_token' => $token,
-    //         'token_type' => 'Bearer',
-    //         'expires_in' => JWTAuth::factory()->getTTL() * 60,
-    //         'user' => Auth::guard('api')->user()
-    //     ]);
-    // }
     /**
      * @OA\Get(
-     *   tags={"Admin"},
+     *   tags={"Profile and Logout admin , staff"},
      *   path="/api/auth/profile",
-     *   summary="Thông tin admin",
+     *   summary="Thông tin quản lý, nhân viên",
      *   @OA\Response(response=200, description="OK"),
      *   @OA\Response(response=401, description="Unauthorized"),
      *   @OA\Response(response=404, description="Not Found"),
      *   security={{ "bearerAuth":{}}}
      * )
      */
-    public function profile()  // profile admin
+    public function profile()  // profile 
     {
         $userId = Auth::user()->id;
         $user =  Employee::findOrFail($userId);
         return response()->json($user);
     }
-    // public function profile()  // profile client tạm thời khóa lại
-    // {
-    //     $userId = Auth::user()->id;
-    //     $user =  User::findOrFail($userId);
-    //     return response()->json($user);
-    // }
-    // public function refresh()
-    // {
-    //     return $this->createNewToken(JWTAuth::refresh());
-    // }
     /**
      * @OA\Get(
-     *   tags={"Admin"},
+     *   tags={"Profile and Logout admin , staff"},
      *   path="/api/auth/logout",
      *   summary="Đăng xuất",
      *   @OA\Response(response=200, description="OK"),
@@ -171,7 +129,6 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-        return response()->json(['message' => 'User successfully singed out'], 200);
+        return response()->json(['message' => 'Đăng xuất thành công'], 200);
     }
-
 }

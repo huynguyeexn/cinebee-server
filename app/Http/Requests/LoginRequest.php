@@ -25,8 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'username' => 'required|string',
-            'password' => 'required|string',
-            'employee_role_id'=>'required|integer|in:1,2'
+            'password' => 'required|string'
         ];
     }
 }

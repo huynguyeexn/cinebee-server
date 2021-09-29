@@ -10,7 +10,7 @@ interface RepositoryInterface
      * Get List
      * @return mixed
      */
-    public function getList(Request $request = null);
+    public function getList(Request $request = null, $child = null);
 
     /**
      * Get Deleted List
@@ -37,7 +37,7 @@ interface RepositoryInterface
      * @param array $attributes
      * @return mixed
      */
-    public function store($attributes = []);
+    public function store($attributes = [], $dataResponse = null);
 
     /**
      * Update

@@ -14,6 +14,7 @@ use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
@@ -618,4 +619,24 @@ Route::prefix('customers')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - FIle Upload
+ *
+ * Date: 26/09/2021
+ * Time: 19:30
+ * @author  HUi <huynguyeexn@gmail.com>
+ */
+
+Route::prefix('uploads')->group(function () {
+
+    // Get list
+    Route::get('/', [FileUploadController::class, 'index']);
+
+    // Image
+    Route::get('/images', [FileUploadController::class, 'imageList']);
+    Route::post('/images', [FileUploadController::class, 'imageUpload']);
 });

@@ -30,7 +30,6 @@ class MovieFactory extends Factory
             'name' => $name,
             'slug' => Str::slug($name),
             'trailer' => "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-            'thumbnail' => "https://cdn.filestackcontent.com/Krg875TyRVwr5OOumHAG",
             'likes' => $this->faker->numberBetween(100, 10000),
             'description' => $this->faker->text(500),
             'release_date' => $this->faker->dateTimeThisYear(),

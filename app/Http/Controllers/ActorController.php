@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 
 class ActorController extends Controller
 {
-    protected $ActocRepo;
-    public function __construct(ActorRepositoryInterface $ActocRepo)
+    protected $ActorRepo;
+    public function __construct(ActorRepositoryInterface $ActorRepo)
     {
-        $this->ActocRepo = $ActocRepo;
+        $this->ActorRepo = $ActorRepo;
     }
 
     public function index(ListRequest $request)
@@ -70,7 +70,7 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getList($request);
+        return $this->ActorRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
@@ -126,7 +126,7 @@ class ActorController extends Controller
          *
          * )
          */
-        return $this->ActocRepo->getDeletedList($request);
+        return $this->ActorRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
@@ -157,7 +157,7 @@ class ActorController extends Controller
             'slug' => $request->slug,
             'avatar' => $request->avatar
         ];
-        return $this->ActocRepo->store($attributes);
+        return $this->ActorRepo->store($attributes);
     }
 
     public function getById($id)
@@ -180,7 +180,7 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->ActocRepo->getById($id);
+        return $this->ActorRepo->getById($id);
     }
 
     public function getBySlug($slug)
@@ -203,7 +203,7 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->ActocRepo->getBySlug($slug);
+        return $this->ActorRepo->getBySlug($slug);
     }
 
     public function update(UpdateRequest $request, $id)
@@ -241,7 +241,7 @@ class ActorController extends Controller
             'avatar' => $request->avatar
         ];
 
-        return $this->ActocRepo->update($id, $attributes);
+        return $this->ActorRepo->update($id, $attributes);
     }
 
     public function delete($id)
@@ -262,7 +262,7 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->delete($id);
+        return $this->ActorRepo->delete($id);
     }
 
     public function remove($id)
@@ -283,7 +283,7 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->remove($id);
+        return $this->ActorRepo->remove($id);
     }
 
     public function restore($id)
@@ -304,7 +304,7 @@ class ActorController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->ActocRepo->restore($id);
+        return $this->ActorRepo->restore($id);
     }
 
     public function movies($id)
@@ -367,6 +367,6 @@ class ActorController extends Controller
          * )
          */
 
-        return $this->ActocRepo->getMovies($id);
+        return $this->ActorRepo->getMovies($id);
     }
 }

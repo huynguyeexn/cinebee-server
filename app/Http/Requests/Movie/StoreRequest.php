@@ -30,10 +30,10 @@ class StoreRequest extends FormRequest
             'name' => "string|max:100|required",
             'slug' => "unique:movies,slug|string|required",
             'trailer' => "string",
-            'thumbnail' => "string",
             'description' => "string",
             'release_date' => "date",
             'running_time' => "numeric",
+            'posters' => "array|required",
             'age_rating_id' => "required|integer|exists:$ageRatingId,id",
         ];
     }

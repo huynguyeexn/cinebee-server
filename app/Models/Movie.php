@@ -14,7 +14,6 @@ class Movie extends Model
         'name',
         'slug',
         'trailer',
-        'thumbnail',
         'description',
         'release_date',
         'running_time',
@@ -23,22 +22,30 @@ class Movie extends Model
 
     public function ageRating()
     {
-        return $this->belongsto(AgeRating::class);
+        return $this->belongsTo(AgeRating::class);
     }
 
     public function genres()
     {
-        return $this->belongsToMany(Genre::class,'movie_genres');
+        return $this->belongsToMany(Genre::class, 'movie_genres');
     }
 
     public function actors()
     {
-        return $this->belongsToMany(Actor::class,'movie_actors');
+        return $this->belongsToMany(Actor::class, 'movie_actors');
     }
 
     public function directors()
     {
-        return $this->belongsToMany(Director::class,'movie_directors');
+        return $this->belongsToMany(Director::class, 'movie_directors');
+    }
+    public function files()
+    {
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->withPivot('type');
+    }
+    public function posters()
+    {
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'thumb');
     }
 
     public function showtimes()

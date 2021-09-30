@@ -184,7 +184,7 @@ class CustomerController extends Controller
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
-            'birthday' => $request->birthday,
+            'birthday'  => \Carbon\Carbon::parse($request->birthday),
             'gender'      => $request->gender,
             'customer_type_id' => $request->customer_type_id,
         ];
@@ -266,7 +266,7 @@ class CustomerController extends Controller
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
-            'birthday'  => $request->birthday,
+            'birthday'  => \Carbon\Carbon::parse($request->birthday),
             'gender'      => $request->gender,
             'customer_type_id' => $request->customer_type_id,
         ];

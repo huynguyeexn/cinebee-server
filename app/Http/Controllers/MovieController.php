@@ -77,7 +77,7 @@ class MovieController extends Controller
          *
          * )
          */
-        return $this->movieRepo->getList($request, 'posters');
+        return $this->movieRepo->getList($request, ["posters", "backdrops"]);
     }
 
 
@@ -187,19 +187,15 @@ class MovieController extends Controller
             'age_rating_id' => $request->age_rating_id,
         ];
 
-        $addThumbType = function (int $id) {
-            return [$id => ["type" => "thumb"]];
-        };
-
-
         try {
             $movie =  Movie::create($attributes);
-            $movie->files()->sync(array_fill_keys($request->posters, ["type" => "thumb"]));
+            $movie->files()->attach(array_fill_keys($request->posters, ["type" => "poster"]));
+            $movie->files()->attach(array_fill_keys($request->backdrops, ["type" => "backdrop"]));
             $id = $movie->id;
             if ($movie) {
                 return response([
                     'message' => 'Nhập dữ liệu thành công!',
-                    'data' => $movie->with("posters")->find($id),
+                    'data' => $movie->with(["posters", "backdrops"])->find($id),
                 ], 200);
             }
         } catch (\Throwable $th) {

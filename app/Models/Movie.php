@@ -45,6 +45,10 @@ class Movie extends Model
     }
     public function posters()
     {
-        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'thumb');
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'poster');
+    }
+    public function backdrops()
+    {
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'backdrop');
     }
 }

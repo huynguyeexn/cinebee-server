@@ -77,7 +77,7 @@ class MovieController extends Controller
          *
          * )
          */
-        return $this->movieRepo->getList($request, ["posters", "backdrops"]);
+        return $this->movieRepo->getList($request, ["posters", "backdrops", "actors", "genres", "directors"]);
     }
 
 
@@ -189,8 +189,12 @@ class MovieController extends Controller
 
         try {
             $movie =  Movie::create($attributes);
+
             $movie->files()->attach(array_fill_keys($request->posters, ["type" => "poster"]));
             $movie->files()->attach(array_fill_keys($request->backdrops, ["type" => "backdrop"]));
+
+            $movie->actors()->attach($request->actors);
+            $movie->genres()->attach($request->genres);
             $id = $movie->id;
             if ($movie) {
                 return response([

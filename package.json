@@ -7,7 +7,7 @@
         "watch-poll": "mix watch -- --watch-options-poll=1000",
         "hot": "mix watch --hot",
         "prod": "npm run production",
-        "production": "mix --production",
+        "production": "mix --production"
     },
     "devDependencies": {
         "axios": "^0.21",
@@ -16,6 +16,6 @@
         "postcss": "^8.1.14"
     },
     "dependencies": {
-        "heroku": "^7.59.0",
+        "heroku": "^7.59.0"
     }
 }

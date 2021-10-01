@@ -101,14 +101,14 @@ class FileUploadController extends Controller
 
                 $image->move($path, $filename);
 
-                if($result = FileUpload::create([
+                if ($result = FileUpload::create([
                     'name' => $name,
                     'file_name' => $filename,
                     'type' => $mimeType,
                     'alt' => $alt,
                     'size' => $size,
                     'folder' => $path,
-                ])){
+                ])) {
                     array_push($response, $result);
                 };
             }

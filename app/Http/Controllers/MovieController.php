@@ -9,6 +9,7 @@ use App\Models\FileUpload;
 use App\Models\Movie;
 use App\Repositories\Movie\MovieRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MovieController extends Controller
 {
@@ -77,7 +78,7 @@ class MovieController extends Controller
          *
          * )
          */
-        return $this->movieRepo->getList($request, ["posters", "backdrops", "actors", "genres", "directors"]);
+        return $this->movieRepo->getList($request);
     }
 
 
@@ -193,13 +194,13 @@ class MovieController extends Controller
             $movie->files()->attach(array_fill_keys($request->posters, ["type" => "poster"]));
             $movie->files()->attach(array_fill_keys($request->backdrops, ["type" => "backdrop"]));
 
-            $movie->actors()->attach($request->actors);
-            $movie->genres()->attach($request->genres);
+            $movie->actorsFull()->attach($request->actors);
+            $movie->genresFull()->attach($request->genres);
             $id = $movie->id;
             if ($movie) {
                 return response([
                     'message' => 'Nhập dữ liệu thành công!',
-                    'data' => $movie->with(["posters", "backdrops"])->find($id),
+                    'data' => $movie,
                 ], 200);
             }
         } catch (\Throwable $th) {
@@ -282,10 +283,6 @@ class MovieController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $images = $request->images;
-
-        print_r($images);
-
 
         $attributes = [
             'name' => $request->name,
@@ -297,7 +294,35 @@ class MovieController extends Controller
             'age_rating_id' => $request->age_rating_id,
         ];
 
-        return $this->movieRepo->update($id, $attributes);
+        $posters = array(array_fill_keys(
+            $request->posters,
+            ["type" => "poster"]
+        ));
+
+        $backdrops = array(array_fill_keys(
+            $request->backdrops,
+            ["type" => "backdrop"]
+        ));
+
+        try {
+            $movie = Movie::findOrFail($id);
+
+            $movie->files()->sync([...array_replace_recursive($posters, $backdrops)][0]);
+
+            $movie->actorsFull()->sync($request->actors);
+            $movie->genresFull()->sync($request->genres);
+
+            $movie->update($attributes);
+            $id = $movie->id;
+            if ($movie) {
+                return response([
+                    'message' => 'Cập nhật dữ liệu thành công!',
+                    'data' => $movie,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
 

@@ -81,6 +81,18 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Customer\CustomerRepositoryInterface::class,
             \App\Repositories\Customer\CustomerRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Combo\ComboRepositoryInterface::class,
+            \App\Repositories\Combo\ComboRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\ComboTicket\ComboTicketRepositoryInterface::class,
+            \App\Repositories\ComboTicket\ComboTicketRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\ComboItem\ComboItemRepositoryInterface::class,
+            \App\Repositories\ComboItem\ComboItemRepository::class,
+        );
     }
 
     /**

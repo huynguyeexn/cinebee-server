@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
+use App\Http\Controllers\ComboController;
+use App\Http\Controllers\ComboItemController;
+use App\Http\Controllers\ComboTicketController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\GenreController;
@@ -618,4 +621,119 @@ Route::prefix('customers')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 25/09/2021
+ * Time: 12:22
+ * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
+ */
+Route::prefix('combo')->group(function () {
+
+    // Get list
+    Route::get('/', [ComboController::class, 'index']);
+
+    // Get by id
+    Route::get('/{id}', [ComboController::class, 'getById'])->whereNumber('id');
+
+    // Get deleted list
+    Route::get('/deleted', [ComboController::class, 'deleted']);
+
+    // Get by slug
+    Route::get('/{slug}', [ComboController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Create new
+    Route::post('/', [ComboController::class, 'store']);
+
+    // Update by id
+    Route::put('/{id}', [ComboController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('/{id}/delete', [ComboController::class, 'delete'])->whereNumber('id');
+
+    // Restore
+    Route::patch('/{id}/restore', [ComboController::class, 'restore'])->whereNumber('id');
+
+    // Remove
+    Route::delete('/{id}/remove', [ComboController::class, 'remove'])->whereNumber('id');
+});
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 27/09/2021
+ * Time: 2:22
+ * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
+ */
+Route::prefix('comboticket')->group(function () {
+
+    // Get list
+    Route::get('/', [ComboTicketController::class, 'index']);
+
+    // Get by id
+    Route::get('/{id}', [ComboTicketController::class, 'getById'])->whereNumber('id');
+
+    // Get deleted list
+    Route::get('/deleted', [ComboTicketController::class, 'deleted']);
+
+    // Get by slug
+    Route::get('/{slug}', [ComboTicketController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Create new
+    Route::post('/', [ComboTicketController::class, 'store']);
+
+    // Update by id
+    Route::put('/{id}', [ComboTicketController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('/{id}/delete', [ComboTicketController::class, 'delete'])->whereNumber('id');
+
+    // Restore
+    Route::patch('/{id}/restore', [ComboTicketController::class, 'restore'])->whereNumber('id');
+
+    // Remove
+    Route::delete('/{id}/remove', [ComboTicketController::class, 'remove'])->whereNumber('id');
+});
+
+
+
+/**
+ * REST API - Customers
+ *
+ * Date: 2/10/2021
+ * Time: 9:22
+ * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
+ */
+Route::prefix('comboitem')->group(function () {
+
+    // Get list
+    Route::get('/', [ComboItemController::class, 'index']);
+
+    // Get by id
+    Route::get('/{id}', [ComboItemController::class, 'getById'])->whereNumber('id');
+
+    // Get deleted list
+    Route::get('/deleted', [ComboItemController::class, 'deleted']);
+
+    // Get by slug
+    Route::get('/{slug}', [ComboItemController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+
+    // Create new
+    Route::post('/', [ComboItemController::class, 'store']);
+
+    // Update by id
+    Route::put('/{id}', [ComboItemController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('/{id}/delete', [ComboItemController::class, 'delete'])->whereNumber('id');
+
+    // Restore
+    Route::patch('/{id}/restore', [ComboItemController::class, 'restore'])->whereNumber('id');
+
+    // Remove
+    Route::delete('/{id}/remove', [ComboItemController::class, 'remove'])->whereNumber('id');
 });

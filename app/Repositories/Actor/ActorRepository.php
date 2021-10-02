@@ -12,7 +12,7 @@ class ActorRepository extends BaseRepository implements ActorRepositoryInterface
     {
         return Actor::class;
     }
-    
+
     public function getMovies($id)
     {
         $data = $this->model->findOrFail($id)->movies;

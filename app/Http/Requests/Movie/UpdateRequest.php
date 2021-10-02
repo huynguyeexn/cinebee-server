@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
         return [
             //
             'name' => "string|max:100|required",
-            'slug' => "unique:movies,slug,$this->id,id|string|required",
+            'slug' => "string|required",
             'trailer' => "string",
             'thumbnail' => "string",
             'description' => "string",

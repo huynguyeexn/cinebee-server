@@ -250,7 +250,7 @@ class EmployeeController extends Controller
          *          "email": "Leonie@gmail.com",
          *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
          *          "id_card": "",
-         *          "bithday": "1993-03-26",
+         *          "birthday": "1993-03-26",
          *          "gender": "male",
          *          "employee_role_id": "1",
          *       }
@@ -269,7 +269,7 @@ class EmployeeController extends Controller
             'email'    => $request->email,
             'address'  => $request->address,
             'id_card'  => $request->id_card,
-            'bithday'  => $request->bithday,
+            'birthday'  => $request->birthday,
             'gender'      => $request->gender,
             'employee_role_id' => $request->employee_role_id,
         ];

@@ -68,7 +68,7 @@ class GenreController extends Controller
          *
          * )
          */
-        return $this->GenreRepo->getList($request);
+        return $this->GenreRepo->getList($request, "movies");
     }
     public function deleted(ListRequest $request)
     {

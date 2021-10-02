@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             'fullname' => 'required|string',
             'avatar' => 'required|string',
-            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:actor,slug,$this->id"
+            'slug' => "string|required|regex:/^[a-z0-9-]+$/|unique:actors,slug,$this->id"
         ];
     }
 }

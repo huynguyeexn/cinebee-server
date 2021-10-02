@@ -24,8 +24,9 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'   => 'string|required',
-            'avatar' => 'string|required'
+            'fullname'   => 'string|required',
+            'avatar' => 'string',
+            'slug' => 'unique:directors,slug|string|required|regex:/^[a-z0-9-]+$/',
         ];
     }
 }

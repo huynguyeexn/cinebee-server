@@ -158,9 +158,9 @@ class DirectorController extends Controller
          * )
          */
         $attributes = [
-            'name' => $request->name,
+            'fullname' => $request->fullname,
             'avatar' => $request->avatar,
-            'slug' => Str::slug($request->name, '-'),
+            'slug' =>  $request->slug,
         ];
         return $this->directorRepo->store($attributes);
     }
@@ -218,9 +218,9 @@ class DirectorController extends Controller
          * )
          */
         $attributes = [
-            'name' => $request->name,
+            'fullname' => $request->fullname,
             'avatar' => $request->avatar,
-            'slug' => Str::slug($request->name, '-'),
+            'slug' => $request->slug,
         ];
 
         return $this->directorRepo->update($id, $attributes);

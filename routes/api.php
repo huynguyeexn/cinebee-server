@@ -70,8 +70,12 @@ Route::group(['middleware' => ['assign.guard:admin']],function ()
  * REST API - actor
  *  long add 06-09-2021
  */
+// Route::group(['middleware' => ['assign.guard:admin','check.login']],function ()  tạm thời comment lại
+// {
 Route::prefix('actors')->group(function () {
+
     Route::get('/', [ActorController::class, 'index']);
+
     // Get deleted list
     Route::get('/deleted', [ActorController::class, 'deleted']);
 
@@ -98,7 +102,37 @@ Route::prefix('actors')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+    // tạm thời comment lại 
+    // Route::get('/', [ActorController::class, 'index'])->middleware('checkRole:list-actors');
+
+    // // Get deleted list
+    // Route::get('/deleted', [ActorController::class, 'deleted'])->middleware('checkRole:list-actors');
+
+    // // Create new
+    // Route::post('/', [ActorController::class, 'store'])->middleware('checkRole:add-actors');
+
+    // // Get by ID
+    // Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id')->middleware('checkRole:edit-actors');
+
+    // // Get by slug
+    // Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$'])->middleware('checkRole:edit-actors');
+
+    // // Get Movie of actor
+    // Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+
+    // // Update
+    // Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id')->middleware('checkRole:update-actors');
+
+    // // Soft Delete
+    // Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id')->middleware('checkRole:delete-actors');
+
+    // // Hard Delete
+    // Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id')->middleware('checkRole:delete-actors');
+
+    // // Restore
+    // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
 });
+// });
 /**
  * REST API - genre
  *  long add 06-09-2021

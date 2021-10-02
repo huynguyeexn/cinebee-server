@@ -32,7 +32,7 @@ class Employee extends Authenticatable implements JWTSubject
 
     public function employeeRoles()
     {
-        return $this->belongsto(EmployeeRole::class);
+        return $this->belongsto(EmployeeRole::class,'employee_role_id');
     }
     public function getJWTIdentifier()
     {

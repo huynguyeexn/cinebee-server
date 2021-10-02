@@ -13,7 +13,7 @@ class permissionSeed extends Seeder
      */
     public function run()
     {
-        $array1 = ['add','update','edit','delete'];
+        $array1 = ['list','add','edit','update','delete','restore'];
         $actors = 'actors';
         $genres = 'genres';
         $seat_status = 'seat-status';
@@ -35,15 +35,28 @@ class permissionSeed extends Seeder
         $room_status,$items,$rooms,$seats,$employee_roles,
         $employee,$directors,$age_ratings,$movies,$movie_directors,
         $movie_actors,$movie_genres,$customer_types,$customers];
-
+        $display_name = "";
         foreach($array2 as $ar2){
             foreach($array1 as $val){
                $name = $val.'-'.$ar2;
                $count = DB::table('permissions')->where('name',$name)->count();
                 if($count == 0){
+                    if($val == "list"):
+                        $display_name = "Danh sách";
+                    elseif($val == 'add'):
+                        $display_name = "Thêm";
+                    elseif($val == 'edit'):
+                        $display_name = "Sửa";
+                    elseif($val == 'update'):
+                        $display_name = "Cập nhật";
+                    elseif($val == 'delete'):
+                        $display_name = "Xóa";
+                    elseif($val == 'restore'):
+                        $display_name = "Khôi phục";
+                    endif;
                     DB::table('permissions')->insert([
                         'name'=>  $name,
-                        'display_name'=> $name
+                        'display_name'=> $display_name ." ". $ar2
                     ]);
                 }
             }

@@ -17,28 +17,37 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            ItemSeed::class,
-            RoomStatusSeed::class,
-            SeatStatusSeed::class,
-            UserRoleSeed::class,
-            UserSeed::class,
-            RoomSeeder::class,
-            SeatSeeder::class,
             EmployeeRoleSeed::class,
             EmployeeSeed::class,
-            MovieSeeder::class,
-            ActorSeed::class,
-            GenreSeed::class,
             EmployeeRoleSeed::class,
-            DirectorSeed::class,
+
+            UserRoleSeed::class,
+            UserSeed::class,
+
+            CustomerTypeSeed::class,
+            CustomerSeed::class,
+
+            RoomStatusSeed::class,
+            RoomSeeder::class,
+
+            SeatStatusSeed::class,
+            SeatSeeder::class,
+
             AgeRatingSeeder::class,
-            MovieDirectorSeed::class,
+            // ActorSeed::class,
+            GenreSeed::class,
+            DirectorSeed::class,
+
+            // MovieActorSeed::class,
             MovieGenreSeed::class,
             MovieActorSeed::class,
             CustomerTypeSeed::class,
             CustomerSeed::class,
             ShowtimeSeed::class,
             MovieTicketSeed::class,
+            MovieDirectorSeed::class,
+
+            ItemSeed::class,
         ]);
     }
 }

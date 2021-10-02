@@ -46,16 +46,20 @@ abstract class BaseRepository implements RepositoryInterface
         return $list;
     }
 
-    public function getById($id)
+    public function getById($id, $child = null)
     {
         try {
-            return  $this->model->findorfail($id);
+            if ($child === null) {
+                return  $this->model->findOrFail($id);
+            } else {
+                return  $this->model->with($child)->findOrFail($id);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function getBySlug($slug)
+    public function getBySlug($slug, $child = null)
     {
         try {
             return $this->model->where('slug', 'like', $slug)->firstOrFail();

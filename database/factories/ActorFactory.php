@@ -23,11 +23,11 @@ class ActorFactory extends Factory
     public function definition()
     {
         $name_slug = $this->faker->sentence($this->faker->numberBetween(1, 5), true);
-        $avartarID = rand(0, 3000);
+        $id = rand(0, 3000);
         return [
-            'name' => $name_slug,
+            'fullname' => $name_slug,
             'slug' => Str::slug($name_slug),
-            'avatar' => "https://i.picsum.photos/id/$avartarID/200/200.jpg",
+            'avatar' => "https://picsum.photos/200/300?random=$id",
         ];
     }
 }

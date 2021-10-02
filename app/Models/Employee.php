@@ -27,7 +27,8 @@ class Employee extends Authenticatable implements JWTSubject
     ];
 
     protected $hidden = [
-        'deleted_at'
+        'deleted_at',
+        'password'
     ];
 
     public function employeeRoles()

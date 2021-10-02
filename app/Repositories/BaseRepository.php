@@ -159,6 +159,8 @@ abstract class BaseRepository implements RepositoryInterface
         $per_page = $request->per_page ?? 10;
         $sort_by = $request->sort_by ?? NULL;
         $sort_type = $request->sort_type ?? 'asc';
+        $filter = $request->filter ?? NULL;
+        $filter_by = $request->filter_by ?? NULL;
 
         // Check column exists
         if ($sort_by !== NULL && !columnExists($model, $sort_by)) {
@@ -166,6 +168,15 @@ abstract class BaseRepository implements RepositoryInterface
             return response()->json([
                 'message' => 'Dữ liệu không hợp lệ!',
                 'errors' => ['sort_by' => 'Dữ liệu sắp xếp không hợp lệ.']
+            ], 422);
+        }
+
+        // Check column exists
+        if ($filter_by !== NULL && !columnExists($model, $filter_by)) {
+            // Return errors when not exists
+            return response()->json([
+                'message' => 'Dữ liệu không hợp lệ!',
+                'errors' => ['filter_by' => 'Dữ liệu lọc không hợp lệ.']
             ], 422);
         }
 
@@ -178,7 +189,11 @@ abstract class BaseRepository implements RepositoryInterface
         }
 
         if ($query && $search) {
-            $sql->where("$search", 'ILIKE', "%$query%");
+            $sql->where("$search", 'ILIKE', "$query%");
+        }
+
+        if ($filter_by && $filter) {
+            $sql->where("$filter_by", "$filter");
         }
 
         if ($sort_by) {

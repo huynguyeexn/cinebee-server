@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Director extends Model
 {
-    use HasFactory,SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name',
+        'fullname',
         'avatar',
         'slug'
     ];
@@ -22,6 +22,6 @@ class Director extends Model
 
     public function movies()
     {
-        return $this->belongsToMany(Movie::class,'movie_directors');
+        return $this->belongsToMany(Movie::class, 'movie_directors');
     }
 }

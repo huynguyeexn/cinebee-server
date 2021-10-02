@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\Movie\StoreRequest;
 use App\Http\Requests\Movie\UpdateRequest;
-use App\Models\FileUpload;
 use App\Models\Movie;
 use App\Repositories\Movie\MovieRepositoryInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class MovieController extends Controller
 {
@@ -194,9 +191,9 @@ class MovieController extends Controller
             $movie->files()->attach(array_fill_keys($request->posters, ["type" => "poster"]));
             $movie->files()->attach(array_fill_keys($request->backdrops, ["type" => "backdrop"]));
 
+            $movie->directorsFull()->attach($request->directors);
             $movie->actorsFull()->attach($request->actors);
             $movie->genresFull()->attach($request->genres);
-            $id = $movie->id;
             if ($movie) {
                 return response([
                     'message' => 'Nhập dữ liệu thành công!',
@@ -311,6 +308,7 @@ class MovieController extends Controller
 
             $movie->actorsFull()->sync($request->actors);
             $movie->genresFull()->sync($request->genres);
+            $movie->directorsFull()->attach($request->directors);
 
             $movie->update($attributes);
             $id = $movie->id;

@@ -22,6 +22,7 @@ use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\AuthStaffController;
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -681,7 +682,11 @@ Route::prefix('customers')->group(function () {
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });
 
+Route::prefix('permission')->group(function () {
 
+    // Get list
+    Route::get('/', [PermissionController::class, 'index']);
+});
 
 /**
  * REST API - FIle Upload

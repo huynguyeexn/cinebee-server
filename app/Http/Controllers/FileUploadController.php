@@ -19,14 +19,12 @@ class FileUploadController extends Controller
 
     public function imageList()
     {
-        echo 'image list';
+        $files = FileUpload::where('type', 'image');
+        return response()->json(["status" => "success", "count" => count($files), "data" => $files]);
     }
 
     public function imageUpload(Request $request)
     {
-        // $imagesName = [];
-        // $response = [];
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -53,11 +51,10 @@ class FileUploadController extends Controller
             $alt = $name;
             // size
             $size = $image->getSize();
-
             // folder
             $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-            Storage::disk('s3')->put($path . $filename, file_get_contents($image));
+            Storage::disk()->put($path . $filename, file_get_contents($image));
             $url = Storage::url($path . $filename);
 
             $response = FileUpload::create([
@@ -90,7 +87,7 @@ class FileUploadController extends Controller
                 // folder
                 $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-                Storage::disk('s3')->put($path . $filename, file_get_contents($image));
+                Storage::disk()->put($path . $filename, file_get_contents($image));
                 $url = Storage::url($path . $filename);
 
                 if ($result = FileUpload::create([

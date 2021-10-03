@@ -57,8 +57,8 @@ class FileUploadController extends Controller
             // folder
             $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-            Storage::disk('s3')->put($path . '/' . $filename, file_get_contents($image));
-            $url = Storage::url($path . '/' . $filename);
+            Storage::disk('s3')->put($path . $filename, file_get_contents($image));
+            $url = Storage::url($path . $filename);
 
             $response = FileUpload::create([
                 'name' => $name,
@@ -90,8 +90,8 @@ class FileUploadController extends Controller
                 // folder
                 $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-                Storage::disk('s3')->put($path . '/' . $filename, file_get_contents($image));
-                $url = Storage::url($path . '/' . $filename);
+                Storage::disk('s3')->put($path . $filename, file_get_contents($image));
+                $url = Storage::url($path . $filename);
 
                 if ($result = FileUpload::create([
                     'name' => $name,

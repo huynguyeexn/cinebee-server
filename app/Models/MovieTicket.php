@@ -6,32 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Room extends Model
+class MovieTicket extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "name",
-        "room_status_id"
+        'get_at',
+        'showtime_id',
+        'seat_id',
+        'price'
     ];
 
     protected $hidden = [
-        'delete_at'
+        'deleted_at'
     ];
-
-    public function roomSatus()
-    {
-        return $this->belongsto(RoomStatus::class);
-    }
-
-
-    public function seats()
-    {
-        return $this->hasMany(Seat::class);
-    }
 
     public function showtimes()
     {
-        return $this->hasMany(Showtime::class);
+        return $this->belongsto(Showtime::class);
+    }
+
+    public function seats()
+    {
+        return $this->belongsto(Seat::class);
     }
 }

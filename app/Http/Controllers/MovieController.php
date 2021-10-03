@@ -575,4 +575,28 @@ class MovieController extends Controller
 
         return $this->movieRepo->getDirectors($id);
     }
+
+    public function showtimes($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Movies"},
+         *   path="/api/movies/{id}/showtimes",
+         *   summary="List Showtimes of Movie",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *      description="Movie ID",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->movieRepo->getShowtimes($id);
+    }
 }

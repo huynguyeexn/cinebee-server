@@ -20,7 +20,6 @@ use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
-use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,32 +36,30 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::prefix('auth')->group(function () {
-// admin 
-Route::group(['middleware' => ['assign.guard:admin']],function ()
-{
-    // login admin
-    Route::group(['prefix'=>'admin'],function () {
-        Route::post('login', [AuthAdminController::class, 'login']);
-        Route::post('register', [AuthAdminController::class, 'register']);
+    // admin
+    Route::group(['middleware' => ['assign.guard:admin']], function () {
+        // login admin
+        Route::group(['prefix' => 'admin'], function () {
+            Route::post('login', [AuthAdminController::class, 'login']);
+            Route::post('register', [AuthAdminController::class, 'register']);
+        });
+        // login staff
+        Route::group(['prefix' => 'staff'], function () {
+            Route::post('login', [AuthStaffController::class, 'login']);
+            Route::post('register', [AuthStaffController::class, 'register']);
+        });
+        // profile admin, staff
+        Route::middleware(['check.login'])->group(function () {
+            Route::get('profile', [AuthAdminController::class, 'profile']);
+            Route::get('logout', [AuthAdminController::class, 'logout']);
+        });
     });
-    // login staff
-    Route::group(['prefix'=>'staff'],function () {
-        Route::post('login', [AuthStaffController::class, 'login']);
-        Route::post('register', [AuthStaffController::class, 'register']);
-    });
-    // profile admin, staff
-    Route::middleware(['check.login'])->group(function () {
-        Route::get('profile', [AuthAdminController::class, 'profile']);
-        Route::get('logout', [AuthAdminController::class,'logout']);
-    });
-  
-});
-// client
-// Route::group(['middleware' => ['assign.guard:api']],function ()
-// {
-// 	Route::post('login_user', [AuthController::class, 'login_user']);
-//     Route::post('register_user', [AuthController::class, 'register_user']);	
-// });
+    // client
+    // Route::group(['middleware' => ['assign.guard:api']],function ()
+    // {
+    // 	Route::post('login_user', [AuthController::class, 'login_user']);
+    //     Route::post('register_user', [AuthController::class, 'register_user']);
+    // });
 
 
 });
@@ -103,7 +100,7 @@ Route::prefix('actors')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
-    // tạm thời comment lại 
+    // tạm thời comment lại
     // Route::get('/', [ActorController::class, 'index'])->middleware('checkRole:list-actors');
 
     // // Get deleted list
@@ -279,9 +276,11 @@ Route::prefix('rooms')->group(function () {
     // Get by ID
     Route::get('/{id}', [RoomController::class, 'getById'])->whereNumber('id');
 
-
     // Get Seat of room
     Route::get('/{id}/seats', [RoomController::class, 'getSeats'])->whereNumber('id');
+
+    // Get showtime of room
+    Route::get('/{id}/showtimes', [RoomController::class, 'showtimes'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [RoomController::class, 'update'])->whereNumber('id');
@@ -509,6 +508,9 @@ Route::prefix('movies')->group(function () {
 
     // Get director of movie
     Route::get('/{id}/directors', [MovieController::class, 'directors'])->whereNumber('id');
+
+    // Get showtime of movie
+    Route::get('/{id}/showtimes', [MovieController::class, 'showtimes'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');

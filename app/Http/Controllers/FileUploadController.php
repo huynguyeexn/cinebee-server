@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FileUpload;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -18,14 +19,12 @@ class FileUploadController extends Controller
 
     public function imageList()
     {
-        echo 'image list';
+        $files = FileUpload::where('type', 'image');
+        return response()->json(["status" => "success", "count" => count($files), "data" => $files]);
     }
 
     public function imageUpload(Request $request)
     {
-        // $imagesName = [];
-        // $response = [];
-
         $validator = Validator::make(
             $request->all(),
             [
@@ -50,23 +49,13 @@ class FileUploadController extends Controller
             $mimeType = 'image';
             // alt
             $alt = $name;
-
             // size
             $size = $image->getSize();
-
             // folder
             $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-            // dd([
-            //     'name' => $name,
-            //     'filename' => $filename,
-            //     'mimeType' => $mimeType,
-            //     'alt' => $alt,
-            //     'size' => $size,
-            //     'path' => $path,
-            // ]);
-
-            $image->move($path, $filename);
+            Storage::disk()->put($path . $filename, file_get_contents($image));
+            $url = Storage::url($path . $filename);
 
             $response = FileUpload::create([
                 'name' => $name,
@@ -75,6 +64,7 @@ class FileUploadController extends Controller
                 'alt' => $alt,
                 'size' => $size,
                 'folder' => $path,
+                'url' => $url,
             ]);
 
             return response()->json(["data" => $response], 201);
@@ -92,14 +82,13 @@ class FileUploadController extends Controller
                 $mimeType = 'image';
                 // alt
                 $alt = $name;
-
                 // size
                 $size = $image->getSize();
-
                 // folder
                 $path = 'uploads/' . Carbon::now()->format('Y/m/d/');
 
-                $image->move($path, $filename);
+                Storage::disk()->put($path . $filename, file_get_contents($image));
+                $url = Storage::url($path . $filename);
 
                 if ($result = FileUpload::create([
                     'name' => $name,
@@ -108,6 +97,7 @@ class FileUploadController extends Controller
                     'alt' => $alt,
                     'size' => $size,
                     'folder' => $path,
+                    'url' => $url,
                 ])) {
                     array_push($response, $result);
                 };

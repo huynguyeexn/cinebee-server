@@ -14,13 +14,14 @@ use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
-use App\Http\Controllers\MovieTicketController;
-use App\Http\Controllers\ShowtimeController;
+use App\Http\Controllers\Admin\AuthStaffController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,21 +34,46 @@ use App\Http\Controllers\ShowtimeController;
 |
 */
 
+
 Route::prefix('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::middleware(['auth:api'])->group(function () {
-        Route::get('logout', [AuthController::class, 'logout']);
-        Route::get('profile', [AuthController::class, 'profile']);
+    // admin
+    Route::group(['middleware' => ['assign.guard:admin']], function () {
+        // login admin
+        Route::group(['prefix' => 'admin'], function () {
+            Route::post('login', [AuthAdminController::class, 'login']);
+            Route::post('register', [AuthAdminController::class, 'register']);
+        });
+        // login staff
+        Route::group(['prefix' => 'staff'], function () {
+            Route::post('login', [AuthStaffController::class, 'login']);
+            Route::post('register', [AuthStaffController::class, 'register']);
+        });
+        // profile admin, staff
+        Route::middleware(['check.login'])->group(function () {
+            Route::get('profile', [AuthAdminController::class, 'profile']);
+            Route::get('logout', [AuthAdminController::class, 'logout']);
+        });
     });
+    // client
+    // Route::group(['middleware' => ['assign.guard:api']],function ()
+    // {
+    // 	Route::post('login_user', [AuthController::class, 'login_user']);
+    //     Route::post('register_user', [AuthController::class, 'register_user']);
+    // });
+
+
 });
+
 /**
  * REST API - actor
  *  long add 06-09-2021
  */
+// Route::group(['middleware' => ['assign.guard:admin','check.login']],function ()  tạm thời comment lại
+// {
 Route::prefix('actors')->group(function () {
+
     Route::get('/', [ActorController::class, 'index']);
+
     // Get deleted list
     Route::get('/deleted', [ActorController::class, 'deleted']);
 
@@ -74,7 +100,37 @@ Route::prefix('actors')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+    // tạm thời comment lại
+    // Route::get('/', [ActorController::class, 'index'])->middleware('checkRole:list-actors');
+
+    // // Get deleted list
+    // Route::get('/deleted', [ActorController::class, 'deleted'])->middleware('checkRole:list-actors');
+
+    // // Create new
+    // Route::post('/', [ActorController::class, 'store'])->middleware('checkRole:add-actors');
+
+    // // Get by ID
+    // Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id')->middleware('checkRole:edit-actors');
+
+    // // Get by slug
+    // Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$'])->middleware('checkRole:edit-actors');
+
+    // // Get Movie of actor
+    // Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+
+    // // Update
+    // Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id')->middleware('checkRole:update-actors');
+
+    // // Soft Delete
+    // Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id')->middleware('checkRole:delete-actors');
+
+    // // Hard Delete
+    // Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id')->middleware('checkRole:delete-actors');
+
+    // // Restore
+    // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
 });
+// });
 /**
  * REST API - genre
  *  long add 06-09-2021
@@ -630,74 +686,19 @@ Route::prefix('customers')->group(function () {
 
 
 /**
- * REST API - Customers
+ * REST API - FIle Upload
  *
- * Date: 21/09/2021
- * Time: 20:30
- * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ * Date: 26/09/2021
+ * Time: 19:30
+ * @author  HUi <huynguyeexn@gmail.com>
  */
-Route::prefix('showtimes')->group(function () {
+
+Route::prefix('uploads')->group(function () {
 
     // Get list
-    Route::get('/', [ShowtimeController::class, 'index']);
+    Route::get('/', [FileUploadController::class, 'index']);
 
-    // Get deleted list
-    Route::get('/deleted', [ShowtimeController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [ShowtimeController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
-
-    // Get Movie Ticket of Showtime
-    Route::get('/{id}/movie-ticket', [ShowtimeController::class, 'movieTicket'])->whereNumber('id');
-
-    // Update
-    Route::put('/{id}', [ShowtimeController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [ShowtimeController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [ShowtimeController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [ShowtimeController::class, 'restore'])->whereNumber('id');
-});
-
-
-
-/**
- * REST API - Customers
- *
- * Date: 21/09/2021
- * Time: 21:30
- * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
- */
-Route::prefix('movie-tickets')->group(function () {
-
-    // Get list
-    Route::get('/', [MovieTicketController::class, 'index']);
-
-    // Get deleted list
-    Route::get('/deleted', [MovieTicketController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [MovieTicketController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [MovieTicketController::class, 'getById'])->whereNumber('id');
-
-    // Update
-    Route::put('/{id}', [MovieTicketController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [MovieTicketController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [MovieTicketController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
+    // Image
+    Route::get('/images', [FileUploadController::class, 'imageList']);
+    Route::post('/images', [FileUploadController::class, 'imageUpload']);
 });

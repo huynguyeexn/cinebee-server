@@ -14,36 +14,67 @@ class Movie extends Model
         'name',
         'slug',
         'trailer',
-        'thumbnail',
         'description',
         'release_date',
         'running_time',
         'age_rating_id',
     ];
 
+    protected $appends = [
+        'genres', 'actors', 'directors', 'posters',
+        'backdrops'
+    ];
+
     public function ageRating()
     {
-        return $this->belongsto(AgeRating::class);
+        return $this->belongsTo(AgeRating::class);
     }
 
-    public function genres()
+    public function genresFull()
     {
-        return $this->belongsToMany(Genre::class,'movie_genres');
+        return $this->belongsToMany(Genre::class, 'movie_genres');
     }
 
-    public function actors()
+    public function actorsFull()
     {
-        return $this->belongsToMany(Actor::class,'movie_actors');
+        return $this->belongsToMany(Actor::class, 'movie_actors');
     }
 
-    public function directors()
+    public function directorsFull()
     {
-        return $this->belongsToMany(Director::class,'movie_directors');
+        return $this->belongsToMany(Director::class, 'movie_directors');
     }
-
-    public function showtimes()
+    public function files()
     {
-        return $this->hasMany(Showtime::class);
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->withPivot('type');
+    }
+    public function postersFull()
+    {
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'poster');
+    }
+    public function backdropsFull()
+    {
+        return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'backdrop');
     }
 
+    public function getGenresAttribute()
+    {
+        return $this->genresFull->pluck('id');
+    }
+    public function getActorsAttribute()
+    {
+        return $this->actorsFull->pluck('id');
+    }
+    public function getDirectorsAttribute()
+    {
+        return $this->directorsFull->pluck('id');
+    }
+    public function getPostersAttribute()
+    {
+        return $this->postersFull->pluck('id');
+    }
+    public function getBackdropsAttribute()
+    {
+        return $this->backdropsFull->pluck('id');
+    }
 }

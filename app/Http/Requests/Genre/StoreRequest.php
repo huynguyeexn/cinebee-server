@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'slug' => 'unique:genre,slug|string|required|regex:/^[a-z0-9-]+$/'
+            'slug' => 'unique:genres,slug|string|required|regex:/^[a-z0-9-]+$/'
         ];
     }
 }

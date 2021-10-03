@@ -7,7 +7,6 @@ use App\Http\Requests\Movie\StoreRequest;
 use App\Http\Requests\Movie\UpdateRequest;
 use App\Models\Movie;
 use App\Repositories\Movie\MovieRepositoryInterface;
-use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
@@ -153,16 +152,21 @@ class MovieController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "slug", "trailer", "thumbnail", "likes", "description", "release_date", "running_time", "age_rating_id"},
+         *       required={"name", "slug", "age_rating_id"},
          *       @OA\Property(property="name", type="string"),
          *       @OA\Property(property="slug", type="string"),
          *       @OA\Property(property="trailer", type="string"),
-         *       @OA\Property(property="thumbnail", type="string"),
          *       @OA\Property(property="description", type="string"),
          *       @OA\Property(property="release_date", type="datetime"),
          *       @OA\Property(property="running_time", type="number"),
          *       @OA\Property(property="age_rating_id", type="number"),
-         *       example={"name": "Ten phim", "slug": "ten-phim","trailer":"https://www.youtube.com/watch?v=9ix7TUGVYIo", "thumbnail": "https://upload.wikimedia.org/wikipedia/vi/c/c1/The_Matrix_Poster.jpg", "description": "Một lập trình viên tên Thomas A. Anderson (Keanu Reeves) làm việc trong một công ty phần mềm, và còn là một hacker với biệt danh Neo. Neo thường đột nhập vào các hệ thống an ninh mạng, sau nhiều lần như thế, anh gặp gỡ một nhóm hacker bí ẩn. Họ thường giới thiệu với anh về thuật ngữ 'Ma Trận'. Một phụ nữ tên Trinity (Carrie-Anne Moss) gặp anh và hứa rằng Morpheus (Laurence Fishburne), thủ lĩnh của nhóm này có thể giải thích ý nghĩa của từ này. Tuy nhiên, một nhóm đặc vụ bắt giữ Neo và muốn anh giúp chúng bắt Morpheus, người mà chúng cho là 'kẻ khủng bố'. Neo vẫn tìm tới Morpheus và được yêu cầu chọn uống một viên thuốc màu đỏ hoặc một viên thuốc màu xanh dương. Nếu anh chọn uống viên màu đỏ, anh sẽ biết được sự thật về Ma trận. Nếu anh chọn uống viên màu xanh, anh sẽ trở về với cuộc sống bình thường của mình. Neo chọn uống viên thuốc màu đỏ và rơi vào trạng thái vô thức. Khi tỉnh dậy, anh thấy mình nằm trong một cái kén đầy chất lỏng, còn thân thể anh được nối với một cỗ máy khổng lồ bên ngoài căn phòng bằng hàng chục sợi dây điện. Morpheus giải cứu anh và hồi phục cơ thể yếu đuối của anh trên con tàu Nebuchadnezzar.", "release_date": "1999-03-31T00:00:00+07:00", "running_time": 136, "age_rating_id": 3}
+         *       @OA\Property(property="images", type="array",
+         *          @OA\Items(
+         *              type="number",
+         *          ),
+         *           description="bla bla bla"
+         *      ),
+         *       example={"name": "Ten phim", "slug": "ten-phim","trailer":"https://www.youtube.com/watch?v=9ix7TUGVYIo", "description": "Một lập trình viên tên Thomas A. Anderson (Keanu Reeves) làm việc trong một công ty phần mềm, và còn là một hacker với biệt danh Neo. Neo thường đột nhập vào các hệ thống an ninh mạng, sau nhiều lần như thế, anh gặp gỡ một nhóm hacker bí ẩn. Họ thường giới thiệu với anh về thuật ngữ 'Ma Trận'. Một phụ nữ tên Trinity (Carrie-Anne Moss) gặp anh và hứa rằng Morpheus (Laurence Fishburne), thủ lĩnh của nhóm này có thể giải thích ý nghĩa của từ này. Tuy nhiên, một nhóm đặc vụ bắt giữ Neo và muốn anh giúp chúng bắt Morpheus, người mà chúng cho là 'kẻ khủng bố'. Neo vẫn tìm tới Morpheus và được yêu cầu chọn uống một viên thuốc màu đỏ hoặc một viên thuốc màu xanh dương. Nếu anh chọn uống viên màu đỏ, anh sẽ biết được sự thật về Ma trận. Nếu anh chọn uống viên màu xanh, anh sẽ trở về với cuộc sống bình thường của mình. Neo chọn uống viên thuốc màu đỏ và rơi vào trạng thái vô thức. Khi tỉnh dậy, anh thấy mình nằm trong một cái kén đầy chất lỏng, còn thân thể anh được nối với một cỗ máy khổng lồ bên ngoài căn phòng bằng hàng chục sợi dây điện. Morpheus giải cứu anh và hồi phục cơ thể yếu đuối của anh trên con tàu Nebuchadnezzar.", "release_date": "1999-03-31T00:00:00+07:00", "running_time": 136, "age_rating_id": 3}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -170,18 +174,35 @@ class MovieController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+
         $attributes = [
             'name' => $request->name,
             'slug' => $request->slug,
             'trailer' => $request->trailer,
-            'thumbnail' => $request->thumbnail,
             'description' => $request->description,
             'release_date' => $request->release_date,
             'running_time' => $request->running_time,
             'age_rating_id' => $request->age_rating_id,
         ];
 
-        return $this->movieRepo->store($attributes);
+        try {
+            $movie =  Movie::create($attributes);
+
+            $movie->files()->attach(array_fill_keys($request->posters, ["type" => "poster"]));
+            $movie->files()->attach(array_fill_keys($request->backdrops, ["type" => "backdrop"]));
+
+            $movie->directorsFull()->attach($request->directors);
+            $movie->actorsFull()->attach($request->actors);
+            $movie->genresFull()->attach($request->genres);
+            if ($movie) {
+                return response([
+                    'message' => 'Nhập dữ liệu thành công!',
+                    'data' => $movie,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -237,16 +258,21 @@ class MovieController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "slug", "trailer", "thumbnail", "likes", "description", "release_date", "running_time", "age_rating_id"},
+         *       required={"name", "slug", "age_rating_id"},
          *       @OA\Property(property="name", type="string"),
          *       @OA\Property(property="slug", type="string"),
          *       @OA\Property(property="trailer", type="string"),
-         *       @OA\Property(property="thumbnail", type="string"),
          *       @OA\Property(property="description", type="string"),
          *       @OA\Property(property="release_date", type="datetime"),
          *       @OA\Property(property="running_time", type="number"),
          *       @OA\Property(property="age_rating_id", type="number"),
-         *       example={"name": "Ten phim", "slug": "ten-phim","trailer":"https://www.youtube.com/watch?v=9ix7TUGVYIo", "thumbnail": "https://upload.wikimedia.org/wikipedia/vi/c/c1/The_Matrix_Poster.jpg", "description": "Một lập trình viên tên Thomas A. Anderson (Keanu Reeves) làm việc trong một công ty phần mềm, và còn là một hacker với biệt danh Neo. Neo thường đột nhập vào các hệ thống an ninh mạng, sau nhiều lần như thế, anh gặp gỡ một nhóm hacker bí ẩn. Họ thường giới thiệu với anh về thuật ngữ 'Ma Trận'. Một phụ nữ tên Trinity (Carrie-Anne Moss) gặp anh và hứa rằng Morpheus (Laurence Fishburne), thủ lĩnh của nhóm này có thể giải thích ý nghĩa của từ này. Tuy nhiên, một nhóm đặc vụ bắt giữ Neo và muốn anh giúp chúng bắt Morpheus, người mà chúng cho là 'kẻ khủng bố'. Neo vẫn tìm tới Morpheus và được yêu cầu chọn uống một viên thuốc màu đỏ hoặc một viên thuốc màu xanh dương. Nếu anh chọn uống viên màu đỏ, anh sẽ biết được sự thật về Ma trận. Nếu anh chọn uống viên màu xanh, anh sẽ trở về với cuộc sống bình thường của mình. Neo chọn uống viên thuốc màu đỏ và rơi vào trạng thái vô thức. Khi tỉnh dậy, anh thấy mình nằm trong một cái kén đầy chất lỏng, còn thân thể anh được nối với một cỗ máy khổng lồ bên ngoài căn phòng bằng hàng chục sợi dây điện. Morpheus giải cứu anh và hồi phục cơ thể yếu đuối của anh trên con tàu Nebuchadnezzar.", "release_date": "1999-03-31T00:00:00+07:00", "running_time": 136, "age_rating_id": 3}
+         *       @OA\Property(property="images", type="array",
+         *          @OA\Items(
+         *              type="number",
+         *          ),
+         *           description="bla bla bla"
+         *      ),
+         *       example={"name": "Ten phim", "slug": "ten-phim","trailer":"https://www.youtube.com/watch?v=9ix7TUGVYIo", "description": "Một lập trình viên tên Thomas A. Anderson (Keanu Reeves) làm việc trong một công ty phần mềm, và còn là một hacker với biệt danh Neo. Neo thường đột nhập vào các hệ thống an ninh mạng, sau nhiều lần như thế, anh gặp gỡ một nhóm hacker bí ẩn. Họ thường giới thiệu với anh về thuật ngữ 'Ma Trận'. Một phụ nữ tên Trinity (Carrie-Anne Moss) gặp anh và hứa rằng Morpheus (Laurence Fishburne), thủ lĩnh của nhóm này có thể giải thích ý nghĩa của từ này. Tuy nhiên, một nhóm đặc vụ bắt giữ Neo và muốn anh giúp chúng bắt Morpheus, người mà chúng cho là 'kẻ khủng bố'. Neo vẫn tìm tới Morpheus và được yêu cầu chọn uống một viên thuốc màu đỏ hoặc một viên thuốc màu xanh dương. Nếu anh chọn uống viên màu đỏ, anh sẽ biết được sự thật về Ma trận. Nếu anh chọn uống viên màu xanh, anh sẽ trở về với cuộc sống bình thường của mình. Neo chọn uống viên thuốc màu đỏ và rơi vào trạng thái vô thức. Khi tỉnh dậy, anh thấy mình nằm trong một cái kén đầy chất lỏng, còn thân thể anh được nối với một cỗ máy khổng lồ bên ngoài căn phòng bằng hàng chục sợi dây điện. Morpheus giải cứu anh và hồi phục cơ thể yếu đuối của anh trên con tàu Nebuchadnezzar.", "release_date": "1999-03-31T00:00:00+07:00", "running_time": 136, "age_rating_id": 3}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -254,18 +280,47 @@ class MovieController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+
         $attributes = [
             'name' => $request->name,
             'slug' => $request->slug,
             'trailer' => $request->trailer,
-            'thumbnail' => $request->thumbnail,
             'description' => $request->description,
             'release_date' => $request->release_date,
             'running_time' => $request->running_time,
             'age_rating_id' => $request->age_rating_id,
         ];
 
-        return $this->movieRepo->update($id, $attributes);
+        $posters = array(array_fill_keys(
+            $request->posters,
+            ["type" => "poster"]
+        ));
+
+        $backdrops = array(array_fill_keys(
+            $request->backdrops,
+            ["type" => "backdrop"]
+        ));
+
+        try {
+            $movie = Movie::findOrFail($id);
+
+            $movie->files()->sync([...array_replace_recursive($posters, $backdrops)][0]);
+
+            $movie->actorsFull()->sync($request->actors);
+            $movie->genresFull()->sync($request->genres);
+            $movie->directorsFull()->attach($request->directors);
+
+            $movie->update($attributes);
+            $id = $movie->id;
+            if ($movie) {
+                return response([
+                    'message' => 'Cập nhật dữ liệu thành công!',
+                    'data' => $movie,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
 

@@ -17,9 +17,10 @@ class FileUpload extends Model
         'alt',
         'size',
         'folder',
+        'url',
     ];
 
-    protected $appends = ['url', 'thumbUrl', 'uid'];
+    protected $appends = ['thumbUrl', 'uid'];
 
     public function movieFiles()
     {
@@ -27,11 +28,7 @@ class FileUpload extends Model
     }
     public function getThumbUrlAttribute()
     {
-        return URL::to('/') . '/' . $this->folder . $this->file_name;
-    }
-    public function getUrlAttribute()
-    {
-        return URL::to('/') . '/' . $this->folder . $this->file_name;
+        return $this->url;
     }
     public function getUidAttribute()
     {

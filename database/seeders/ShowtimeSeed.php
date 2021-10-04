@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\ShowTime;
+use App\Models\Showtime;
 use Illuminate\Database\Seeder;
 use Exception;
 
@@ -16,7 +16,7 @@ class ShowtimeSeed extends Seeder
     public function run()
     {
         try {
-            ShowTime::factory(20)->create();
+            Showtime::factory(20)->create();
         } catch (Exception $e) {
             if ($this->failures > 5) {
                 print_r("Seeder Error. Failure count for current entity: " . $this->failures);

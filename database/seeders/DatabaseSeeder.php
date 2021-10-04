@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             AgeRatingSeeder::class,
             // ActorSeed::class,
             GenreSeed::class,
-            DirectorSeed::class,
+            // DirectorSeed::class,
 
             // MovieActorSeed::class,
             MovieGenreSeed::class,

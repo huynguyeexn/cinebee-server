@@ -18,8 +18,16 @@ use Illuminate\Routing\Controller as BaseController;
  *      @OA\License(
  *          name="Apache 2.0",
  *          url="http://www.apache.org/licenses/LICENSE-2.0.html"
- *      )
+ *      )   
  * )
+ *  @OA\SecurityScheme(
+ *         type="http",
+ *         description= "Dùng auth để lấy token",
+ *         name="Authorization",
+ *         in="header",
+ *         scheme="bearer",
+ *         securityScheme="bearerAuth", 
+ *   )
  * */
 class Controller extends BaseController
 {

@@ -89,6 +89,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\MovieTicket\MovieTicketRepositoryInterface::class,
             \App\Repositories\MovieTicket\MovieTicketRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Category\CategoryRepositoryInterface::class,
+            \App\Repositories\Category\CategoryRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\Blog\BlogRepositoryInterface::class,
+            \App\Repositories\Blog\BlogRepository::class,
+        );
     }
 
     /**

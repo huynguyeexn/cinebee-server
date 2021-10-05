@@ -48,6 +48,10 @@ class DatabaseSeeder extends Seeder
             MovieDirectorSeed::class,
 
             ItemSeed::class,
+
+
+            CategorySeed::class,
+            BlogSeed::class,
         ]);
     }
 }

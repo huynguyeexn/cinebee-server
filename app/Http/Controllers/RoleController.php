@@ -3,30 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\EmployeeRole\StoreRequest;
-use App\Http\Requests\EmployeeRole\UpdateRequest;
-use App\Models\EmployeeRole;
-use App\Repositories\EmployeeRole\EmployeeRoleRepositoryInterface;
+use App\Http\Requests\Role\StoreRequest;
+use App\Http\Requests\Role\UpdateRequest;
+use App\Models\Role;
+use App\Repositories\Role\RoleRepositoryInterface;
 
-class EmployeeRoleController extends Controller
+class RoleController extends Controller
 {
     /**
-     * @var EmployeeRoleRepositoryInterface
+     * @var RoleRepositoryInterface
      */
-    protected $employeeRoleRepo;
+    protected $RoleRepo;
 
-    public function __construct(EmployeeRoleRepositoryInterface $employeeRoleRepo)
+    public function __construct(RoleRepositoryInterface $RoleRepo)
     {
-        $this->employeeRoleRepo = $employeeRoleRepo;
+        $this->RoleRepo = $RoleRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role",
-         *   summary="List Employee Role",
+         *   tags={"Role"},
+         *   path="/api/role",
+         *   summary="List Role",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -49,7 +49,7 @@ class EmployeeRoleController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Role per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
@@ -63,7 +63,7 @@ class EmployeeRoleController extends Controller
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort Role type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -73,16 +73,16 @@ class EmployeeRoleController extends Controller
          *
          * )
          */
-        return $this->employeeRoleRepo->getList($request);
+        return $this->RoleRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/deleted",
-         *   summary="List Employee Role Deleted",
+         *   tags={"Role"},
+         *   path="/api/role/deleted",
+         *   summary="List Role Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -129,16 +129,16 @@ class EmployeeRoleController extends Controller
          *
          * )
          */
-        return $this->employeeRoleRepo->getDeletedList($request);
+        return $this->RoleRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role",
-         *   summary="Store new Employee Role",
+         *   tags={"Role"},
+         *   path="/api/role",
+         *   summary="Store new Role",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
@@ -157,16 +157,16 @@ class EmployeeRoleController extends Controller
         $attributes = [
             'name' => $request->name,
         ];
-        return $this->employeeRoleRepo->store($attributes);
+        return $this->RoleRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}",
-         *   summary="Get Employee Role by id",
+         *   tags={"Role"},
+         *   path="/api/role/{id}",
+         *   summary="Get Role by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
@@ -180,16 +180,16 @@ class EmployeeRoleController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->employeeRoleRepo->getById($id);
+        return $this->RoleRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}",
-         *   summary="Update a Employee Role",
+         *   tags={"Role"},
+         *   path="/api/role/{id}",
+         *   summary="Update a Role",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -215,15 +215,15 @@ class EmployeeRoleController extends Controller
             'name' => $request->name,
         ];
 
-        return $this->employeeRoleRepo->update($id, $attributes);
+        return $this->RoleRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/delete",
+         *   tags={"Role"},
+         *   path="/api/role/{id}/delete",
          *   summary="Delete a room status",
          *   @OA\Parameter(
          *     name="id",
@@ -236,16 +236,16 @@ class EmployeeRoleController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRoleRepo->delete($id);
+        return $this->RoleRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/remove",
-         *   summary="Remove Employee Role from trash",
+         *   tags={"Role"},
+         *   path="/api/role/{id}/remove",
+         *   summary="Remove Role from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -257,16 +257,16 @@ class EmployeeRoleController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRoleRepo->remove($id);
+        return $this->RoleRepo->remove($id);
     }
 
-    public function restore(EmployeeRole $employeeRole, $id)
+    public function restore(Role $Role, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/restore",
-         *   summary="Restore Employee Role from trash",
+         *   tags={"Role"},
+         *   path="/api/role/{id}/restore",
+         *   summary="Restore Role from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -278,16 +278,16 @@ class EmployeeRoleController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRoleRepo->restore($id);
+        return $this->RoleRepo->restore($id);
     }
 
     public function employees($id)
     {
         /**
          * @OA\Get(
-         *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/employees",
-         *   summary="List Employee Role",
+         *   tags={"Role"},
+         *   path="/api/role/{id}/employees",
+         *   summary="List Role",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -341,6 +341,6 @@ class EmployeeRoleController extends Controller
          * )
          */
 
-        return $this->employeeRoleRepo->getEmployees($id);
+        return $this->RoleRepo->getEmployees($id);
     }
 }

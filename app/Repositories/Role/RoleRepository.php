@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repositories\EmployeeRole;
+namespace App\Repositories\Role;
 
-use App\Models\EmployeeRole;
+use App\Models\Role;
 use App\Repositories\BaseRepository;
 
-class EmployeeRoleRepository extends BaseRepository implements EmployeeRoleRepositoryInterface
+class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
     public function getModel()
     {
-        return EmployeeRole::class;
+        return Role::class;
     }
 
 

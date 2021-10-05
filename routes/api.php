@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
@@ -334,34 +334,34 @@ Route::prefix('seats')->group(function () {
  * Time: 13:00 AM
  * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
  */
-Route::prefix('employee-roles')->group(function () {
+Route::prefix('role')->group(function () {
 
     // Get list
-    Route::get('/', [EmployeeRoleController::class, 'index']);
+    Route::get('/', [RoleController::class, 'index']);
 
     // Get deleted list
-    Route::get('/deleted', [EmployeeRoleController::class, 'deleted']);
+    Route::get('/deleted', [RoleController::class, 'deleted']);
 
     // Create new
-    Route::post('/', [EmployeeRoleController::class, 'store']);
+    Route::post('/', [RoleController::class, 'store']);
 
     // Get by ID
-    Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
 
     // Get Employees of Employee Role
-    Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
+    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
 
     // Update
-    Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
+    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove/', [RoleController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore/', [RoleController::class, 'restore'])->whereNumber('id');
 });
 
 

@@ -11,8 +11,14 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
     {
         return Role::class;
     }
-
-
+    public function storeRolePermission($attributes = []){
+        $role = $attributes['role'];
+        $permission = $attributes['permission'];
+        $id = $this->model::create(['name'=>$role]);
+        $Rolenew = $this->model::find($id->id);
+        $records = $Rolenew->premission()->sync($permission);
+        return $records;
+    }
     public function delete($id)
     {
         try {

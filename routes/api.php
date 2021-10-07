@@ -328,40 +328,42 @@ Route::prefix('seats')->group(function () {
 
 
 /**
- * REST API - Employee Role
+ * REST API - Role
  *
- * Date: 08/09/2021
- * Time: 13:00 AM
- * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ * Date: 07/10/2021
+ * Long sửa đổi
  */
 Route::prefix('role')->group(function () {
 
     // Get list
     Route::get('/', [RoleController::class, 'index']);
+    // get list permission
+    Route::get('/permission', [RoleController::class, 'getListPermissions']);
+    // get permission
+    Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
 
-    // Get deleted list
-    Route::get('/deleted', [RoleController::class, 'deleted']);
 
     // Create new
     Route::post('/', [RoleController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
-
-    // Get Employees of Employee Role
-    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
-
-    // Update
-    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [RoleController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [RoleController::class, 'restore'])->whereNumber('id');
+//    // Get deleted list
+//    Route::get('/deleted', [RoleController::class, 'deleted']);
+//    // Get by ID
+//    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
+//
+//    // Get Employees of Employee Role
+//    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
+//
+//    // Update
+//    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
+//
+//    // Soft Delete
+//    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
+//
+//    // Hard Delete
+//    Route::delete('{id}/remove/', [RoleController::class, 'remove'])->whereNumber('id');
+//
+//    // Restore
+//    Route::patch('{id}/restore/', [RoleController::class, 'restore'])->whereNumber('id');
 });
 
 

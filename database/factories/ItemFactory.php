@@ -26,6 +26,7 @@ class ItemFactory extends Factory
         return [
             //
             'name' => $name,
+            'price' => $this->faker->numberBetween(1500, 6000, true),
             'slug' => Str::slug($name),
         ];
     }

@@ -18,7 +18,7 @@ class ItemSeed extends Seeder
     {
         //
         try {
-            Item::factory(50)->create();
+            Item::factory(10)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

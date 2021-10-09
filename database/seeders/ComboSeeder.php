@@ -18,7 +18,7 @@ class ComboSeeder extends Seeder
     {
         //
         try {
-            Combo::factory(50)->create();
+            Combo::factory(10)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

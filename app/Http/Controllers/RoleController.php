@@ -82,57 +82,6 @@ class RoleController extends Controller
     }
 //    public function deleted(ListRequest $request)
 //    {
-//        /**
-//         * @OA\Get(
-//         *   tags={"Role"},
-//         *   path="/api/role/deleted",
-//         *   summary="List Role Deleted",
-//         *   @OA\Parameter(
-//         *      name="search",
-//         *      in="query",
-//         *      description="Search by",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Parameter(
-//         *      name="q",
-//         *      in="query",
-//         *      description="Search query",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *     @OA\Parameter(
-//         *      name="page",
-//         *      in="query",
-//         *      description="Page",
-//         *      example="1",
-//         *     @OA\Schema(type="number")
-//         *   ),
-//         *     @OA\Parameter(
-//         *      name="per_page",
-//         *      in="query",
-//         *      description="Items per page",
-//         *      example="10",
-//         *     @OA\Schema(type="number")
-//         *   ),
-//         *      @OA\Parameter(
-//         *      name="sort_by",
-//         *      in="query",
-//         *      description="Sort items by",
-//         *      example="updated_at",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *      @OA\Parameter(
-//         *      name="sort_type",
-//         *      in="query",
-//         *      description="Sort items type ['asc', 'desc']",
-//         *      example="desc",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found"),
-//         *
-//         * )
-//         */
 //        return $this->RoleRepo->getDeletedList($request);
 //    }
 
@@ -162,7 +111,7 @@ class RoleController extends Controller
             'role' => $request->name,
             'permission' => $request->permission,
         ];
-        
+
         return $this->RoleRepo->storeRolePermission($attributes);
     }
 
@@ -204,106 +153,17 @@ class RoleController extends Controller
 //
 //    public function remove($id)
 //    {
-//        /**
-//         * @OA\Delete(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}/remove",
-//         *   summary="Remove Role from trash",
-//         *   @OA\Parameter(
-//         *     name="id",
-//         *     in="path",
-//         *     required=true,
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found")
-//         * )
-//         */
+
 //        return $this->RoleRepo->remove($id);
 //    }
 //
 //    public function restore(Role $Role, $id)
 //    {
-//        /**
-//         * @OA\Patch(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}/restore",
-//         *   summary="Restore Role from trash",
-//         *   @OA\Parameter(
-//         *     name="id",
-//         *     in="path",
-//         *     required=true,
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found")
-//         * )
-//         */
 //        return $this->RoleRepo->restore($id);
 //    }
 //
 //    public function employees($id)
 //    {
-//        /**
-//         * @OA\Get(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}/employees",
-//         *   summary="List Role",
-//         *   @OA\Parameter(
-//         *     name="id",
-//         *     in="path",
-//         *     required=true,
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Parameter(
-//         *      name="search",
-//         *      in="query",
-//         *      description="Search by",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Parameter(
-//         *      name="q",
-//         *      in="query",
-//         *      description="Search query",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *     @OA\Parameter(
-//         *      name="page",
-//         *      in="query",
-//         *      description="Page",
-//         *      example="1",
-//         *     @OA\Schema(type="number")
-//         *   ),
-//         *     @OA\Parameter(
-//         *      name="per_page",
-//         *      in="query",
-//         *      description="Items per page",
-//         *      example="10",
-//         *     @OA\Schema(type="number")
-//         *   ),
-//         *      @OA\Parameter(
-//         *      name="sort_by",
-//         *      in="query",
-//         *      description="Sort items by",
-//         *      example="updated_at",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *      @OA\Parameter(
-//         *      name="sort_type",
-//         *      in="query",
-//         *      description="Sort items type ['asc', 'desc']",
-//         *      example="desc",
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found"),
-//         *
-//         * )
-//         */
-//
 //        return $this->RoleRepo->getEmployees($id);
 //    }
 }

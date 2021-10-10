@@ -49,35 +49,35 @@ class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 //        }
 //    }
 
-    public function remove($id)
-    {
-        try {
-            $record = tap($this->model->onlyTrashed()->findOrFail($id))->forceDelete();
-            if ($record) {
-                return response([
-                    'message' => 'Employee Role has been remove from trash!',
-                    'data' => $record,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
+    // public function remove($id)
+    // {
+    //     try {
+    //         $record = tap($this->model->onlyTrashed()->findOrFail($id))->forceDelete();
+    //         if ($record) {
+    //             return response([
+    //                 'message' => 'Employee Role has been remove from trash!',
+    //                 'data' => $record,
+    //             ], 200);
+    //         }
+    //     } catch (\Throwable $th) {
+    //         throw $th;
+    //     }
+    // }
 
-    public function restore($id)
-    {
-        try {
-            $record = tap($this->model->onlyTrashed()->findOrFail($id))->restore();
-            if ($record) {
-                return response([
-                    'message' => 'Employee Role has been restore!',
-                    'data' => $record,
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
-    }
+    // public function restore($id)
+    // {
+    //     try {
+    //         $record = tap($this->model->onlyTrashed()->findOrFail($id))->restore();
+    //         if ($record) {
+    //             return response([
+    //                 'message' => 'Employee Role has been restore!',
+    //                 'data' => $record,
+    //             ], 200);
+    //         }
+    //     } catch (\Throwable $th) {
+    //         throw $th;
+    //     }
+    // }
 
     public function getEmployees($id)
     {

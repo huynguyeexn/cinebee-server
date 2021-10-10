@@ -341,20 +341,22 @@ Route::prefix('role')->group(function () {
     Route::get('/permission', [RoleController::class, 'getListPermissions']);
     // get permission
     Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
-
-
+    // Get by ID
+    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
+    // Update
+    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
     // Create new
     Route::post('/', [RoleController::class, 'store']);
+    // Soft Delete
+    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
 //    // Get deleted list
 //    Route::get('/deleted', [RoleController::class, 'deleted']);
-//    // Get by ID
-//    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
+
 //
 //    // Get Employees of Employee Role
 //    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
 //
-//    // Update
-//    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
+
 //
 //    // Soft Delete
 //    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');

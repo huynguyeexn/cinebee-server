@@ -162,87 +162,45 @@ class RoleController extends Controller
             'role' => $request->name,
             'permission' => $request->permission,
         ];
+        
         return $this->RoleRepo->storeRolePermission($attributes);
     }
 
-//    public function getById($id)
-//    {
-//        /**
-//         * @OA\Get(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}",
-//         *   summary="Get Role by id",
-//         *   @OA\Parameter(
-//         *      name="id",
-//         *      in="path",
-//         *      required=true,
-//         *      description="Item id",
-//         *      example="21",
-//         *     @OA\Schema(type="number"),
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found"),
-//         * )
-//         */
-//        return $this->RoleRepo->getById($id);
-//    }
+    public function getById($id)
+    {
+        return $this->RoleRepo->getById_role_pe($id);
+    }
 //
-//    public function update(UpdateRequest $request, $id)
-//    {
-//        /**
-//         * @OA\Put(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}",
-//         *   summary="Update a Role",
-//         *   @OA\Parameter(
-//         *     name="id",
-//         *     in="path",
-//         *     required=true,
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\RequestBody(
-//         *     required=true,
-//         *     @OA\JsonContent(
-//         *       type="string",
-//         *       required={"name", "slug"},
-//         *       @OA\Property(property="name", type="string"),
-//         *       @OA\Property(property="slug", type="string"),
-//         *       example={"name": "Nhân Viên", "slug": "nhan-vien"}
-//         *     )
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found")
-//         * )
-//         */
-//        $attributes = [
-//            'name' => $request->name,
-//        ];
+    public function update(Request $request, $id)
+    {
+        $attributes = [
+            'name' => $request->name,
+            'permission' => $request->permission,
+        ];
+
+        return $this->RoleRepo->update_role_pe($id, $attributes);
+    }
 //
-//        return $this->RoleRepo->update($id, $attributes);
-//    }
-//
-//    public function delete($id)
-//    {
-//        /**
-//         * @OA\Delete(
-//         *   tags={"Role"},
-//         *   path="/api/role/{id}/delete",
-//         *   summary="Delete a room status",
-//         *   @OA\Parameter(
-//         *     name="id",
-//         *     in="path",
-//         *     required=true,
-//         *     @OA\Schema(type="string")
-//         *   ),
-//         *   @OA\Response(response=200, description="OK"),
-//         *   @OA\Response(response=401, description="Unauthorized"),
-//         *   @OA\Response(response=404, description="Not Found")
-//         * )
-//         */
-//        return $this->RoleRepo->delete($id);
-//    }
+    public function delete($id)
+    {
+        /**
+         * @OA\Delete(
+         *   tags={"Role"},
+         *   path="/api/role/{id}/delete",
+         *   summary="Delete a room status",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->RoleRepo->delete_role_pe($id);
+    }
 //
 //    public function remove($id)
 //    {

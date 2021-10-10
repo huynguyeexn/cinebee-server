@@ -68,6 +68,8 @@ class ItemController extends Controller
          *
          * )
          */
+
+         // test
         $query = Item::query();
 
         $search = $request->q ?? NULL;
@@ -126,8 +128,9 @@ class ItemController extends Controller
          *       type="string",
          *       required={"name", "slug"},
          *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="price", type="float"),
          *       @OA\Property(property="slug", type="string"),
-         *       example={"name": "Name of Item", "slug": "name-of-item"}
+         *       example={"name": "Name of Item","price": "1200" , "slug": "name-of-item"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -137,6 +140,7 @@ class ItemController extends Controller
          */
         $data = [
             'name' => $request->name,
+            'price' => $request->price,
             'slug' => $request->slug,
         ];
 

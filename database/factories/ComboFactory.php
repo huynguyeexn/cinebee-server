@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
-use App\Models\Item;
+use App\Models\Combo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class ItemFactory extends Factory
+class ComboFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Item::class;
+    protected $model = Combo::class;
 
     /**
      * Define the model's default state.
@@ -27,7 +27,7 @@ class ItemFactory extends Factory
             //
             'name' => $name,
             'price' => $this->faker->numberBetween(1500, 6000, true),
-            'slug' => Str::slug($name),
+            'slug' => str::slug($name),
         ];
     }
 }

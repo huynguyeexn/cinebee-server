@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\Item;
+use App\Models\Combo;
+use App\Models\ComboTicket;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class ItemFactory extends Factory
+class ComboTicketFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Item::class;
+    protected $model = ComboTicket::class;
 
     /**
      * Define the model's default state.
@@ -22,12 +23,13 @@ class ItemFactory extends Factory
      */
     public function definition()
     {
-        $name = $this->faker->sentence($this->faker->numberBetween(1, 5), true);
+        $startDate = date('01-08-2021 H:i:s');
+        $endDate = date('28-09-2021 H:i:s');
         return [
             //
-            'name' => $name,
+            'get_at' => $this->faker->dateTimeBetween($startDate, $endDate),
             'price' => $this->faker->numberBetween(1500, 6000, true),
-            'slug' => Str::slug($name),
+            'combo_id' => Combo::inRandomOrder()->first(),
         ];
     }
 }

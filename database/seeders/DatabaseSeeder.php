@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Movie;
+use App\Models\ShowTime;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,26 +17,32 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            ItemSeed::class,
-            RoomStatusSeed::class,
-            SeatStatusSeed::class,
-            UserRoleSeed::class,
-            UserSeed::class,
-            RoomSeeder::class,
-            SeatSeeder::class,
             EmployeeRoleSeed::class,
             EmployeeSeed::class,
-            ActorSeed::class,
-            GenreSeed::class,
             EmployeeRoleSeed::class,
-            DirectorSeed::class,
-            AgeRatingSeeder::class,
-            MovieSeeder::class,
-            MovieDirectorSeed::class,
-            MovieGenreSeed::class,
-            MovieActorSeed::class,
+
+            UserRoleSeed::class,
+            UserSeed::class,
+
             CustomerTypeSeed::class,
             CustomerSeed::class,
+
+            RoomStatusSeed::class,
+            RoomSeeder::class,
+
+            SeatStatusSeed::class,
+            SeatSeeder::class,
+
+            AgeRatingSeeder::class,
+            // ActorSeed::class,
+            GenreSeed::class,
+            // DirectorSeed::class,
+
+            // MovieActorSeed::class,
+            // MovieGenreSeed::class,
+            // MovieDirectorSeed::class,
+
+            ItemSeed::class,
         ]);
     }
 }

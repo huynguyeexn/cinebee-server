@@ -2,13 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Item;
+use App\Models\ComboItem;
 use Exception;
 use Illuminate\Database\Seeder;
 
-class ItemSeed extends Seeder
+class ComboItemSeeder extends Seeder
 {
-    private $failures = 0;
     /**
      * Run the database seeds.
      *
@@ -18,11 +17,11 @@ class ItemSeed extends Seeder
     {
         //
         try {
-            Item::factory(10)->create();
+            ComboItem::factory(2)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {
-                print_r("Seeder Error. Failure count for current entity: " . $this->failures);
+                print_r(" Seeder Error. Failure count for current entity: " . $this->failures);
                 return;
             }
 

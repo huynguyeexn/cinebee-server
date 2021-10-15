@@ -39,10 +39,19 @@ class DatabaseSeeder extends Seeder
             // DirectorSeed::class,
 
             // MovieActorSeed::class,
-            // MovieGenreSeed::class,
-            // MovieDirectorSeed::class,
+            MovieGenreSeed::class,
+            MovieActorSeed::class,
+            CustomerTypeSeed::class,
+            CustomerSeed::class,
+            ShowtimeSeed::class,
+            MovieTicketSeed::class,
+            MovieDirectorSeed::class,
 
             ItemSeed::class,
+
+
+            CategorySeed::class,
+            BlogSeed::class,
         ]);
     }
 }

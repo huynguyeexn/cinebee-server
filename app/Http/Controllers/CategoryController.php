@@ -2,34 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Employee\StoreRequest;
-use App\Http\Requests\Employee\UpdateRequest;
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Models\Employee;
-use App\Repositories\Employee\EmployeeRepositoryInterface;
+use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\This;
-use Ramsey\Uuid\Nonstandard\Uuid;
 
-class EmployeeController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * @var EmployeeRepositoryInterface
+     * @var CategoryRepositoryInterface
      */
-    protected $employeeRepo;
+    protected $categoryRepo;
 
-    public function __construct(EmployeeRepositoryInterface $employeeRepo)
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
     {
-        $this->employeeRepo = $employeeRepo;
+        $this->categoryRepo = $categoryRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Employee"},
-         *   path="/api/employee",
-         *   summary="List Employee",
+         *   tags={"Category"},
+         *   path="/api/categories",
+         *   summary="List Category",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -52,21 +50,21 @@ class EmployeeController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Category per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort category by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort category type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -76,16 +74,16 @@ class EmployeeController extends Controller
          *
          * )
          */
-        return $this->employeeRepo->getList($request);
+        return $this->categoryRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Employee"},
-         *   path="/api/employee/deleted",
-         *   summary="List Employee Deleted",
+         *   tags={"Category"},
+         *   path="/api/categories/deleted",
+         *   summary="List Category Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -108,21 +106,21 @@ class EmployeeController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Category per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort Category by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort Category type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -132,43 +130,25 @@ class EmployeeController extends Controller
          *
          * )
          */
-        return $this->employeeRepo->getDeletedList($request);
+        return $this->categoryRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Employee"},
-         *   path="/api/employee",
-         *   summary="Store new Employee",
+         *   tags={"Category"},
+         *   path="/api/categories",
+         *   summary="Store new Category",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "gender", "employee_role_id"},
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="password", type="string"),
-         *       @OA\Property(property="phone",    type="number"),
-         *       @OA\Property(property="email",    type="string"),
-         *       @OA\Property(property="address",  type="string"),
-         *       @OA\Property(property="id_card",  type="uuid"),
-         *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="gender", type="string"),
-         *       @OA\Property(property="employee_role_id", type="number"),
-         *       example={
-         *          "fullname": "Leonie Maggio",
-         *          "username": "Leonie",
-         *          "password": "Leonie123",
-         *          "phone": "346.997.2035",
-         *          "email": "Leonie@gmail.com",
-         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
-         *          "id_card": "1234-1234-1234-1234",
-         *          "birthday": "1993-03-26",
-         *          "gender": "2",
-         *          "employee_role_id": "1",
-         *       }
+         *       required={"name", "slug", "show"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="slug", type="string"),
+         *       @OA\Property(property="show", type="integer"),
+         *       example={"name": "Thể Loại", "slug": "the-loai", "show": 1}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -177,32 +157,25 @@ class EmployeeController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            'password' => $request->password,
-            'phone'    => $request->phone,
-            'email'    => $request->email,
-            'address'  => $request->address,
-            'id_card'  => Uuid::uuid4(),
-            'birthday' => $request->birthday,
-            'gender'      => $request->gender,
-            'employee_role_id' => $request->employee_role_id,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'show' => $request->show,
         ];
-        return $this->employeeRepo->store($attributes);
+        return $this->categoryRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}",
-         *   summary="Get Employee by id",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}",
+         *   summary="Get Category by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Item id",
+         *      description="Category id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -211,16 +184,16 @@ class EmployeeController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->employeeRepo->getById($id);
+        return $this->categoryRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}",
-         *   summary="Update a Employee",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}",
+         *   summary="Update a Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -231,29 +204,11 @@ class EmployeeController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "gender", "employee_role_id"},
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="password", type="string"),
-         *       @OA\Property(property="phone",    type="number"),
-         *       @OA\Property(property="email",    type="string"),
-         *       @OA\Property(property="address",  type="string"),
-         *       @OA\Property(property="id_card",  type="uuid"),
-         *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="gender", type="string"),
-         *       @OA\Property(property="employee_role_id", type="number"),
-         *        example={
-         *          "fullname": "Leonie Maggio",
-         *          "username": "Leonie",
-         *          "password": "Leonie123",
-         *          "phone": "346.997.2035",
-         *          "email": "Leonie@gmail.com",
-         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
-         *          "id_card": "",
-         *          "birthday": "1993-03-26",
-         *          "gender": "male",
-         *          "employee_role_id": "1",
-         *       }
+         *       required={"name", "slug", "show"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="slug", type="string"),
+         *       @OA\Property(property="show", type="integer"),
+         *       example={"name": "Thể Loại", "slug": "the-loai", "show": 1}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -262,28 +217,21 @@ class EmployeeController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            'password' => $request->password,
-            'phone'    => $request->phone,
-            'email'    => $request->email,
-            'address'  => $request->address,
-            'id_card'  => $request->id_card,
-            'birthday'  => $request->birthday,
-            'gender'      => $request->gender,
-            'employee_role_id' => $request->employee_role_id,
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'show' => $request->show,
         ];
 
-        return $this->employeeRepo->update($id, $attributes);
+        return $this->categoryRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}/delete",
-         *   summary="Delete a Employee",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/delete",
+         *   summary="Delete a Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -295,16 +243,16 @@ class EmployeeController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRepo->delete($id);
+        return $this->categoryRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}/remove",
-         *   summary="Remove Employee from trash",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/remove",
+         *   summary="Remove Category from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -316,16 +264,16 @@ class EmployeeController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRepo->remove($id);
+        return $this->categoryRepo->remove($id);
     }
 
-    public function restore(Employee $employee, $id)
+    public function restore(Category $category, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}/restore",
-         *   summary="Restore Employee from trash",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/restore",
+         *   summary="Restore Category from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -337,16 +285,16 @@ class EmployeeController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->employeeRepo->restore($id);
+        return $this->categoryRepo->restore($id);
     }
 
     public function blogs($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Employee"},
-         *   path="/api/employee/{id}/blogs",
-         *   summary="List Blog by Employee",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/blogs",
+         *   summary="List Blog by Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -400,6 +348,6 @@ class EmployeeController extends Controller
          * )
          */
 
-        return $this->employeeRepo->getBlogs($id);
+        return $this->categoryRepo->getBlogs($id);
     }
 }

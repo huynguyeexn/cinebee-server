@@ -92,6 +92,12 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             \App\Repositories\ComboItem\ComboItemRepositoryInterface::class,
             \App\Repositories\ComboItem\ComboItemRepository::class,
+            \App\Repositories\Showtime\ShowtimeRepositoryInterface::class,
+            \App\Repositories\Showtime\ShowtimeRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\MovieTicket\MovieTicketRepositoryInterface::class,
+            \App\Repositories\MovieTicket\MovieTicketRepository::class,
         );
     }
 

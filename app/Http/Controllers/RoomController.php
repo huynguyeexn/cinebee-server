@@ -307,4 +307,27 @@ class RoomController extends Controller
          */
         return $this->roomRepo->restore($id);
     }
+
+    public function showtimes($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Rooms"},
+         *   path="/api/rooms/{id}/showtimes",
+         *   summary="List Showtimes of Room",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->roomRepo->getShowtimes($id);
+    }
 }

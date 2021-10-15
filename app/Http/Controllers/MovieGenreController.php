@@ -28,7 +28,7 @@ class MovieGenreController extends Controller
          * @OA\Get(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/",
-         *   summary="List movie Genre",
+         *   summary="List movie Genres",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -85,7 +85,7 @@ class MovieGenreController extends Controller
          * @OA\Get(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/deleted",
-         *   summary="List Movie Genre Deleted",
+         *   summary="List Movie Genres Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -147,7 +147,7 @@ class MovieGenreController extends Controller
          * @OA\Post(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres",
-         *   summary="Store new Movie Genre",
+         *   summary="Store new Movie Genres",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
@@ -183,7 +183,7 @@ class MovieGenreController extends Controller
          * @OA\Get(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/{id}",
-         *   summary="Get Movie Genre by id",
+         *   summary="Get Movie Genres by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
@@ -213,7 +213,7 @@ class MovieGenreController extends Controller
          * @OA\Put(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/{id}",
-         *   summary="Update new Movie Genre",
+         *   summary="Update new Movie Genres",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -249,7 +249,7 @@ class MovieGenreController extends Controller
          * @OA\Delete(
          *   tags={"Movie Genres"},
          *   path="/api/movie-genres/{id}/remove",
-         *   summary="Remove Movie Genre",
+         *   summary="Remove Movie Genres",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",

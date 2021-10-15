@@ -115,8 +115,26 @@ class ComboController extends Controller
             'price' => $request->price,
             'slug' => $request->slug,
         ];
+/* 
+        return response([
+            'data' => $request->all(),
+        ], 200); */
 
-        return $this->ComboRepo->store($attributes);
+        try {
+            $combo = Combo::create($attributes);
+
+            $combo->itemsFull()->attach($request->items);
+            
+            if ($combo) {
+                return response([
+                    'message' => 'Nhập dữ liệu thành công!',
+                    'data' => $combo,
+                ], 200);
+            }
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
 
@@ -147,6 +165,7 @@ class ComboController extends Controller
          * )
          */
         return $this->ComboRepo->getById($id);
+
     }
 
         /**

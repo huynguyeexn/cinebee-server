@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableActor extends Migration
+class ModifyComboItemsQuantity extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateTableActor extends Migration
      */
     public function up()
     {
-        Schema::create('actors', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 50);
-            $table->string('avatar', 255);
-            $table->timestamps();
+        Schema::table('combo_items', function (Blueprint $table) {
+            //
+            $table->integer('quantity')->default(1)->nullable()->change();
         });
     }
 
@@ -28,6 +26,8 @@ class CreateTableActor extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actors');
+        Schema::table('combo_items', function (Blueprint $table) {
+            //
+        });
     }
 }

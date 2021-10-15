@@ -19,4 +19,20 @@ class Combo extends Model
     protected $hidden = [
         'delete_at'
     ];
+
+    protected $appends = [
+       'items'
+    ];
+
+
+    public function itemsFull()
+    {
+        return $this->belongsToMany(Item::class, 'combo_items');
+    }
+
+    public function getItemsAttribute()
+    {
+        return $this->itemsFull->pluck('id');
+    }
+
 }

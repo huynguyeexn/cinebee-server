@@ -156,30 +156,6 @@ class RoomController extends Controller
         return $this->roomRepo->getById($id);
     }
 
-
-    public function getSeats($id)
-    {
-        /**
-         * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/seats",
-         *   summary="Get Seat of Room",
-         *   @OA\Parameter(
-         *      name="id",
-         *      in="path",
-         *      required=true,
-         *      description="Room id",
-         *      example="9",
-         *     @OA\Schema(type="number"),
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found"),
-         * )
-         */
-        return $this->roomRepo->getSeats($id);
-    }
-
     public function store(StoreRequest $request)
     {
         /**
@@ -194,7 +170,10 @@ class RoomController extends Controller
          *       required={"name"},
          *       @OA\Property(property="name", type="string"),
          *       @OA\Property(property="room_status_id", type="number"),
-         *       example={"name": "Status of seat", "room_status_id": null}
+         *       @OA\Property(property="rows", type="number"),
+         *       @OA\Property(property="cols", type="number"),
+         *       @OA\Property(property="seats", type="number"),
+         *       example={"name": "Rạp số 69", "room_status_id": null, "rows": 6, "cols": 9, "seats": "[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -205,6 +184,9 @@ class RoomController extends Controller
         $attributes = [
             'name' => $request->name,
             'room_status_id' => $request->room_status_id,
+            'rows' => $request->rows,
+            'cols' => $request->cols,
+            'seats' => $request->seats,
         ];
         return $this->roomRepo->store($attributes);
     }

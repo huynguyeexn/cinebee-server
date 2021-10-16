@@ -12,22 +12,19 @@ class Room extends Model
 
     protected $fillable = [
         "name",
-        "room_status_id"
+        "room_status_id",
+        "rows",
+        "cols",
+        "seats",
     ];
 
     protected $hidden = [
         'delete_at'
     ];
 
-    public function roomSatus()
+    public function roomStatus()
     {
-        return $this->belongsto(RoomStatus::class);
-    }
-
-
-    public function seats()
-    {
-        return $this->hasMany(Seat::class);
+        return $this->belongsTo(RoomStatus::class);
     }
 
     public function showtimes()

@@ -45,6 +45,11 @@ class Employee extends Authenticatable implements JWTSubject
         return $this->hasMany(Blog::class);
     }
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *

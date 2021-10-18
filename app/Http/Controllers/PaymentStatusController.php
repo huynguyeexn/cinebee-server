@@ -2,37 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Customer\StoreRequest;
-use App\Http\Requests\Customer\UpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Repositories\Customer\CustomerRepositoryInterface;
+use App\Http\Requests\PaymentStatus\StoreRequest;
+use App\Http\Requests\PaymentStatus\UpdateRequest;
+use App\Models\PaymentStatus;
+use App\Repositories\PaymentStatus\PaymentStatusRepositoryInterface;
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class PaymentStatusController extends Controller
 {
     /**
-     * @var CustomerRepositoryInterface
+     * @var PaymentStatusRepositoryInterface
      */
-    protected $customerRepo;
+    protected $paymentStatusRepo;
 
-    public function __construct(CustomerRepositoryInterface $customerRepo)
+    public function __construct(PaymentStatusRepositoryInterface $paymentStatusRepo)
     {
-        $this->customerRepo = $customerRepo;
+        $this->paymentStatusRepo = $paymentStatusRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Customers"},
-         *   path="/api/customers",
-         *   summary="List Customer",
-         *   @OA\Parameter(
-         *      name="search",
-         *      in="query",
-         *      description="Search by",
-         *     @OA\Schema(type="string")
-         *   ),
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses",
+         *   summary="List Payment Status",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -55,21 +50,21 @@ class CustomerController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Payment status per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort payment status by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort payment status type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -79,16 +74,16 @@ class CustomerController extends Controller
          *
          * )
          */
-        return $this->customerRepo->getList($request);
+        return $this->paymentStatusRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Customers"},
-         *   path="/api/customers/deleted",
-         *   summary="List Customer Deleted",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/deleted",
+         *   summary="List Payment Status Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -111,21 +106,21 @@ class CustomerController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Payment Status per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort payment status by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort payment status type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -135,40 +130,24 @@ class CustomerController extends Controller
          *
          * )
          */
-        return $this->customerRepo->getDeletedList($request);
+        return $this->paymentStatusRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Customers"},
-         *   path="/api/customers",
-         *   summary="Store new Customer",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses",
+         *   summary="Store new Payment Status",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "fullname", "username", "password"},
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="password", type="string"),
-         *       @OA\Property(property="phone",    type="number"),
-         *       @OA\Property(property="email",    type="string"),
-         *       @OA\Property(property="address",  type="string"),
-         *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="gender", type="string"),
-         *       @OA\Property(property="customer_type_id", type="number"),
+         *       required={ "name"},
+         *       @OA\Property(property="name", type="string"),
          *       example={
-         *          "fullname": "Leonie Maggio",
-         *          "username": "Leonie",
-         *          "password": "Leonie123",
-         *          "phone": "346.997.2035",
-         *          "email": "Leonie@gmail.com",
-         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
-         *          "birthday": "1993-03-26",
-         *          "gender": "2",
-         *          "customer_type_id": "1",
+         *          "name": "Đã thanh toán",
          *       }
          *     )
          *   ),
@@ -178,31 +157,23 @@ class CustomerController extends Controller
          * )
          */
         $attributes = [
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            'password' => bcrypt($request->password),
-            'phone'    => $request->phone,
-            'email'    => $request->email,
-            'address'  => $request->address,
-            'birthday'  => \Carbon\Carbon::parse($request->birthday),
-            'gender'      => $request->gender,
-            'customer_type_id' => $request->customer_type_id,
+            'name' => $request->name,
         ];
-        return $this->customerRepo->store($attributes);
+        return $this->paymentStatusRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}",
-         *   summary="Get Customer by id",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}",
+         *   summary="Get Payment Status by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Item id",
+         *      description="Payment Status id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -211,16 +182,16 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->customerRepo->getById($id);
+        return $this->paymentStatusRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}",
-         *   summary="Update a Customer",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}",
+         *   summary="Update a Payment Status",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -231,25 +202,10 @@ class CustomerController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       @OA\Property(property="fullname", type="string"),
-         *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="phone",    type="number"),
-         *       @OA\Property(property="email",    type="string"),
-         *       @OA\Property(property="address",  type="string"),
-         *       @OA\Property(property="birthday", type="date"),
-         *       @OA\Property(property="gender", type="string"),
-         *       @OA\Property(property="customer_type_id", type="integer"),
+         *       required={ "name"},
+         *       @OA\Property(property="name", type="string"),
          *        example={
-         *          "fullname": "Leonie Maggio",
-         *          "username": "Leonie",
-         *          "password": "Leonie123",
-         *          "phone": "346.997.2035",
-         *          "email": "Leonie@gmail.com",
-         *          "address": "77864 Morissette Coves Port Deontae, MT 45009",
-         *          "id_card": "",
-         *          "birthday": "1993-03-26",
-         *          "gender": "male",
-         *          "customer_type_id": "1",
+         *          "name": "Đã thanh toán",
          *       }
          *     )
          *   ),
@@ -258,29 +214,20 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        // is_null($request->fullname) ?: $attributes['fullname'] = $request->fullname;
-
         $attributes = [
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            'phone'    => $request->phone,
-            'email'    => $request->email,
-            'address'  => $request->address,
-            'birthday'  => \Carbon\Carbon::parse($request->birthday),
-            'gender'      => $request->gender,
-            'customer_type_id' => $request->customer_type_id,
+            'name' => $request->name,
         ];
 
-        return $this->customerRepo->update($id, $attributes);
+        return $this->paymentStatusRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}/delete",
-         *   summary="Delete a Customer",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}/delete",
+         *   summary="Delete a Payment Status",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -292,16 +239,16 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->customerRepo->delete($id);
+        return $this->paymentStatusRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}/remove",
-         *   summary="Remove Customer from trash",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}/remove",
+         *   summary="Remove Payment Status from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -313,16 +260,16 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->customerRepo->remove($id);
+        return $this->paymentStatusRepo->remove($id);
     }
 
-    public function restore($id)
+    public function restore(PaymentStatus $paymentStatus, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}/restore",
-         *   summary="Restore Customer from trash",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}/restore",
+         *   summary="Restore Payment Status from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -334,16 +281,16 @@ class CustomerController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->customerRepo->restore($id);
+        return $this->paymentStatusRepo->restore($id);
     }
 
     public function payments($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Customers"},
-         *   path="/api/customers/{id}/payments",
-         *   summary="List Payment by Customer",
+         *   tags={"Payment Status"},
+         *   path="/api/payment-statuses/{id}/payments",
+         *   summary="List Payment By Payment Status",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -379,14 +326,14 @@ class CustomerController extends Controller
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort Payment by",
+         *      description="Sort payment by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort Payment type ['asc', 'desc']",
+         *      description="Sort payment type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -397,6 +344,6 @@ class CustomerController extends Controller
          * )
          */
 
-        return $this->customerRepo->getPayments($id);
+        return $this->paymentStatusRepo->getPayments($id);
     }
 }

@@ -19,4 +19,9 @@ class ComboTicket extends Model
     protected $hidden = [
         'delete_at'
     ];
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

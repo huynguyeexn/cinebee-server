@@ -26,6 +26,8 @@ use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PaymentStatusController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -430,6 +432,9 @@ Route::prefix('employee')->group(function () {
     // Get Blog by Employee
     Route::get('/{id}/blogs/', [EmployeeController::class, 'blogs'])->whereNumber('id');
 
+    // Get Payment by Employee
+    Route::get('/{id}/payments/', [EmployeeController::class, 'payments'])->whereNumber('id');
+
     // Get by ID
     Route::get('/{id}', [EmployeeController::class, 'getById'])->whereNumber('id');
 
@@ -677,6 +682,9 @@ Route::prefix('customers')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [CustomerController::class, 'getById'])->whereNumber('id');
+
+    // Get Payment by Customer
+    Route::get('/{id}/payments/', [CustomerController::class, 'payments'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [CustomerController::class, 'update'])->whereNumber('id');
@@ -968,4 +976,77 @@ Route::prefix('blogs')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [BlogController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - Payment Status
+*
+* Date: 17/10/2021
+* Time: 19:00
+* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+*/
+
+Route::prefix('payment-statuses')->group(function () {
+
+    // Get list
+    Route::get('/', [PaymentStatusController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [PaymentStatusController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [PaymentStatusController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [PaymentStatusController::class, 'getById'])->whereNumber('id');
+
+    // Get Payment by Payment Status
+    Route::get('/{id}/payments', [PaymentStatusController::class, 'payments'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [PaymentStatusController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [PaymentStatusController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [PaymentStatusController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [PaymentStatusController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - Payment
+*
+* Date: 17/10/2021
+* Time: 22:45
+* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+*/
+
+Route::prefix('payments')->group(function () {
+
+    // Get list
+    Route::get('/', [PaymentController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [PaymentController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [PaymentController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [PaymentController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [PaymentController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [PaymentController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [PaymentController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [PaymentController::class, 'restore'])->whereNumber('id');
 });

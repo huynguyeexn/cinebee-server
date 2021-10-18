@@ -30,4 +30,9 @@ class MovieTicket extends Model
     {
         return $this->belongsto(Seat::class);
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

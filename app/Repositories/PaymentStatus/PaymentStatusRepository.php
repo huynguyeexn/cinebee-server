@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repositories\Customer;
+namespace App\Repositories\PaymentStatus;
 
-use App\Models\Customer;
+use App\Models\PaymentStatus;
 use App\Repositories\BaseRepository;
 
-class CustomerRepository extends BaseRepository implements CustomerRepositoryInterface
+class PaymentStatusRepository extends BaseRepository implements PaymentStatusRepositoryInterface
 {
     public function getModel()
     {
-        return Customer::class;
+        return PaymentStatus::class;
     }
 
     public function getPayments($id)

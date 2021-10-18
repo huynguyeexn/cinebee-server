@@ -107,6 +107,14 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Blog\BlogRepositoryInterface::class,
             \App\Repositories\Blog\BlogRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\PaymentStatus\PaymentStatusRepositoryInterface::class,
+            \App\Repositories\PaymentStatus\PaymentStatusRepository::class,
+        );
+        $this->app->singleton(
+            \App\Repositories\Payment\PaymentRepositoryInterface::class,
+            \App\Repositories\Payment\PaymentRepository::class,
+        );
     }
 
     /**

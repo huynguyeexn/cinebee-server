@@ -8,6 +8,7 @@ use App\Http\Requests\Showtime\UpdateRequest;
 use App\Models\Showtime;
 use App\Repositories\Showtime\ShowtimeRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ShowtimeController extends Controller
 {
@@ -74,7 +75,7 @@ class ShowtimeController extends Controller
          *
          * )
          */
-        return $this->ShowtimeRepo->getList($request);
+        return $this->ShowtimeRepo->getList($request, ["movie", "room"]);
     }
 
     public function deleted(ListRequest $request)
@@ -144,12 +145,12 @@ class ShowtimeController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"room_id", "movie_id", "start_at", "end_at"},
+         *       required={"room_id", "movie_id", "start", "end"},
          *       @OA\Property(property="room_id", type="integer"),
          *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="start_at", type="timestamp"),
-         *       @OA\Property(property="end_at", type="timestamp"),
-         *       example={"room_id": "1", "movie_id": "1", "start_at":"2021-09-21 12:15:00", "end_at":"2021-09-21 14:00:00"}
+         *       @OA\Property(property="start", type="timestamp"),
+         *       @OA\Property(property="end", type="timestamp"),
+         *       example={"room_id": "1", "movie_id": "1", "start":"2021-09-21 12:15:00", "end":"2021-09-21 14:00:00"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -160,8 +161,8 @@ class ShowtimeController extends Controller
         $attributes = [
             'room_id' => $request->room_id,
             'movie_id' => $request->movie_id,
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at,
+            'start' => $request->start,
+            'end' => $request->end,
         ];
         return $this->ShowtimeRepo->store($attributes);
     }
@@ -189,7 +190,7 @@ class ShowtimeController extends Controller
         return $this->ShowtimeRepo->getById($id);
     }
 
-    public function update(UpdateRequest $request, $id)
+    public function update(Request $request)
     {
         /**
          * @OA\Put(
@@ -206,12 +207,12 @@ class ShowtimeController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"room_id", "movie_id", "start_at", "end_at"},
+         *       required={"room_id", "movie_id", "start", "end"},
          *       @OA\Property(property="room_id", type="integer"),
          *       @OA\Property(property="movie_id", type="integer"),
-         *       @OA\Property(property="start_at", type="timestamp"),
-         *       @OA\Property(property="end_at", type="timestamp"),
-         *       example={"room_id": "1", "movie_id": "1", "start_at":"2021-09-21 12:15:00", "end_at":"2021-09-21 14:00:00"}
+         *       @OA\Property(property="start", type="timestamp"),
+         *       @OA\Property(property="end", type="timestamp"),
+         *       example={"room_id": "1", "movie_id": "1", "start":"2021-09-21 12:15:00", "end":"2021-09-21 14:00:00"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -219,14 +220,28 @@ class ShowtimeController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $attributes = [
-            'room_id' => $request->room_id,
-            'movie_id' => $request->movie_id,
-            'start_at' => $request->start_at,
-            'end_at' => $request->end_at,
-        ];
 
-        return $this->ShowtimeRepo->update($id, $attributes);
+
+        // $attributes = [
+        //     'room_id' => $request->room_id,
+        //     'movie_id' => $request->movie_id,
+        //     'start' => $request->start,
+        //     'end' => $request->end,
+        // ];
+
+        // return $this->ShowtimeRepo->update($id, $attributes);
+
+        if(isset($request->deleted)) {
+            Showtime::destroy($request->deleted);
+        }
+
+        DB::table('showtimes')->upsert(
+            $request->events
+        , ['id'], ["room_id", 'start', 'end']);
+        return response([
+            'message' => 'Đã lưu !',
+            'data' => $this->ShowtimeRepo->getList($request, ["movie", "room"]),
+        ], 200);
     }
 
     public function delete($id)

@@ -19,10 +19,10 @@ class Room extends Model
         'delete_at'
     ];
 
-    public function roomSatus()
-    {
-        return $this->belongsto(RoomStatus::class);
-    }
+    // public function roomSatus()
+    // {
+    //     return $this->belongsto(RoomStatus::class);
+    // }
 
 
     public function seats()
@@ -30,7 +30,7 @@ class Room extends Model
         return $this->hasMany(Seat::class);
     }
 
-    public function showtimes()
+    public function showtime()
     {
         return $this->hasMany(Showtime::class);
     }

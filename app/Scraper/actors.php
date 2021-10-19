@@ -7,7 +7,7 @@ use Goutte\Client;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Str;
 
-class themoviedb
+class actors
 {
     public function scrape()
     {
@@ -39,7 +39,7 @@ class themoviedb
                                 "slug" =>  Str::slug($node->filter('.info p a')->text()),
                                 "avatar" => $node->filter('.profile')->attr("src")
                                     ? 'https://www.themoviedb.org/' . str_replace('w66_and_h66_face', 'original', $node->filter('.profile')->attr("src"))
-                                    : 'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
+                                    : null,
                             ]
                         );
                     } catch (\Throwable $th) {

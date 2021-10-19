@@ -26,6 +26,7 @@ use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ShowtimeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -821,9 +822,6 @@ Route::prefix('showtimes')->group(function () {
     // Get deleted list
     Route::get('/deleted', [ShowtimeController::class, 'deleted']);
 
-    // Create new
-    Route::post('/', [ShowtimeController::class, 'store']);
-
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
 
@@ -831,7 +829,7 @@ Route::prefix('showtimes')->group(function () {
     Route::get('/{id}/movie-ticket', [ShowtimeController::class, 'movieTicket'])->whereNumber('id');
 
     // Update
-    Route::put('/{id}', [ShowtimeController::class, 'update'])->whereNumber('id');
+    Route::put('/', [ShowtimeController::class, 'update']);
 
     // Soft Delete
     Route::delete('{id}/delete/', [ShowtimeController::class, 'delete'])->whereNumber('id');

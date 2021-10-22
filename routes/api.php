@@ -27,6 +27,7 @@ use App\Http\Controllers\MovieTicketController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ComboTicketDetailController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentStatusController;
 use Illuminate\Support\Facades\Auth;
@@ -1050,4 +1051,40 @@ Route::prefix('payments')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [PaymentController::class, 'restore'])->whereNumber('id');
+});
+
+
+
+/** REST API - Combo Ticket Detail
+*
+* Date: 22/10/2021
+* Time: 21:30
+* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+*/
+
+Route::prefix('combo-ticket-details')->group(function () {
+
+    // Get list
+    Route::get('/', [ComboTicketDetailController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [ComboTicketDetailController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [ComboTicketDetailController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [ComboTicketDetailController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [ComboTicketDetailController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [ComboTicketDetailController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [ComboTicketDetailController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [ComboTicketDetailController::class, 'restore'])->whereNumber('id');
 });

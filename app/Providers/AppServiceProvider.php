@@ -115,6 +115,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Payment\PaymentRepositoryInterface::class,
             \App\Repositories\Payment\PaymentRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\ComboTicketDetail\ComboTicketDetailRepositoryInterface::class,
+            \App\Repositories\ComboTicketDetail\ComboTicketDetailRepository::class,
+        );
     }
 
     /**

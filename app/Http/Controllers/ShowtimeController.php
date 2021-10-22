@@ -33,9 +33,10 @@ class ShowtimeController extends Controller
          *   summary="List Showtime",
          *   @OA\Parameter(
          *      name="date",
-         *      in="date",
+         *      in="query",
          *      description="date",
-         *     @OA\Schema(type="date")
+         *      example="2021-10-23T22:04:30+07:00",
+         *     @OA\Schema(type="string")
          *   ),
          *   @OA\Response(response=200, description="OK"),
          *   @OA\Response(response=401, description="Unauthorized"),

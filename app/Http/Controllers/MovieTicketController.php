@@ -144,12 +144,14 @@ class MovieTicketController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       required={ "get_at", "showtime_id", "room_id", "seat_text", "seat_code", "price"},
          *       @OA\Property(property="get_at", type="date"),
          *       @OA\Property(property="showtime_id", type="integer"),
-         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="room_id", type="integer"),
+         *       @OA\Property(property="seat_code", type="integer"),
+         *       @OA\Property(property="seat_text", type="string"),
          *       @OA\Property(property="price",    type="float"),
-         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "room_id": "1", "seat_text": "A1", "seat_code": "1", "price": "45.000"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -160,7 +162,9 @@ class MovieTicketController extends Controller
         $attributes = [
             'get_at' => $request->get_at,
             'showtime_id' => $request->showtime_id,
-            'seat_id' => $request->seat_id,
+            'room_id' => $request->room_id,
+            'seat_code' => $request->seat_code,
+            'seat_text' => $request->seat_text,
             'price'    => $request->price,
         ];
         return $this->movieTicketRepo->store($attributes);
@@ -206,12 +210,14 @@ class MovieTicketController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "get_at", "showtime_id", "seat_id", "price"},
+         *       required={ "get_at", "showtime_id", "room_id", "seat_text", "seat_code", "price"},
          *       @OA\Property(property="get_at", type="date"),
          *       @OA\Property(property="showtime_id", type="integer"),
-         *       @OA\Property(property="seat_id", type="integer"),
+         *       @OA\Property(property="room_id", type="integer"),
+         *       @OA\Property(property="seat_code", type="integer"),
+         *       @OA\Property(property="seat_text", type="string"),
          *       @OA\Property(property="price",    type="float"),
-         *       example={"get_at": "21/09/2021", "showtime_id": "1", "seat_id": "1", "price": "45.000"}
+         *       example={"get_at": "21/09/2021", "showtime_id": "1", "room_id": "1", "seat_text": "A1", "seat_code": "1", "price": "45.000"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -222,7 +228,9 @@ class MovieTicketController extends Controller
         $attributes = [
             'get_at' => $request->get_at,
             'showtime_id' => $request->showtime_id,
-            'seat_id' => $request->seat_id,
+            'room_id' => $request->room_id,
+            'seat_code' => $request->seat_code,
+            'seat_text' => $request->seat_text,
             'price'    => $request->price,
         ];
 

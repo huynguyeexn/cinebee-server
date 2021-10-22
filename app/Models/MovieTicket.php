@@ -13,7 +13,9 @@ class MovieTicket extends Model
     protected $fillable = [
         'get_at',
         'showtime_id',
-        'seat_id',
+        'room_id',
+        'seat_code',
+        'seat_text',
         'price'
     ];
 

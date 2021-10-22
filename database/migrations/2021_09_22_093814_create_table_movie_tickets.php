@@ -20,10 +20,12 @@ class CreateTableMovieTickets extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->foreignId('seat_id')
+            $table->foreignId('room_id')
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
+            $table->string('seat_text');
+            $table->integer('seat_code');
             $table->float('price');
             $table->softDeletes();
             $table->timestamps();

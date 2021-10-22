@@ -8,6 +8,7 @@ use Exception;
 
 class ShowtimeSeed extends Seeder
 {
+    private $failures = 0;
     /**
      * Run the database seeds.
      *

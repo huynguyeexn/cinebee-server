@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\MovieTicket;
 
+use App\Models\Room;
 use App\Models\Seat;
 use App\Models\Showtime;
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,15 +24,17 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Showtime $showtime,Seat $seat)
+    public function rules(Showtime $showtime,Room $room)
     {
         $showtimeId = $showtime->getTable();
-        $seatId = $seat->getTable();
+        $roomId = $room->getTable();
         return [
-            'get_at' => "required|date",
+            'get_at'      => "required|date",
             'showtime_id' => "required|integer|exists:$showtimeId,id",
-            'seat_id' => "required|integer|exists:$seatId,id",
-            'price' => "required|string",
+            'room_id'     => "required|integer|exists:$roomId,id",
+            'seat_code'   => "required|integer",
+            'seat_text'   => "required|string|min:2|max:3",
+            'price'       => "required|string",
         ];
     }
 }

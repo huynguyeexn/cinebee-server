@@ -819,9 +819,6 @@ Route::prefix('showtimes')->group(function () {
     // Get list
     Route::get('/', [ShowtimeController::class, 'index']);
 
-    // Get deleted list
-    Route::get('/deleted', [ShowtimeController::class, 'deleted']);
-
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
 
@@ -830,15 +827,6 @@ Route::prefix('showtimes')->group(function () {
 
     // Update
     Route::put('/', [ShowtimeController::class, 'update']);
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [ShowtimeController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [ShowtimeController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [ShowtimeController::class, 'restore'])->whereNumber('id');
 });
 
 
@@ -878,7 +866,7 @@ Route::prefix('movie-tickets')->group(function () {
 });
 
 
- /** REST API - FIle Upload
+/** REST API - FIle Upload
  *
  * Date: 26/09/2021
  * Time: 19:30
@@ -897,11 +885,11 @@ Route::prefix('uploads')->group(function () {
 
 
 /** REST API - Category
-*
-* Date: 05/10/2021
-* Time: 20:00
-* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
-*/
+ *
+ * Date: 05/10/2021
+ * Time: 20:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
 
 Route::prefix('categories')->group(function () {
 
@@ -935,11 +923,11 @@ Route::prefix('categories')->group(function () {
 
 
 /** REST API - Blog
-*
-* Date: 05/10/2021
-* Time: 22:00
-* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
-*/
+ *
+ * Date: 05/10/2021
+ * Time: 22:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
 
 Route::prefix('blogs')->group(function () {
 

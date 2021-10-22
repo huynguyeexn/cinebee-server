@@ -15,8 +15,8 @@ class ChangeStartAtEndAtShowtime extends Migration
     {
         Schema::table('showtimes', function (Blueprint $table) {
             //
-            $table->renameColumn('start', 'start');
-            $table->renameColumn('end', 'end');
+            $table->renameColumn('start_at', 'start');
+            $table->renameColumn('end_at', 'end');
         });
     }
 
@@ -29,8 +29,8 @@ class ChangeStartAtEndAtShowtime extends Migration
     {
         Schema::table('showtimes', function (Blueprint $table) {
             //
-            $table->renameColumn('start', 'start');
-            $table->renameColumn('end', 'end');
+            $table->renameColumn('start', 'start_at');
+            $table->renameColumn('end', 'end_at');
         });
     }
 }

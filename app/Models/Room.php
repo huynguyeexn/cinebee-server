@@ -15,16 +15,16 @@ class Room extends Model
         "room_status_id",
         "rows",
         "cols",
-        "seats",
+        "price",
     ];
 
     protected $hidden = [
         'delete_at'
     ];
 
-    // public function roomSatus()
+    // public function roomStatus()
     // {
-    //     return $this->belongsto(RoomStatus::class);
+    //     return $this->belongsTo(RoomStatus::class);
     // }
 
 

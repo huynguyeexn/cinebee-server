@@ -19,4 +19,9 @@ class Item extends Model
     protected $hidden = [
         'delete_at'
     ];
+
+    public function combos()
+    {
+        return $this->belongsToMany(Combo::class, 'combo_items');
+    }
 }

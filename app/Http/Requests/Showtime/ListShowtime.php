@@ -6,7 +6,7 @@ use App\Models\Movie;
 use App\Models\Room;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class ListShowtime extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,13 +25,8 @@ class UpdateRequest extends FormRequest
      */
     public function rules(Movie $movie,Room $room)
     {
-        $movieId = $movie->getTable();
-        $roomId = $room->getTable();
         return [
-            'room_id' => "required|integer|exists:$roomId,id",
-            'movie_id' => "required|integer|exists:$movieId,id",
-            'start' => "required",
-            'end' => "required",
+            'date' => 'required|date_format:Y-m-d\TH:i:sP',
         ];
     }
 }

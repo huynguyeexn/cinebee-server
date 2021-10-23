@@ -26,6 +26,7 @@ use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ShowtimeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -818,12 +819,6 @@ Route::prefix('showtimes')->group(function () {
     // Get list
     Route::get('/', [ShowtimeController::class, 'index']);
 
-    // Get deleted list
-    Route::get('/deleted', [ShowtimeController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [ShowtimeController::class, 'store']);
-
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
 
@@ -831,16 +826,7 @@ Route::prefix('showtimes')->group(function () {
     Route::get('/{id}/movie-ticket', [ShowtimeController::class, 'movieTicket'])->whereNumber('id');
 
     // Update
-    Route::put('/{id}', [ShowtimeController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [ShowtimeController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [ShowtimeController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [ShowtimeController::class, 'restore'])->whereNumber('id');
+    Route::put('/', [ShowtimeController::class, 'update']);
 });
 
 
@@ -880,7 +866,7 @@ Route::prefix('movie-tickets')->group(function () {
 });
 
 
- /** REST API - FIle Upload
+/** REST API - FIle Upload
  *
  * Date: 26/09/2021
  * Time: 19:30
@@ -899,11 +885,11 @@ Route::prefix('uploads')->group(function () {
 
 
 /** REST API - Category
-*
-* Date: 05/10/2021
-* Time: 20:00
-* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
-*/
+ *
+ * Date: 05/10/2021
+ * Time: 20:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
 
 Route::prefix('categories')->group(function () {
 
@@ -937,11 +923,11 @@ Route::prefix('categories')->group(function () {
 
 
 /** REST API - Blog
-*
-* Date: 05/10/2021
-* Time: 22:00
-* @author  DungLe-Webdesigner <dungle21092001@gmail.com>
-*/
+ *
+ * Date: 05/10/2021
+ * Time: 22:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
 
 Route::prefix('blogs')->group(function () {
 

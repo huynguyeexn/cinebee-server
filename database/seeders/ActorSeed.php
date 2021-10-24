@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Actor;
 use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class ActorSeed extends Seeder
 {
@@ -18,7 +19,8 @@ class ActorSeed extends Seeder
     {
         //
         try {
-            Actor::factory(50)->create();
+            // Actor::factory(50)->create();
+            Artisan::call('scrape:actor');
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

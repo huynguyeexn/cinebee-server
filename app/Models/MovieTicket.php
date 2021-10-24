@@ -12,11 +12,11 @@ class MovieTicket extends Model
 
     protected $fillable = [
         'get_at',
+        'price',
+        'order_id',
         'showtime_id',
         'room_id',
-        'seat_code',
-        'seat_text',
-        'price'
+        'seat_id',
     ];
 
     protected $hidden = [
@@ -33,8 +33,8 @@ class MovieTicket extends Model
         return $this->belongsto(Seat::class);
     }
 
-    public function payments()
+    public function orders()
     {
-        return $this->hasMany(Payment::class);
+        return $this->belongsto(Order::class, "order_id");
     }
 }

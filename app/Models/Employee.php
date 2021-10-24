@@ -45,9 +45,9 @@ class Employee extends Authenticatable implements JWTSubject
         return $this->hasMany(Blog::class);
     }
 
-    public function payments()
+    public function orders()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Order::class);
     }
 
     /**

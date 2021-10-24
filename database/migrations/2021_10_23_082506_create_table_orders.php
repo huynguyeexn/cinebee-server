@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableComboTicketDetails extends Migration
+class CreateTableOrders extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,21 @@ class CreateTableComboTicketDetails extends Migration
      */
     public function up()
     {
-        Schema::create('combo_ticket_details', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('combo_ticket_id')
+            $table->float('total');
+            $table->dateTime('booking_at');
+            $table->foreignId('employee_id')
             ->nullable()
             ->constrained()
             ->cascadeOnUpdate()
             ->nullOnDelete();
-            $table->integer('quantity');
-            $table->float('price');
+            $table->foreignId('customer_id')
+            ->nullable()
+            ->constrained()
+            ->cascadeOnUpdate()
+            ->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -33,6 +39,6 @@ class CreateTableComboTicketDetails extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('combo_ticket_details');
+        Schema::dropIfExists('orders');
     }
 }

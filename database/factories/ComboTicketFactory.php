@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Combo;
 use App\Models\ComboTicket;
+use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -28,8 +29,10 @@ class ComboTicketFactory extends Factory
         return [
             //
             'get_at' => $this->faker->dateTimeBetween($startDate, $endDate),
+            'quantity' => $this->faker->numberBetween(1, 5),
             'price' => $this->faker->numberBetween(1500, 6000, true),
             'combo_id' => Combo::inRandomOrder()->first(),
+            'order_id' => Order::inRandomOrder()->first(),
         ];
     }
 }

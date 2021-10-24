@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ComboTicketDetailController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentStatusController;
 use Illuminate\Support\Facades\Auth;
@@ -434,9 +435,6 @@ Route::prefix('employee')->group(function () {
     // Get Blog by Employee
     Route::get('/{id}/blogs/', [EmployeeController::class, 'blogs'])->whereNumber('id');
 
-    // Get Payment by Employee
-    Route::get('/{id}/payments/', [EmployeeController::class, 'payments'])->whereNumber('id');
-
     // Get by ID
     Route::get('/{id}', [EmployeeController::class, 'getById'])->whereNumber('id');
 
@@ -684,9 +682,6 @@ Route::prefix('customers')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [CustomerController::class, 'getById'])->whereNumber('id');
-
-    // Get Payment by Customer
-    Route::get('/{id}/payments/', [CustomerController::class, 'payments'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [CustomerController::class, 'update'])->whereNumber('id');
@@ -1054,37 +1049,36 @@ Route::prefix('payments')->group(function () {
 });
 
 
-
-/** REST API - Combo Ticket Detail
+/** REST API - Order
 *
-* Date: 22/10/2021
-* Time: 21:30
+* Date: 23/10/2021
+* Time: 09:30
 * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
 */
 
-Route::prefix('combo-ticket-details')->group(function () {
+Route::prefix('orders')->group(function () {
 
     // Get list
-    Route::get('/', [ComboTicketDetailController::class, 'index']);
+    Route::get('/', [OrderController::class, 'index']);
 
     // Get deleted list
-    Route::get('/deleted', [ComboTicketDetailController::class, 'deleted']);
+    Route::get('/deleted', [OrderController::class, 'deleted']);
 
     // Create new
-    Route::post('/', [ComboTicketDetailController::class, 'store']);
+    Route::post('/', [OrderController::class, 'store']);
 
     // Get by ID
-    Route::get('/{id}', [ComboTicketDetailController::class, 'getById'])->whereNumber('id');
+    Route::get('/{id}', [OrderController::class, 'getById'])->whereNumber('id');
 
     // Update
-    Route::put('/{id}', [ComboTicketDetailController::class, 'update'])->whereNumber('id');
+    Route::put('/{id}', [OrderController::class, 'update'])->whereNumber('id');
 
     // Soft Delete
-    Route::delete('{id}/delete/', [ComboTicketDetailController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [OrderController::class, 'delete'])->whereNumber('id');
 
     // Hard Delete
-    Route::delete('{id}/remove/', [ComboTicketDetailController::class, 'remove'])->whereNumber('id');
+    Route::delete('{id}/remove/', [OrderController::class, 'remove'])->whereNumber('id');
 
     // Restore
-    Route::patch('{id}/restore/', [ComboTicketDetailController::class, 'restore'])->whereNumber('id');
+    Route::patch('{id}/restore/', [OrderController::class, 'restore'])->whereNumber('id');
 });

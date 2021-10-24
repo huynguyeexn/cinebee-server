@@ -11,12 +11,11 @@ class Payment extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'booking_at',
+        'order_id',
         'payment_status_id',
-        'employee_id',
-        'customer_id',
-        'combo_ticket_id',
-        'movie_ticket_id',
+        'code_bank',
+        'code_transaction',
+        'note',
     ];
 
     protected $hidden = [
@@ -28,23 +27,8 @@ class Payment extends Model
         return $this->belongsto(PaymentStatus::class,'payment_status_id');
     }
 
-    public function employees()
+    public function orders()
     {
-        return $this->belongsto(Employee::class,'employee_id');
-    }
-
-    public function customers()
-    {
-        return $this->belongsto(Customer::class,'customer_id');
-    }
-
-    public function movieTickets()
-    {
-        return $this->belongsto(movieTickets::class,'movie_ticket_id');
-    }
-
-    public function comboTickets()
-    {
-        return $this->belongsto(comboTickets::class,'combo_ticket_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 }

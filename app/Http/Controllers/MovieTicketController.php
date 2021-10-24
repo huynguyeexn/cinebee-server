@@ -144,14 +144,14 @@ class MovieTicketController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "get_at", "showtime_id", "room_id", "seat_text", "seat_code", "price"},
+         *       required={ "get_at", "price", "order_id", "showtime_id", "room_id", "seat_id"},
          *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="price",    type="float"),
+         *       @OA\Property(property="order_id", type="integer"),
          *       @OA\Property(property="showtime_id", type="integer"),
          *       @OA\Property(property="room_id", type="integer"),
-         *       @OA\Property(property="seat_code", type="integer"),
-         *       @OA\Property(property="seat_text", type="string"),
-         *       @OA\Property(property="price",    type="float"),
-         *       example={"get_at": "21/09/2021", "showtime_id": "1", "room_id": "1", "seat_text": "A1", "seat_code": "1", "price": "45.000"}
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       example={"get_at": "2021-10-24 09:30:00", "price": "45.000", "order_id": "1", "showtime_id": "1", "room_id": "1", "seat_id": "1"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -161,11 +161,11 @@ class MovieTicketController extends Controller
          */
         $attributes = [
             'get_at' => $request->get_at,
+            'price'    => $request->price,
+            'order_id' => $request->order_id,
             'showtime_id' => $request->showtime_id,
             'room_id' => $request->room_id,
-            'seat_code' => $request->seat_code,
-            'seat_text' => $request->seat_text,
-            'price'    => $request->price,
+            'seat_id' => $request->seat_id,
         ];
         return $this->movieTicketRepo->store($attributes);
     }
@@ -210,14 +210,14 @@ class MovieTicketController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "get_at", "showtime_id", "room_id", "seat_text", "seat_code", "price"},
+         *       required={ "get_at", "price", "order_id", "showtime_id", "room_id", "seat_id"},
          *       @OA\Property(property="get_at", type="date"),
+         *       @OA\Property(property="price",    type="float"),
+         *       @OA\Property(property="order_id", type="integer"),
          *       @OA\Property(property="showtime_id", type="integer"),
          *       @OA\Property(property="room_id", type="integer"),
-         *       @OA\Property(property="seat_code", type="integer"),
-         *       @OA\Property(property="seat_text", type="string"),
-         *       @OA\Property(property="price",    type="float"),
-         *       example={"get_at": "21/09/2021", "showtime_id": "1", "room_id": "1", "seat_text": "A1", "seat_code": "1", "price": "45.000"}
+         *       @OA\Property(property="seat_id", type="integer"),
+         *       example={"get_at": "2021-10-24 09:30:00", "price": "45.000", "order_id": "1", "showtime_id": "1", "room_id": "1", "seat_id": "1"}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -227,11 +227,11 @@ class MovieTicketController extends Controller
          */
         $attributes = [
             'get_at' => $request->get_at,
+            'price'    => $request->price,
+            'order_id' => $request->order_id,
             'showtime_id' => $request->showtime_id,
             'room_id' => $request->room_id,
-            'seat_code' => $request->seat_code,
-            'seat_text' => $request->seat_text,
-            'price'    => $request->price,
+            'seat_id' => $request->seat_id,
         ];
 
         return $this->movieTicketRepo->update($id, $attributes);

@@ -32,8 +32,8 @@ class Customer extends Model
         return $this->belongsto(CustomerType::class);
     }
 
-    public function payments()
+    public function orders()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Order::class);
     }
 }

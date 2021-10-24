@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Payment;
 
-use App\Models\ComboTicket;
-use App\Models\Customer;
-use App\Models\Employee;
-use App\Models\MovieTicket;
+use App\Models\Order;
 use App\Models\PaymentStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -26,20 +23,16 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(PaymentStatus $status, Employee $employee, Customer $customer, ComboTicket $combo_ticket, MovieTicket $movie_ticket)
+    public function rules(PaymentStatus $status, Order $order)
     {
         $statusId = $status->getTable();
-        $employeeId = $employee->getTable();
-        $customerId = $customer->getTable();
-        $comboTicketId = $combo_ticket->getTable();
-        $movieTicketId = $movie_ticket->getTable();
+        $orderId = $order->getTable();
         return [
-            'booking_at'        => "required|date",
-            'payment_status_id'  => "nullable|integer|exists:$statusId,id",
-            'employee_id'         => "nullable|integer|exists:$employeeId,id",
-            'customer_id'         => "nullable|integer|exists:$customerId,id",
-            'combo_ticket_id'     => "nullable|integer|exists:$comboTicketId,id",
-            'movie_ticket_id'     => "nullable|integer|exists:$movieTicketId,id",
+            'order_id'           => "required|integer|exists:$orderId,id",
+            'payment_status_id'  => "required|integer|exists:$statusId,id",
+            'code_bank'          => "required|string",
+            'code_transaction'   => "required|string|unique:payments,code_transaction,$this->id,id",
+            'note'               => "nullable|string",
         ];
     }
 }

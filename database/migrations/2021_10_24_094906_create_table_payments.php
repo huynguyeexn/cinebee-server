@@ -15,32 +15,19 @@ class CreateTablePayments extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('booking_at');
+            $table->foreignId('order_id')
+            ->nullable()
+            ->constrained()
+            ->cascadeOnUpdate()
+            ->nullOnDelete();
             $table->foreignId('payment_status_id')
             ->nullable()
             ->constrained()
             ->cascadeOnUpdate()
             ->nullOnDelete();
-            $table->foreignId('employee_id')
-            ->nullable()
-            ->constrained()
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
-            $table->foreignId('customer_id')
-            ->nullable()
-            ->constrained()
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
-            $table->foreignId('combo_ticket_id')
-            ->nullable()
-            ->constrained()
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
-            $table->foreignId('movie_ticket_id')
-            ->nullable()
-            ->constrained()
-            ->cascadeOnUpdate()
-            ->nullOnDelete();
+            $table->string('code_bank');
+            $table->string('code_transaction');
+            $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

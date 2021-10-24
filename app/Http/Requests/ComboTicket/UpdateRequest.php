@@ -3,6 +3,7 @@
 namespace App\Http\Requests\ComboTicket;
 
 use App\Models\Combo;
+use App\Models\Order;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -22,14 +23,16 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Combo $combo)
+    public function rules(Combo $combo, Order $order)
     {
         $comboId = $combo->getTable();
+        $orderId = $order->getTable();
         return [
-            //
             "get_at" => "required",
-            "price" => "required|numberic",
-            "combo_id" => "required|integer|exists:$comboId,id"
+            'quantity' => 'required|integer',
+            "price" => "required|numeric",
+            "combo_id" => "required|integer|exists:$comboId,id",
+            "order_id" => "required|integer|exists:$orderId,id"
         ];
     }
 }

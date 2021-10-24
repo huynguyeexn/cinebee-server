@@ -3,31 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\Payment\StoreRequest;
-use App\Http\Requests\Payment\UpdateRequest;
-use App\Models\Payment;
-use App\Repositories\Payment\PaymentRepositoryInterface;
+use App\Http\Requests\Order\StoreRequest;
+use App\Http\Requests\Order\UpdateRequest;
+use App\Models\Order;
+use App\Repositories\Order\OrderRepositoryInterface;
 use Illuminate\Http\Request;
 
-class PaymentController extends Controller
+class OrderController extends Controller
 {
     /**
-     * @var PaymentRepositoryInterface
+     * @var OrderRepositoryInterface
      */
-    protected $paymentRepo;
+    protected $orderRepo;
 
-    public function __construct(PaymentRepositoryInterface $paymentRepo)
+    public function __construct(OrderRepositoryInterface $orderRepo)
     {
-        $this->paymentRepo = $paymentRepo;
+        $this->orderRepo = $orderRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Payment"},
-         *   path="/api/payments",
-         *   summary="List Payment",
+         *   tags={"Order"},
+         *   path="/api/orders",
+         *   summary="List Order",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -50,21 +50,21 @@ class PaymentController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Payment per page",
+         *      description="Order per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort payment by",
+         *      description="Sort Order by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort payment type ['asc', 'desc']",
+         *      description="Sort Order type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -74,16 +74,16 @@ class PaymentController extends Controller
          *
          * )
          */
-        return $this->paymentRepo->getList($request);
+        return $this->orderRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Payment"},
-         *   path="/api/payments/deleted",
-         *   summary="List Payment Deleted",
+         *   tags={"Order"},
+         *   path="/api/orders/deleted",
+         *   summary="List Order Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -106,21 +106,21 @@ class PaymentController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Payment per page",
+         *      description="Order per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort payment by",
+         *      description="Sort Order by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort payment type ['asc', 'desc']",
+         *      description="Sort Order type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -130,32 +130,30 @@ class PaymentController extends Controller
          *
          * )
          */
-        return $this->paymentRepo->getDeletedList($request);
+        return $this->orderRepo->getDeletedList($request);
     }
 
     public function store(StoreRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Payment"},
-         *   path="/api/payments",
-         *   summary="Store new Payment",
+         *   tags={"Order"},
+         *   path="/api/orders",
+         *   summary="Store new Order",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "order_id", "payment_status_id", "code_bank", "code_transaction", "note"},
-         *       @OA\Property(property="order_id", type="integer"),
-         *       @OA\Property(property="payment_status_id", type="integer"),
-         *       @OA\Property(property="code_bank", type="string"),
-         *       @OA\Property(property="code_transaction", type="string"),
-         *       @OA\Property(property="note", type="string"),
+         *       required={ "total", "booking_at", "employee_id", "customer_id"},
+         *       @OA\Property(property="total", type="float"),
+         *       @OA\Property(property="booking_at", type="date"),
+         *       @OA\Property(property="employee_id", type="integer"),
+         *       @OA\Property(property="customer_id", type="integer"),
          *       example={
-         *          "order_id": 30,
-         *          "payment_status_id": 1,
-         *          "code_bank": "TPBank",
-         *          "code_transaction": "13482203",
-         *          "note": "Nội dung thanh toán",
+         *          "total": "120000",
+         *          "booking_at": "2021-10-21 09:30:00",
+         *          "employee_id": 1,
+         *          "customer_id": 1,
          *       }
          *     )
          *   ),
@@ -165,27 +163,26 @@ class PaymentController extends Controller
          * )
          */
         $attributes = [
-            'order_id' => $request->order_id,
-            'payment_status_id' => $request->payment_status_id,
-            'code_bank' => $request->code_bank,
-            'code_transaction' => $request->code_transaction,
-            'note' => $request->note,
+            'total' => $request->total,
+            'booking_at' => $request->booking_at,
+            'employee_id' => $request->employee_id,
+            'customer_id' => $request->customer_id,
         ];
-        return $this->paymentRepo->store($attributes);
+        return $this->orderRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Payment"},
-         *   path="/api/payments/{id}",
-         *   summary="Get Payment by id",
+         *   tags={"Order"},
+         *   path="/api/orders/{id}",
+         *   summary="Get Order by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Payment id",
+         *      description="Order id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -194,16 +191,16 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->paymentRepo->getById($id);
+        return $this->orderRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Payment"},
-         *   path="/api/payments/{id}",
-         *   summary="Update a Payment",
+         *   tags={"Order"},
+         *   path="/api/orders/{id}",
+         *   summary="Update a Order",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -214,18 +211,16 @@ class PaymentController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={ "order_id", "payment_status_id", "code_bank", "code_transaction", "note"},
-         *       @OA\Property(property="order_id", type="integer"),
-         *       @OA\Property(property="payment_status_id", type="integer"),
-         *       @OA\Property(property="code_bank", type="string"),
-         *       @OA\Property(property="code_transaction", type="string"),
-         *       @OA\Property(property="note", type="string"),
+         *       required={ "total", "booking_at", "employee_id", "customer_id"},
+         *       @OA\Property(property="total", type="float"),
+         *       @OA\Property(property="booking_at", type="date"),
+         *       @OA\Property(property="employee_id", type="integer"),
+         *       @OA\Property(property="customer_id", type="integer"),
          *       example={
-         *          "order_id": 30,
-         *          "payment_status_id": 1,
-         *          "code_bank": "TPBank",
-         *          "code_transaction": "13482203",
-         *          "note": "Nội dung thanh toán",
+         *          "total": "120000",
+         *          "booking_at": "2021-10-21 09:30:00",
+         *          "employee_id": 1,
+         *          "customer_id": 1,
          *       }
          *     )
          *   ),
@@ -235,23 +230,22 @@ class PaymentController extends Controller
          * )
          */
         $attributes = [
-            'order_id' => $request->order_id,
-            'payment_status_id' => $request->payment_status_id,
-            'code_bank' => $request->code_bank,
-            'code_transaction' => $request->code_transaction,
-            'note' => $request->note,
+            'total' => $request->total,
+            'booking_at' => $request->booking_at,
+            'employee_id' => $request->employee_id,
+            'customer_id' => $request->customer_id,
         ];
 
-        return $this->paymentRepo->update($id, $attributes);
+        return $this->orderRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Payment"},
-         *   path="/api/payments/{id}/delete",
-         *   summary="Delete a Payment",
+         *   tags={"Order"},
+         *   path="/api/orders/{id}/delete",
+         *   summary="Delete a Order",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -263,16 +257,16 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->paymentRepo->delete($id);
+        return $this->orderRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Payment"},
-         *   path="/api/payments/{id}/remove",
-         *   summary="Remove Payment from trash",
+         *   tags={"Order"},
+         *   path="/api/orders/{id}/remove",
+         *   summary="Remove Order from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -284,16 +278,16 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->paymentRepo->remove($id);
+        return $this->orderRepo->remove($id);
     }
 
-    public function restore(Payment $payment, $id)
+    public function restore(Order $Order, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Payment"},
-         *   path="/api/payments/{id}/restore",
-         *   summary="Restore Payment from trash",
+         *   tags={"Order"},
+         *   path="/api/orders/{id}/restore",
+         *   summary="Restore Order from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -305,6 +299,6 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->paymentRepo->restore($id);
+        return $this->orderRepo->restore($id);
     }
 }

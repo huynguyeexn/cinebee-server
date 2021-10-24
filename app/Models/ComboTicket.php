@@ -12,16 +12,18 @@ class ComboTicket extends Model
 
     protected $fillable = [
         'get_at',
+        'quantity',
         'price',
         'combo_id',
+        'order_id'
     ];
 
     protected $hidden = [
         'delete_at'
     ];
 
-    public function payments()
+    public function orders()
     {
-        return $this->hasMany(Payment::class);
+        return $this->belongsto(Order::class, "order_id");
     }
 }

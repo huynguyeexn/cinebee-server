@@ -16,6 +16,11 @@ class CreateTableMovieTickets extends Migration
         Schema::create('movie_tickets', function (Blueprint $table) {
             $table->id();
             $table->dateTime('get_at');
+            $table->float('price');
+            $table->foreignId('order_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->foreignId('showtime_id')
                 ->constrained()
                 ->cascadeOnUpdate()
@@ -24,9 +29,10 @@ class CreateTableMovieTickets extends Migration
                 ->constrained()
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
-            $table->string('seat_text');
-            $table->integer('seat_code');
-            $table->float('price');
+            $table->foreignId('seat_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->nullOnDelete();
             $table->softDeletes();
             $table->timestamps();
         });

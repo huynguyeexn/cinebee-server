@@ -12,16 +12,38 @@ class Order extends Model
 
     protected $fillable = [
         'total',
-        'total_quantity',
-        'employee',
-        'customer',
-        'movie_ticket_detail',
-        'combo_ticket_detail',
         'booking_at',
+        'employee_id',
+        'customer_id',
     ];
 
     protected $hidden = [
         'deleted_at'
     ];
+
+    public function employees()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
+    public function customers()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function comboTickets()
+    {
+        return $this->hasMany(ComboTicket::class);
+    }
+
+    public function movieTickets()
+    {
+        return $this->hasMany(movieTickets::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasOne(Payment::class);
+    }
 
 }

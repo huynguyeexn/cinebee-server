@@ -99,11 +99,13 @@ class ComboTicketController extends Controller
          *        required=true,
          *       @OA\JsonContent(
          *         type="string",
-         *         required={"name", "price", "slug"},
-         *         @OA\Property(property="get_at", type="date"),
-         *         @OA\Property(property="price", type="float"),
-         *         @OA\Property(property="combo_id", type="integer"),
-         *         example={"get_at": "2021-10-02", "price": "2000", "combo_id": "1"}
+         *         required={"get_at", "quantity", "price", "combo_id", "order_id"},
+        *          @OA\Property(property="get_at", type="date"),
+        *          @OA\Property(property="quantity", type="integer"),
+        *          @OA\Property(property="price", type="float"),
+        *          @OA\Property(property="combo_id", type="integer"),
+        *          @OA\Property(property="order_id", type="integer"),
+        *          example={"get_at": "2-10-2021", "quantity": "1", "price": "2000", "combo_id": "2", "order_id": "1"}
          *       )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -113,8 +115,10 @@ class ComboTicketController extends Controller
          */
         $attributes = [
             'get_at' => $request->get_at,
+            'quantity' => $request->quantity,
             'price' => $request->price,
             'combo_id' => $request->combo_id,
+            'order_id' => $request->order_id,
         ];
 
         return $this->ComboTicketRepo->store($attributes);
@@ -167,11 +171,13 @@ class ComboTicketController extends Controller
          *      required=true,
          *      @OA\JsonContent(
          *        type="string",
-         *        required={"get_at", "price", "combo_id"},
+         *        required={"get_at", "quantity", "price", "combo_id", "order_id"},
          *        @OA\Property(property="get_at", type="date"),
+         *        @OA\Property(property="quantity", type="integer"),
          *        @OA\Property(property="price", type="float"),
          *        @OA\Property(property="combo_id", type="integer"),
-         *        example={"get_at": "2-10-2021", "price": "2000", "combo_id": "2"}
+         *        @OA\Property(property="order_id", type="integer"),
+         *        example={"get_at": "2-10-2021", "quantity": "1", "price": "2000", "combo_id": "2", "order_id": "1"}
          *      ),
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -181,8 +187,10 @@ class ComboTicketController extends Controller
          */
         $attributes = [
                 'get_at' => $request->get_at,
+                'quantity' => $request->quantity,
                 'price' => $request->price,
                 'combo_id' => $request->combo_id,
+                'order_id' => $request->order_id,
             ];
         return $this->ComboTicketRepo->update($id, $attributes);
     }

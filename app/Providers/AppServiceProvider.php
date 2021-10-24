@@ -116,13 +116,13 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Payment\PaymentRepository::class,
         );
         $this->app->singleton(
-            \App\Repositories\ComboTicketDetail\ComboTicketDetailRepositoryInterface::class,
-            \App\Repositories\ComboTicketDetail\ComboTicketDetailRepository::class,
+            \App\Repositories\Order\OrderRepositoryInterface::class,
+            \App\Repositories\Order\OrderRepository::class,
         );
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap any application servicesOrder.
      *
      * @return void
      */

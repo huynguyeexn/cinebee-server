@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\ComboTicketDetail;
+use App\Models\Order;
 use Exception;
 use Illuminate\Database\Seeder;
 
-class ComboTicketDetailSeed extends Seeder
+class OrderSeed extends Seeder
 {
     private $failures = 0;
     /**
@@ -17,11 +17,10 @@ class ComboTicketDetailSeed extends Seeder
     public function run()
     {
         try {
-            ComboTicketDetail::factory(10)->create();
+            Order::factory(30)->create();
         } catch (Exception $e) {
-
             if ($this->failures > 5) {
-                print_r(" Seeder Error. Failure count for current entity: " . $this->failures);
+                print_r("Seeder Error. Failure count for current entity: " . $this->failures);
                 return;
             }
 

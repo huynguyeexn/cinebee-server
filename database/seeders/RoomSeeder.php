@@ -15,19 +15,19 @@ class RoomSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
+    {Room::factory(20)->create();
         //
-        try {
-            Room::factory(20)->create();
-        } catch (Exception $e) {
+        // try {
 
-            if ($this->failures > 5) {
-                print_r("Seeder Error. Failure count for current entity: " . $this->failures);
-                return;
-            }
+        // } catch (Exception $e) {
 
-            $this->failures++;
-            $this->run(); // retry again until the number of failure is greater than 5
-        }
+        //     if ($this->failures > 5) {
+        //         print_r("Seeder Error. Failure count for current entity: " . $this->failures);
+        //         return;
+        //     }
+
+        //     $this->failures++;
+        //     $this->run(); // retry again until the number of failure is greater than 5
+        // }
     }
 }

@@ -16,8 +16,8 @@ class UpdateSeatsTable extends Migration
         Schema::table('seats', function (Blueprint $table) {
             //
             $table->renameColumn("name", "label");
+            $table->string("row")->change();
             $table->renameColumn("row", "index");
-            $table->string("index")->change();
             $table->dropColumn("col");
 
             $table->foreignId("customer_id")

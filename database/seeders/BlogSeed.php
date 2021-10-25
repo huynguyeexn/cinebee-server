@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Actor;
-use Exception;
+use App\Models\Blog;
+use Faker\Extension\Extension;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Artisan;
+use PhpParser\Node\Stmt\TryCatch;
 
-class ActorSeed extends Seeder
+class BlogSeed extends Seeder
 {
     private $failures = 0;
     /**
@@ -17,11 +17,9 @@ class ActorSeed extends Seeder
      */
     public function run()
     {
-        //
         try {
-            // Actor::factory(50)->create();
-            Artisan::call('scrape:actor');
-        } catch (Exception $e) {
+            Blog::factory(50)->create();
+        } catch (Extension $e) {
 
             if ($this->failures > 5) {
                 print_r("Seeder Error. Failure count for current entity: " . $this->failures);

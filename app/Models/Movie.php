@@ -18,6 +18,7 @@ class Movie extends Model
         'release_date',
         'running_time',
         'age_rating_id',
+        'status',
     ];
 
     protected $appends = [
@@ -76,5 +77,10 @@ class Movie extends Model
     public function getBackdropsAttribute()
     {
         return $this->backdropsFull->pluck('id');
+    }
+
+    public function showtime()
+    {
+        return $this->hasMany(Showtime::class);
     }
 }

@@ -24,6 +24,9 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthStaffController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ShowtimeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -429,6 +432,9 @@ Route::prefix('employee')->group(function () {
     // Create new
     Route::post('/', [EmployeeController::class, 'store']);
 
+    // Get Blog by Employee
+    Route::get('/{id}/blogs/', [EmployeeController::class, 'blogs'])->whereNumber('id');
+
     // Get by ID
     Route::get('/{id}', [EmployeeController::class, 'getById'])->whereNumber('id');
 
@@ -806,7 +812,65 @@ Route::prefix('comboitem')->group(function () {
 });
 
 /**
- * REST API - FIle Upload
+ * REST API - Showtimes
+ *
+ * Date: 21/09/2021
+ * Time: 20:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('showtimes')->group(function () {
+
+    // Get list
+    Route::get('/', [ShowtimeController::class, 'index']);
+
+    // Get by ID
+    Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
+
+    // Get Movie Ticket of Showtime
+    Route::get('/{id}/movie-ticket', [ShowtimeController::class, 'movieTicket'])->whereNumber('id');
+
+    // Update
+    Route::put('/', [ShowtimeController::class, 'update']);
+});
+
+
+
+/**
+ * REST API - Movie Tickets
+ *
+ * Date: 21/09/2021
+ * Time: 21:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('movie-tickets')->group(function () {
+
+    // Get list
+    Route::get('/', [MovieTicketController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [MovieTicketController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [MovieTicketController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [MovieTicketController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [MovieTicketController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [MovieTicketController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [MovieTicketController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - FIle Upload
  *
  * Date: 26/09/2021
  * Time: 19:30
@@ -821,4 +885,77 @@ Route::prefix('uploads')->group(function () {
     // Image
     Route::get('/images', [FileUploadController::class, 'imageList']);
     Route::post('/images', [FileUploadController::class, 'imageUpload']);
+});
+
+
+/** REST API - Category
+ *
+ * Date: 05/10/2021
+ * Time: 20:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+
+Route::prefix('categories')->group(function () {
+
+    // Get list
+    Route::get('/', [CategoryController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [CategoryController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [CategoryController::class, 'store']);
+
+    // Get Blog by Category
+    Route::get('/{id}/blogs/', [CategoryController::class, 'blogs'])->whereNumber('id');
+
+    // Get by ID
+    Route::get('/{id}', [CategoryController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [CategoryController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CategoryController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [CategoryController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [CategoryController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - Blog
+ *
+ * Date: 05/10/2021
+ * Time: 22:00
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+
+Route::prefix('blogs')->group(function () {
+
+    // Get list
+    Route::get('/', [BlogController::class, 'index']);
+
+    // Get deleted list
+    Route::get('/deleted', [BlogController::class, 'deleted']);
+
+    // Create new
+    Route::post('/', [BlogController::class, 'store']);
+
+    // Get by ID
+    Route::get('/{id}', [BlogController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::put('/{id}', [BlogController::class, 'update'])->whereNumber('id');
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [BlogController::class, 'delete'])->whereNumber('id');
+
+    // Hard Delete
+    Route::delete('{id}/remove/', [BlogController::class, 'remove'])->whereNumber('id');
+
+    // Restore
+    Route::patch('{id}/restore/', [BlogController::class, 'restore'])->whereNumber('id');
 });

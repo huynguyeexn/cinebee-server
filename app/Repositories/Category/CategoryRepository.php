@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Repositories\Employee;
+namespace App\Repositories\Category;
 
-use App\Models\Employee;
+use App\Models\Category;
 use App\Repositories\BaseRepository;
 
-class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInterface
+class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     public function getModel()
     {
-        return Employee::class;
+        return Category::class;
     }
 
     public function getBlogs($id)

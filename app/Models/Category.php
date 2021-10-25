@@ -6,21 +6,22 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Seat extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "label",
-        "index",
-        "room_id",
-        "customer_id",
-        "customer_username",
-        "seat_status_id",
+        'name',
+        'slug',
+        'show',
     ];
 
-    public function room()
+    protected $hidden = [
+        'deleted_at'
+    ];
+
+    public function blogs()
     {
-        return $this->belongsTo(RoomStatus::class);
+        return $this->hasMany(Blog::class);
     }
 }

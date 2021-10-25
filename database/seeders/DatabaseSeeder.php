@@ -27,31 +27,35 @@ class DatabaseSeeder extends Seeder
             CustomerTypeSeed::class,
             CustomerSeed::class,
 
-            // RoomStatusSeed::class,
-            // RoomSeeder::class,
+            RoomStatusSeed::class,
+            RoomSeeder::class,
 
             SeatStatusSeed::class,
-            // SeatSeeder::class,
+            SeatSeeder::class,
 
             AgeRatingSeeder::class,
-            // ActorSeed::class,
+            ActorSeed::class,
             GenreSeed::class,
-            // DirectorSeed::class,
+            DirectorSeed::class,
 
             // MovieActorSeed::class,
             // MovieGenreSeed::class,
+            // MovieActorSeed::class,
+
+            CustomerTypeSeed::class,
+            CustomerSeed::class,
+            // ShowtimeSeed::class,
+            // MovieTicketSeed::class,
             // MovieDirectorSeed::class,
 
             ItemSeed::class,
-<<<<<<< HEAD
-=======
+
 
             CategorySeed::class,
             BlogSeed::class,
 
             PermissionRole::class,
             permissionSeed::class,
->>>>>>> heroku
         ]);
     }
 }

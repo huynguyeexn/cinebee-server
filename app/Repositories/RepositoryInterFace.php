@@ -8,8 +8,6 @@ interface RepositoryInterface
 {
     /**
      * Get List
-     * @param request $request
-     * @param string[] $child
      * @return mixed
      */
     public function getList(Request $request = null, $child = null);

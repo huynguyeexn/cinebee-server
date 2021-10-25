@@ -30,9 +30,8 @@ class StoreRequest extends FormRequest
         return [
             'room_id' => "required|integer|exists:$roomId,id",
             'movie_id' => "required|integer|exists:$movieId,id",
-            'start' => "required|date",
-            'end' => "required|date",
+            'start_at' => "required|date",
+            'end_at' => "required|date",
         ];
     }
 }
-

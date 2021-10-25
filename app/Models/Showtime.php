@@ -11,14 +11,11 @@ class Showtime extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'id',
         'room_id',
         'movie_id',
-        'start',
-        'end'
+        'start_at',
+        'end_at'
     ];
-
-    protected $dates = ['end', 'start'];
 
     protected $hidden = [
         'deleted_at'
@@ -29,13 +26,13 @@ class Showtime extends Model
         return $this->hasMany(MovieTicket::class);
     }
 
-    public function movie()
+    public function movies()
     {
-        return $this->belongsTo(Movie::class);
+        return $this->belongsto(Movie::class);
     }
 
-    public function room()
+    public function rooms()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsto(Room::class);
     }
 }

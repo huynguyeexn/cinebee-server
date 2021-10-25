@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class EmployeeRole extends Model
+class Role extends Model
 {
     use HasFactory, SoftDeletes;
-
+    protected $table = 'role';
     protected $fillable = [
         'name'
     ];
@@ -25,6 +25,6 @@ class EmployeeRole extends Model
         return $this->hasMany(Employee::class);
     }
     public function premission(){
-        return $this->belongsToMany(permissions::class,'permission_role','permission_id','role_id');
+        return $this->belongsToMany(permissions::class,'permission_role','role_id','permission_id');
     }
 }

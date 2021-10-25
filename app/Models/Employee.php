@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Model\Role;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class Employee extends Authenticatable implements JWTSubject
@@ -31,9 +32,9 @@ class Employee extends Authenticatable implements JWTSubject
         'password'
     ];
 
-    public function employeeRoles()
+    public function Role()
     {
-        return $this->belongsto(EmployeeRole::class,'employee_role_id');
+        return $this->belongsto(Role::class,'employee_role_id');
     }
     public function getJWTIdentifier()
     {

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeRoleController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
@@ -331,40 +331,44 @@ Route::prefix('seats')->group(function () {
 
 
 /**
- * REST API - Employee Role
+ * REST API - Role
  *
- * Date: 08/09/2021
- * Time: 13:00 AM
- * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ * Date: 07/10/2021
+ * Long sửa đổi
  */
-Route::prefix('employee-roles')->group(function () {
+Route::prefix('role')->group(function () {
 
     // Get list
-    Route::get('/', [EmployeeRoleController::class, 'index']);
-
-    // Get deleted list
-    Route::get('/deleted', [EmployeeRoleController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [EmployeeRoleController::class, 'store']);
-
+    Route::get('/', [RoleController::class, 'index']);
+    // get list permission
+    Route::get('/permission', [RoleController::class, 'getListPermissions']);
+    // get permission
+    Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
     // Get by ID
-    Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
-
-    // Get Employees of Employee Role
-    Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
-
+    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
     // Update
-    Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
-
+    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
+    // Create new
+    Route::post('/', [RoleController::class, 'store']);
     // Soft Delete
-    Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
+//    // Get deleted list
+//    Route::get('/deleted', [RoleController::class, 'deleted']);
 
-    // Hard Delete
-    Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
+//
+//    // Get Employees of Employee Role
+//    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
+//
 
-    // Restore
-    Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
+//
+//    // Soft Delete
+//    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
+//
+//    // Hard Delete
+//    Route::delete('{id}/remove/', [RoleController::class, 'remove'])->whereNumber('id');
+//
+//    // Restore
+//    Route::patch('{id}/restore/', [RoleController::class, 'restore'])->whereNumber('id');
 });
 
 

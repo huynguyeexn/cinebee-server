@@ -22,12 +22,12 @@ class checkRole
      */
     public function handle(Request $request, Closure $next, $permission = null)
     {
-        
+
         $roleUser = Employee::findOrFail(auth()->id())->employeeRoles->id;
-        $listRoleUser = DB::table('employee_roles')
-        ->join('permission_role','employee_roles.id','=','permission_role.role_id')
+        $listRoleUser = DB::table('role')
+        ->join('permission_role','role.id','=','permission_role.role_id')
         ->join('permissions','permission_role.permission_id','=','permissions.id')
-        ->where('employee_roles.id',$roleUser)->select('permissions.*')
+        ->where('role.id',$roleUser)->select('permissions.*')
         ->get()->pluck('id')->unique();
         $checkPermission = permissions::where('name',$permission)->value('id');
         if($listRoleUser->contains($checkPermission)){

@@ -18,7 +18,7 @@ class RoomSeeder extends Seeder
     {
         //
         try {
-            Room::factory(10)->create();
+            Room::factory(20)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

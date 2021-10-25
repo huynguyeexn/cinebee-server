@@ -26,8 +26,8 @@ class ShowtimeFactory extends Factory
         return [
             'room_id' => Room::inRandomOrder()->first(),
             'movie_id' => Movie::inRandomOrder()->first(),
-            'start' => $this->faker->dateTimeThisYear(),
-            'end' => $this->faker->dateTimeThisYear()
+            'start_at' => $this->faker->dateTimeThisYear(),
+            'end_at' => $this->faker->dateTimeThisYear()
         ];
     }
 }

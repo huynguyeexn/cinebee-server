@@ -183,7 +183,6 @@ class MovieController extends Controller
             'release_date' => $request->release_date,
             'running_time' => $request->running_time,
             'age_rating_id' => $request->age_rating_id,
-            'status' => $request->status,
         ];
 
         try {
@@ -290,7 +289,6 @@ class MovieController extends Controller
             'release_date' => $request->release_date,
             'running_time' => $request->running_time,
             'age_rating_id' => $request->age_rating_id,
-            'status' => $request->status,
         ];
 
         $posters = array(array_fill_keys(
@@ -310,7 +308,7 @@ class MovieController extends Controller
 
             $movie->actorsFull()->sync($request->actors);
             $movie->genresFull()->sync($request->genres);
-            $movie->directorsFull()->sync($request->directors);
+            $movie->directorsFull()->attach($request->directors);
 
             $movie->update($attributes);
             $id = $movie->id;

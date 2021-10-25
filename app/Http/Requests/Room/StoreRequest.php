@@ -28,10 +28,7 @@ class StoreRequest extends FormRequest
         return [
             //
             "name" => "required|string|max:50|unique:rooms,name",
-            "room_status_id" => "exists:$roomStatusName,id",
-            "rows" => "required|numeric",
-            "cols" => "required|numeric",
-            "seats" => "required|string",
+            "room_status_id" => "exists:$roomStatusName,id"
         ];
     }
 }

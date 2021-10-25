@@ -12,20 +12,17 @@ class Room extends Model
 
     protected $fillable = [
         "name",
-        "room_status_id",
-        "rows",
-        "cols",
-        "price",
+        "room_status_id"
     ];
 
     protected $hidden = [
         'delete_at'
     ];
 
-    // public function roomStatus()
-    // {
-    //     return $this->belongsTo(RoomStatus::class);
-    // }
+    public function roomSatus()
+    {
+        return $this->belongsto(RoomStatus::class);
+    }
 
 
     public function seats()
@@ -33,7 +30,7 @@ class Room extends Model
         return $this->hasMany(Seat::class);
     }
 
-    public function showtime()
+    public function showtimes()
     {
         return $this->hasMany(Showtime::class);
     }

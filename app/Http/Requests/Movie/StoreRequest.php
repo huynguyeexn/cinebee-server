@@ -35,6 +35,7 @@ class StoreRequest extends FormRequest
             'running_time' => "numeric",
             'posters' => "array|required",
             'age_rating_id' => "required|integer|exists:$ageRatingId,id",
+            'status' => 'numeric',
         ];
     }
 }

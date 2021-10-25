@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Requests\Showtime;
+namespace App\Http\Requests\Category;
 
-use App\Models\Movie;
-use App\Models\Room;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
@@ -23,15 +21,12 @@ class UpdateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Movie $movie,Room $room)
+    public function rules()
     {
-        $movieId = $movie->getTable();
-        $roomId = $room->getTable();
         return [
-            'room_id' => "required|integer|exists:$roomId,id",
-            'movie_id' => "required|integer|exists:$movieId,id",
-            'start' => "required",
-            'end' => "required",
+            "name" => "required|string|max:30",
+            "slug" => "unique:categories,slug,$this->id,id|string|required",
+            "show" => "nullable|numeric|min:0|max:2",
         ];
     }
 }

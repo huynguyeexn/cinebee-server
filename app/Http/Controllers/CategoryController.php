@@ -2,32 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Category\StoreRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\Room\StoreRequest;
-use App\Http\Requests\Room\UpdateRequest;
-use App\Models\Room;
-use App\Repositories\Room\RoomRepositoryInterface;
+use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
 
-class RoomController extends Controller
+class CategoryController extends Controller
 {
     /**
-     * @var RoomRepositoryInterface
+     * @var CategoryRepositoryInterface
      */
-    protected $roomRepo;
+    protected $categoryRepo;
 
-    public function __construct(RoomRepositoryInterface $roomRepo)
+    public function __construct(CategoryRepositoryInterface $categoryRepo)
     {
-        $this->roomRepo = $roomRepo;
+        $this->categoryRepo = $categoryRepo;
     }
 
     public function index(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms",
-         *   summary="List Rooms",
+         *   tags={"Category"},
+         *   path="/api/categories",
+         *   summary="List Category",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -50,21 +50,21 @@ class RoomController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Category per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort category by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort category type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -74,16 +74,16 @@ class RoomController extends Controller
          *
          * )
          */
-        return $this->roomRepo->getList($request, ['seats', 'showtime']);
+        return $this->categoryRepo->getList($request);
     }
 
     public function deleted(ListRequest $request)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/deleted",
-         *   summary="List Room Deleted",
+         *   tags={"Category"},
+         *   path="/api/categories/deleted",
+         *   summary="List Category Deleted",
          *   @OA\Parameter(
          *      name="search",
          *      in="query",
@@ -106,21 +106,21 @@ class RoomController extends Controller
          *     @OA\Parameter(
          *      name="per_page",
          *      in="query",
-         *      description="Items per page",
+         *      description="Category per page",
          *      example="10",
          *     @OA\Schema(type="number")
          *   ),
          *      @OA\Parameter(
          *      name="sort_by",
          *      in="query",
-         *      description="Sort items by",
+         *      description="Sort Category by",
          *      example="updated_at",
          *     @OA\Schema(type="string")
          *   ),
          *      @OA\Parameter(
          *      name="sort_type",
          *      in="query",
-         *      description="Sort items type ['asc', 'desc']",
+         *      description="Sort Category type ['asc', 'desc']",
          *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
@@ -130,21 +130,52 @@ class RoomController extends Controller
          *
          * )
          */
-        return $this->roomRepo->getDeletedList($request);
+        return $this->categoryRepo->getDeletedList($request);
+    }
+
+    public function store(StoreRequest $request)
+    {
+        /**
+         * @OA\Post(
+         *   tags={"Category"},
+         *   path="/api/categories",
+         *   summary="Store new Category",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={"name", "slug", "show"},
+         *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="slug", type="string"),
+         *       @OA\Property(property="show", type="integer"),
+         *       example={"name": "Thể Loại", "slug": "the-loai", "show": 1}
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'name' => $request->name,
+            'slug' => $request->slug,
+            'show' => $request->show,
+        ];
+        return $this->categoryRepo->store($attributes);
     }
 
     public function getById($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}",
-         *   summary="Get Room by id",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}",
+         *   summary="Get Category by id",
          *   @OA\Parameter(
          *      name="id",
          *      in="path",
          *      required=true,
-         *      description="Room id",
+         *      description="Category id",
          *      example="21",
          *     @OA\Schema(type="number"),
          *   ),
@@ -153,67 +184,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->roomRepo->getById($id, ['seats', 'showtime']);
-    }
-
-    public function store(StoreRequest $request)
-    {
-        /**
-         * @OA\Post(
-         *   tags={"Rooms"},
-         *   path="/api/rooms",
-         *   summary="Store new Rooms",
-         *   @OA\RequestBody(
-         *     required=true,
-         *     @OA\JsonContent(
-         *       type="string",
-         *       required={"name"},
-         *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="room_status_id", type="number"),
-         *       @OA\Property(property="rows", type="number"),
-         *       @OA\Property(property="cols", type="number"),
-         *       @OA\Property(property="seats", type="string"),
-         *       example={"name": "Rạp số 69", "room_status_id": null, "rows": 6, "cols": 9, "seats": "[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0]]"}
-         *     )
-         *   ),
-         *   @OA\Response(response=200, description="OK"),
-         *   @OA\Response(response=401, description="Unauthorized"),
-         *   @OA\Response(response=404, description="Not Found")
-         * )
-         */
-        $attributes = [
-            'name' => $request->name,
-            'room_status_id' => $request->room_status_id,
-            'rows' => $request->rows,
-            'cols' => $request->cols,
-            'price' => $request->price,
-        ];
-
-        try {
-            $room =  Room::create($attributes);
-
-            $room->seats()->createMany(json_decode($request->seats, true));
-
-            if ($room) {
-                return response([
-                    'message' => 'Nhập dữ liệu thành công!',
-                    'data' => $room,
-                    "seats" => $request->seats,
-                    "seats_map" => json_decode($request->seats, true, 4),
-                ], 200);
-            }
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return $this->categoryRepo->getById($id);
     }
 
     public function update(UpdateRequest $request, $id)
     {
         /**
          * @OA\Put(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}",
-         *   summary="Update a Room",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}",
+         *   summary="Update a Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -224,10 +204,11 @@ class RoomController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "room_status_id"},
+         *       required={"name", "slug", "show"},
          *       @OA\Property(property="name", type="string"),
-         *       @OA\Property(property="room_status_id", type="string"),
-         *       example={"name": "Status of seat", "room_status_id": "9"}
+         *       @OA\Property(property="slug", type="string"),
+         *       @OA\Property(property="show", type="integer"),
+         *       example={"name": "Thể Loại", "slug": "the-loai", "show": 1}
          *     )
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -237,19 +218,20 @@ class RoomController extends Controller
          */
         $attributes = [
             'name' => $request->name,
-            'room_status_id' => $request->room_status_id,
+            'slug' => $request->slug,
+            'show' => $request->show,
         ];
 
-        return $this->roomRepo->update($id, $attributes);
+        return $this->categoryRepo->update($id, $attributes);
     }
 
     public function delete($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/delete",
-         *   summary="Delete a Room",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/delete",
+         *   summary="Delete a Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -261,16 +243,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->delete($id);
+        return $this->categoryRepo->delete($id);
     }
 
     public function remove($id)
     {
         /**
          * @OA\Delete(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/remove",
-         *   summary="Remove Room from trash",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/remove",
+         *   summary="Remove Category from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -282,16 +264,16 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->remove($id);
+        return $this->categoryRepo->remove($id);
     }
 
-    public function restore($id)
+    public function restore(Category $category, $id)
     {
         /**
          * @OA\Patch(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/restore",
-         *   summary="Restore Room from trash",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/restore",
+         *   summary="Restore Category from trash",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
@@ -303,20 +285,60 @@ class RoomController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        return $this->roomRepo->restore($id);
+        return $this->categoryRepo->restore($id);
     }
 
-    public function showtimes($id)
+    public function blogs($id)
     {
         /**
          * @OA\Get(
-         *   tags={"Rooms"},
-         *   path="/api/rooms/{id}/showtimes",
-         *   summary="List Showtimes of Room",
+         *   tags={"Category"},
+         *   path="/api/categories/{id}/blogs",
+         *   summary="List Blog by Category",
          *   @OA\Parameter(
          *     name="id",
          *     in="path",
          *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="search",
+         *      in="query",
+         *      description="Search by",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Parameter(
+         *      name="q",
+         *      in="query",
+         *      description="Search query",
+         *     @OA\Schema(type="string")
+         *   ),
+         *     @OA\Parameter(
+         *      name="page",
+         *      in="query",
+         *      description="Page",
+         *      example="1",
+         *     @OA\Schema(type="number")
+         *   ),
+         *     @OA\Parameter(
+         *      name="per_page",
+         *      in="query",
+         *      description="Blog per page",
+         *      example="10",
+         *     @OA\Schema(type="number")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_by",
+         *      in="query",
+         *      description="Sort Blog by",
+         *      example="updated_at",
+         *     @OA\Schema(type="string")
+         *   ),
+         *      @OA\Parameter(
+         *      name="sort_type",
+         *      in="query",
+         *      description="Sort Blog type ['asc', 'desc']",
+         *      example="desc",
          *     @OA\Schema(type="string")
          *   ),
          *   @OA\Response(response=200, description="OK"),
@@ -326,6 +348,6 @@ class RoomController extends Controller
          * )
          */
 
-        return $this->roomRepo->getShowtimes($id);
+        return $this->categoryRepo->getBlogs($id);
     }
 }

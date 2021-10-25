@@ -27,11 +27,11 @@ class DatabaseSeeder extends Seeder
             CustomerTypeSeed::class,
             CustomerSeed::class,
 
-            RoomStatusSeed::class,
-            RoomSeeder::class,
+            // RoomStatusSeed::class,
+            // RoomSeeder::class,
 
             SeatStatusSeed::class,
-            SeatSeeder::class,
+            // SeatSeeder::class,
 
             AgeRatingSeeder::class,
             // ActorSeed::class,
@@ -43,6 +43,15 @@ class DatabaseSeeder extends Seeder
             // MovieDirectorSeed::class,
 
             ItemSeed::class,
+<<<<<<< HEAD
+=======
+
+            CategorySeed::class,
+            BlogSeed::class,
+
+            PermissionRole::class,
+            permissionSeed::class,
+>>>>>>> heroku
         ]);
     }
 }

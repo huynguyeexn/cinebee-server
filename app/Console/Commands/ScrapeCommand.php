@@ -11,7 +11,7 @@ class ScrapeCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'scrape:actor';
+    protected $signature = 'scrape:movie';
 
     /**
      * The console command description.
@@ -37,7 +37,7 @@ class ScrapeCommand extends Command
      */
     public function handle()
     {
-        $bot = new \App\Scraper\actors();
+        $bot = new \App\Scraper\themoviedb();
         $bot->scrape();
     }
 }

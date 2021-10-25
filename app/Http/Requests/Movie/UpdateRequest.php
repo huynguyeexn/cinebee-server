@@ -35,7 +35,6 @@ class UpdateRequest extends FormRequest
             'release_date' => "date",
             'running_time' => "numeric",
             'age_rating_id' => "required|integer|exists:$ageRatingId,id",
-            'status' => "numeric",
         ];
     }
 }

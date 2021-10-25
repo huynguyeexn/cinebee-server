@@ -30,8 +30,8 @@ class UpdateRequest extends FormRequest
         return [
             'room_id' => "required|integer|exists:$roomId,id",
             'movie_id' => "required|integer|exists:$movieId,id",
-            'start' => "required",
-            'end' => "required",
+            'start_at' => "required",
+            'end_at' => "required",
         ];
     }
 }

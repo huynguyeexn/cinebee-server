@@ -6,5 +6,5 @@ use App\Repositories\RepositoryInterface;
 
 interface PaymentRepositoryInterface extends RepositoryInterface
 {
-    //
+    public function createPayment($attributes);
 }

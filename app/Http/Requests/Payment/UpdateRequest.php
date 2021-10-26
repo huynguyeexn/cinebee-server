@@ -31,7 +31,6 @@ class UpdateRequest extends FormRequest
             'order_id'           => "required|integer|exists:$orderId,id",
             'payment_status_id'  => "required|integer|exists:$statusId,id",
             'code_bank'          => "required|string",
-            'code_transaction'   => "required|string|unique:payments,code_transaction,$this->id,id",
             'note'               => "nullable|string",
         ];
     }

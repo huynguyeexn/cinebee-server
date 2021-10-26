@@ -1013,6 +1013,9 @@ Route::prefix('payments')->group(function () {
     // Get deleted list
     Route::get('/deleted', [PaymentController::class, 'deleted']);
 
+    //Create Payment
+    Route::post('/online', [PaymentController::class, 'createPayment']);
+
     // Create new
     Route::post('/', [PaymentController::class, 'store']);
 

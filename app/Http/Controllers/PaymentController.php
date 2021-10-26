@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
+use App\Http\Requests\Payment\StorePaymentRequest;
 use App\Http\Requests\Payment\StoreRequest;
 use App\Http\Requests\Payment\UpdateRequest;
 use App\Models\Payment;
 use App\Repositories\Payment\PaymentRepositoryInterface;
-use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -164,11 +164,12 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+        $code_transaction = strtoupper(substr(md5($request->order_id),8));
         $attributes = [
             'order_id' => $request->order_id,
             'payment_status_id' => $request->payment_status_id,
             'code_bank' => $request->code_bank,
-            'code_transaction' => $request->code_transaction,
+            'code_transaction' => $code_transaction,
             'note' => $request->note,
         ];
         return $this->paymentRepo->store($attributes);
@@ -306,5 +307,47 @@ class PaymentController extends Controller
          * )
          */
         return $this->paymentRepo->restore($id);
+    }
+
+    public function createPayment(StorePaymentRequest $request)
+    {
+        /**
+         * @OA\Patch(
+         *   tags={"Payment"},
+         *   path="/api/payments/online",
+         *   summary="Create Payment",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={ "order_type", "amount", "order_desc", "bank_code", "language"},
+         *       @OA\Property(property="order_type", type="string"),
+         *       @OA\Property(property="amount", type="integer"),
+         *       @OA\Property(property="order_desc", type="string"),
+         *       @OA\Property(property="bank_code", type="string"),
+         *       @OA\Property(property="language", type="string"),
+         *       example={
+         *          "order_type": "billpayment",
+         *          "amount": 100000,
+         *          "order_desc": "Nội dung thanh toán",
+         *          "bank_code": "TPBank",
+         *          "language": "vn",
+         *       }
+         *     )
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+
+        $attributes = [
+            'order_type' => $request->order_type,
+            'amount'     => $request->amount,
+            'order_desc' => $request->order_desc,
+            'bank_code'  => $request->bank_code,
+            'language'   => $request->language,
+        ];
+
+        return $this->paymentRepo->createPayment($attributes);
     }
 }

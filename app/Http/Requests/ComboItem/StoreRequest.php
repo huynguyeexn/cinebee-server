@@ -30,7 +30,7 @@ class StoreRequest extends FormRequest
         return [
             "combo_id" => "required|integer|exists:$comboId,id",
             "item_id" => "required|integer|exists:$itemId,id",
-            "quantity" => "required|numberic"
+            "quantity" => "required"
         ];
     }
 }

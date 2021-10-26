@@ -27,7 +27,7 @@ class StoreRequest extends FormRequest
         $comboId = $combo->getTable();
         return [
             "get_at" => "required",
-            "price" => "required|numberic",
+            "price" => "required",
             "combo_id" => "required|integer|exists:$comboId,id"
         ];
     }

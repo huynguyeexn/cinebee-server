@@ -13,7 +13,8 @@ class Combo extends Model
     protected $fillable = [
         'name',
         'price',
-        'slug'
+        'slug',
+        'description'
     ];
 
     protected $hidden = [
@@ -21,7 +22,7 @@ class Combo extends Model
     ];
 
     protected $appends = [
-        'items'
+        'items', 'imgcombos'
     ];
 
 
@@ -33,6 +34,21 @@ class Combo extends Model
     public function getItemsAttribute()
     {
         return $this->itemsFull->pluck('id');
+    }
+
+    public function files()
+    {
+        return $this->belongsToMany(FileUpload::class, 'combo_files')->withPivot('type');
+    }
+
+    public function imgcombosFull()
+    {
+        return $this->belongsToMany(FileUpload::class, 'combo_files')->where('combo_files.type', 'like', 'imgcombos');
+    }
+
+    public function getImgCombosAttribute()
+    {
+        return $this->imgcombosFull->pluck('id');
     }
 
 }

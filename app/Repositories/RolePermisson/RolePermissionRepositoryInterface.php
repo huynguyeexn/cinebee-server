@@ -1,0 +1,13 @@
+<?php
+
+
+namespace App\Repositories\RolePermission;
+
+use App\Repositories\RepositoryInterface;
+use Illuminate\Http\Request;
+
+interface RolePermissionRepositoryInterface extends RepositoryInterface
+{
+     public function getListPermissionsALl();
+     public function getListPer_Role();
+}

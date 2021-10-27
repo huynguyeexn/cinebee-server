@@ -109,6 +109,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Showtime\ShowtimeRepositoryInterface::class,
             \App\Repositories\Showtime\ShowtimeRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\RolePermission\RolePermissionRepositoryInterface::class,
+            \App\Repositories\RolePermission\RolePermissionRepository::class,
+        );
     }
 
     /**

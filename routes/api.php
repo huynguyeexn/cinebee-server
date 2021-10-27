@@ -26,6 +26,7 @@ use App\Http\Controllers\MovieGenreController;
 use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RolePerController;
 use App\Http\Controllers\ShowtimeController;
 use Illuminate\Support\Facades\Auth;
 
@@ -368,6 +369,38 @@ Route::prefix('employee-roles')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
+});
+
+
+Route::prefix('permission')->group(function () {
+
+    // Get list
+    Route::get('/', [RolePerController::class, 'index']);
+
+    // Get list role permission
+    Route::get('/permission_role', [RolePerController::class, 'List_Role_Per']);
+
+
+    // // Create new
+    // Route::post('/', [EmployeeRoleController::class, 'store']);
+
+    // // Get by ID
+    // Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
+
+    // // Get Employees of Employee Role
+    // Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
+
+    // // Update
+    // Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
+
+    // // Soft Delete
+    // Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+
+    // // Hard Delete
+    // Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
+
+    // // Restore
+    // Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
 });
 
 

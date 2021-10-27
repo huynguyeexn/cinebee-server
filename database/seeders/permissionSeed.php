@@ -13,7 +13,7 @@ class permissionSeed extends Seeder
      */
     public function run()
     {
-        $array1 = ['list','add','edit','update','delete','restore'];
+        $array1 = ['list','create','edit','update','delete','restore'];
         $actors = 'actors';
         $genres = 'genres';
         $seat_status = 'seat-status';
@@ -43,7 +43,7 @@ class permissionSeed extends Seeder
                 if($count == 0){
                     if($val == "list"):
                         $display_name = "Danh sách";
-                    elseif($val == 'add'):
+                    elseif($val == 'create'):
                         $display_name = "Thêm";
                     elseif($val == 'edit'):
                         $display_name = "Sửa";

@@ -114,6 +114,7 @@ class ComboController extends Controller
             'name' => $request->name,
             'price' => $request->price,
             'slug' => $request->slug,
+            'description' => $request->description,
         ];
 /*
         return response([
@@ -122,6 +123,8 @@ class ComboController extends Controller
 
         try {
             $combo = Combo::create($attributes);
+
+            $combo->files()->attach(array_fill_keys($request->imgcombos, ["type" => "imgcombos"]));
 
             $combo->itemsFull()->attach($request->items);
 
@@ -236,9 +239,17 @@ class ComboController extends Controller
                 'name' => $request->name,
                 'price' => $request->price,
                 'slug' => $request->slug,
+                'description' => $request->description,
             ];
+
+            $imgcombos = array(array_fill_keys(
+                $request->imgcombos,
+                ["type" => "imgcombos"]
+            ));
             try {
                 $combo = Combo::findOrFail($id);
+
+                $combo->files()->sync([...array_replace_recursive($imgcombos)][0]);
 
                 $combo->itemsFull()->sync($request->items);
 

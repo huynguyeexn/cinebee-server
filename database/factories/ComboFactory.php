@@ -28,6 +28,7 @@ class ComboFactory extends Factory
             'name' => $name,
             'price' => $this->faker->numberBetween(1500, 6000, true),
             'slug' => str::slug($name),
+            'description' => $this->faker->text(500),
         ];
     }
 }

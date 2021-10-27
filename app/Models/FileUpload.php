@@ -26,6 +26,10 @@ class FileUpload extends Model
     {
         return $this->belongsToMany(Movie::class, 'movie_files');
     }
+    public function comboFiles()
+    {
+        return $this->belongsToMany(Combo::class, 'combo_files');
+    }
     public function getThumbUrlAttribute()
     {
         return $this->url;

@@ -25,7 +25,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Get(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role",
+         *   path="/api/employee-roles",
          *   summary="List Employee Role",
          *   @OA\Parameter(
          *      name="search",
@@ -81,7 +81,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Get(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/deleted",
+         *   path="/api/employee-roless/deleted",
          *   summary="List Employee Role Deleted",
          *   @OA\Parameter(
          *      name="search",
@@ -137,7 +137,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Post(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role",
+         *   path="/api/employee-roles",
          *   summary="Store new Employee Role",
          *   @OA\RequestBody(
          *     required=true,
@@ -165,7 +165,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Get(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}",
+         *   path="/api/employee-roles/{id}",
          *   summary="Get Employee Role by id",
          *   @OA\Parameter(
          *      name="id",
@@ -188,7 +188,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Put(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}",
+         *   path="/api/employee-roles/{id}",
          *   summary="Update a Employee Role",
          *   @OA\Parameter(
          *     name="id",
@@ -223,7 +223,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Delete(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/delete",
+         *   path="/api/employee-roles/{id}/delete",
          *   summary="Delete a room status",
          *   @OA\Parameter(
          *     name="id",
@@ -244,7 +244,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Delete(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/remove",
+         *   path="/api/employee-roles/{id}/remove",
          *   summary="Remove Employee Role from trash",
          *   @OA\Parameter(
          *     name="id",
@@ -265,7 +265,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Patch(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/restore",
+         *   path="/api/employee-roles/{id}/restore",
          *   summary="Restore Employee Role from trash",
          *   @OA\Parameter(
          *     name="id",
@@ -286,7 +286,7 @@ class EmployeeRoleController extends Controller
         /**
          * @OA\Get(
          *   tags={"EmployeeRole"},
-         *   path="/api/employee-role/{id}/employees",
+         *   path="/api/employee-roles/{id}/employees",
          *   summary="List Employee Role",
          *   @OA\Parameter(
          *     name="id",

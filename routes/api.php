@@ -380,7 +380,8 @@ Route::prefix('permission')->group(function () {
     // Get list role permission
     Route::get('/permission_role', [RolePerController::class, 'List_Role_Per']);
 
-
+    // add role permission
+    Route::post('/', [RolePerController::class, 'create_permisison_role']);
     // // Create new
     // Route::post('/', [EmployeeRoleController::class, 'store']);
 

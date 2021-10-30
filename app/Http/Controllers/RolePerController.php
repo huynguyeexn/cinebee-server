@@ -49,4 +49,8 @@ class RolePerController extends Controller
          ];
          return $this->rolePermission->create_role_permission($data);
     }
+
+    public function edit_role_pe($id){
+        return $this->rolePermission->edit_role_pe($id);
+    }
 }

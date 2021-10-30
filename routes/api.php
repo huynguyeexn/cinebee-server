@@ -382,6 +382,9 @@ Route::prefix('permission')->group(function () {
 
     // add role permission
     Route::post('/', [RolePerController::class, 'create_permisison_role']);
+
+    // edit
+    Route::get('/{id}', [RolePerController::class, 'edit_role_pe']);
     // // Create new
     // Route::post('/', [EmployeeRoleController::class, 'store']);
 

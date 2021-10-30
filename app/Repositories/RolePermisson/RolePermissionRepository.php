@@ -35,5 +35,8 @@ class RolePermissionRepository extends BaseRepository implements RolePermissionR
          }
         
     }
+    public function edit_role_pe($id){
+        return "xin chào";
+    }
 
 }

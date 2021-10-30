@@ -36,7 +36,18 @@ class RolePermissionRepository extends BaseRepository implements RolePermissionR
         
     }
     public function edit_role_pe($id){
-        return "xin chào";
+        $role = EmployeeRole::with('premission')->find($id);
+        return $role;
+    }
+    public function Update_role_pe($data = [], $id){
+        $idrole = EmployeeRole::find($id);
+        $record = $idrole->premission()->sync($data['permission']);
+        return response(['message'=>"Sửa dữ liệu thành công"],201);  
+    }
+    public function delete($id){
+        $idrole = EmployeeRole::find($id);
+        $record = $idrole->premission()->detach();
+        return response(['message'=>"Xóa dữ liệu thành công"],201);  
     }
 
 }

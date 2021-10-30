@@ -12,4 +12,6 @@ interface RolePermissionRepositoryInterface extends RepositoryInterface
      public function getListPer_Role();
      public function create_role_permission($data = []);
      public function edit_role_pe($id);
+     public function Update_role_pe($data = [], $id);
+     public function delete($id);
 }

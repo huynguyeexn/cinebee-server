@@ -53,4 +53,14 @@ class RolePerController extends Controller
     public function edit_role_pe($id){
         return $this->rolePermission->edit_role_pe($id);
     }
+    public function update(Request $request, $id){
+        $data = [
+            "role"=>$request->role,
+            "permission"=>$request->permission
+        ];
+        return $this->rolePermission->Update_role_pe($data,$id);
+    }
+    public function delete($id){
+        return $this->rolePermission->delete($id);
+    }
 }

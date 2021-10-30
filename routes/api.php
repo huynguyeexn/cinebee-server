@@ -385,6 +385,8 @@ Route::prefix('permission')->group(function () {
 
     // edit
     Route::get('/{id}', [RolePerController::class, 'edit_role_pe']);
+     // // Update
+    Route::put('/{id}', [RolePerController::class, 'update'])->whereNumber('id');
     // // Create new
     // Route::post('/', [EmployeeRoleController::class, 'store']);
 
@@ -397,8 +399,8 @@ Route::prefix('permission')->group(function () {
     // // Update
     // Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
 
-    // // Soft Delete
-    // Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
+    // Soft Delete
+    Route::delete('{id}/delete/', [RolePerController::class, 'delete'])->whereNumber('id');
 
     // // Hard Delete
     // Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');

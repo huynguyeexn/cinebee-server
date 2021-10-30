@@ -109,7 +109,7 @@ class AuthAdminController extends Controller
      *   security={{ "bearerAuth":{}}}
      * )
      */
-    public function profile()  // profile 
+    public function profile()  // profile
     {
         $userId = Auth::user()->id;
         $user =  Employee::findOrFail($userId);

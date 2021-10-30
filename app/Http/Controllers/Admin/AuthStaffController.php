@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Employee\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use App\Models\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +18,7 @@ class AuthStaffController extends Controller
     public function __construct()
     {
         $this->guard = "admin"; // guard admin
-     }
+    }
 
     /**
      * @OA\Post(
@@ -86,17 +87,19 @@ class AuthStaffController extends Controller
     public function login(LoginRequest $request)
     {
         // 1 nhân viên
-        if (!$token = Auth::guard($this->guard)->attempt(['username'=>$request->username,
-        'password'=>$request->password,'employee_role_id'=>1])) {
+        if (!$token = Auth::guard($this->guard)->attempt([
+            'username' => $request->username,
+            'password' => $request->password, 'employee_role_id' => 1
+        ])) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',
             'expires_in' => JWTAuth::factory()->getTTL() * 60,
-            'user' => Auth::guard($this->guard)->user()->fullname
+            'expires_at' => Carbon::now()->addSeconds(JWTAuth::factory()->getTTL() * 60)->timestamp,
+            'user' => Auth::guard($this->guard)->user()
         ]);
         // return ;
     }
-   
 }

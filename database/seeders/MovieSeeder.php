@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Movie;
 use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class MovieSeeder extends Seeder
 {
@@ -18,7 +19,6 @@ class MovieSeeder extends Seeder
     {
         //
         try {
-            Movie::factory(20)->create();
         } catch (Exception $e) {
             if ($this->failures > 5) {
                 print_r("Seeder Error. Failure count for current entity: " . $this->failures);

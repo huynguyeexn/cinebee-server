@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\EmployeeRole;
+use App\Models\Role;
 use App\Models\Role\permissions;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
 class PermissionRole extends Seeder
 {
     /**
@@ -16,11 +17,11 @@ class PermissionRole extends Seeder
     public function run()
     {
         $permission = permissions::all('id');
-        $EmployeeRole = EmployeeRole::where('id','=',2)->first();
-        foreach($permission as $id){
+        $role = Role::where('code', 'super_admin')->first();
+        foreach ($permission as $id) {
             DB::table('permission_role')->insert([
-                'role_id'=>$EmployeeRole->id,
-                'permission_id'=>$id->id
+                'role_id' => $role->id,
+                'permission_id' => $id->id
             ]);
         }
     }

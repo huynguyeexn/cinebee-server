@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\EmployeeRole;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeRoleSeed extends Seeder
+class RoleSeed extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,11 +14,17 @@ class EmployeeRoleSeed extends Seeder
      */
     public function run()
     {
-        DB::table('employee_roles')->insert([
+        DB::table('role')->insert([
             'name' => 'Nhân Viên',
+            'code' => 'staff',
         ]);
-        DB::table('employee_roles')->insert([
+        DB::table('role')->insert([
             'name' => 'Quản Lý',
+            'code' => 'manager',
+        ]);
+        DB::table('role')->insert([
+            'name' => 'Super Man',
+            'code' => 'super_admin',
         ]);
     }
 }

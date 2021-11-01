@@ -1,0 +1,285 @@
+[33mcommit 32d610e5587b895ce61ff44377d11c0215c650c5[m[33m ([m[1;36mHEAD -> [m[1;32mdev[m[33m, [m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: c7b7e29 8eb5ad5
+Author: hailong289 <longdhps13563@fpt.edu.vn>
+Date:   Mon Oct 25 03:43:31 2021 +0000
+
+    Merge branch 'revert-7b25b1db' into 'dev'
+    
+    Revert "Merge branch 'dev' into Role"
+    
+    See merge request huynguyeexn/Cinebee-server!48
+
+[33mcommit 8eb5ad526cdf4780f9e83a57b0fee7c9becdf307[m[33m ([m[1;31morigin/revert-7b25b1db[m[33m, [m[1;32mrevert-7b25b1db[m[33m)[m
+Author: hailong289 <longdhps13563@fpt.edu.vn>
+Date:   Mon Oct 25 03:42:09 2021 +0000
+
+    Revert "Merge branch 'dev' into Role"
+    
+    This reverts commit 7b25b1dbb1803f8ba2ae46ad8ecd6533e78651da
+
+[33mcommit c7b7e295c63fd1439a1d30324c0cc5cbe82529a7[m
+Merge: 2a567d9 5bcab36
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sun Oct 24 12:42:55 2021 +0000
+
+    Merge branch 'heroku' into 'dev'
+    
+    Fix migration
+    
+    See merge request huynguyeexn/Cinebee-server!47
+
+[33mcommit 5bcab360ee1211bc363127c1ffc9ead94b1ae459[m[33m ([m[1;31morigin/heroku[m[33m)[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 24 19:40:55 2021 +0700
+
+    Fix migration
+
+[33mcommit 2a567d9eb8a3f7d885193d8af27448d8f0ffba9e[m[33m ([m[1;31morigin/room[m[33m)[m
+Merge: f0e2e8c 31b6232
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sun Oct 24 12:35:50 2021 +0000
+
+    Merge branch 'room' into 'dev'
+    
+    Room
+    
+    See merge request huynguyeexn/Cinebee-server!45
+
+[33mcommit 31b6232eacdefeba851311c942162ca348b95f4e[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 23 21:34:33 2021 +0700
+
+    Update room seats
+
+[33mcommit 99b08062dae7049ac2b98b3a462a216a4e24395c[m
+Merge: be98474 f0e2e8c
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 23 10:21:42 2021 +0700
+
+    Merge branch 'dev' into room
+
+[33mcommit f0e2e8c92732cd69fd60ebd392a7210c84e279a9[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Fri Oct 22 22:05:30 2021 +0700
+
+    fix api docs
+
+[33mcommit d82e7966a6293ccaedd3636430ff570b67283d4a[m[33m ([m[1;31morigin/showtime[m[33m)[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Fri Oct 22 21:54:37 2021 +0700
+
+    Fix migrate showtime
+
+[33mcommit 27fdfa653351045b0a122d96abc6c8e4f3d11fd5[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Fri Oct 22 21:44:11 2021 +0700
+
+    Show time CRUD full
+
+[33mcommit cfb89f73c5ef732fed8298ccccb9b2eb920c5ae5[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Tue Oct 19 22:52:22 2021 +0700
+
+    showtime add update
+
+[33mcommit be98474fe7c82158dd3208761163151e65df61c9[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 16 19:27:31 2021 +0700
+
+    1
+
+[33mcommit eea8a895ccc18ccef7a1ecef6b149dcca8d5542e[m[33m ([m[1;31morigin/vdien[m[33m, [m[1;31morigin/movies[m[33m)[m
+Merge: 52e4209 9a70e83
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Fri Oct 15 13:38:30 2021 +0000
+
+    Merge branch 'THDung' into 'dev'
+    
+    Staff and Blog category
+    
+    See merge request huynguyeexn/Cinebee-server!42
+
+[33mcommit 9a70e835cc14b498a91aff945403a598eab590c4[m
+Merge: 937b6d6 52e4209
+Author: ThuyDung2001 <dunglttps14010@fpt.edu.vn>
+Date:   Mon Oct 11 09:06:47 2021 +0700
+
+    Merge branch 'dev' into THDung
+
+[33mcommit 52e42093bcc482c049f2153bb0112c31329395cb[m
+Merge: b4ef005 ee82b02
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sun Oct 10 08:13:10 2021 +0000
+
+    Merge branch 'combo-an' into 'dev'
+    
+    Thêm bảng và chức năng Combo, Combo Item, Combo Ticket
+    
+    See merge request huynguyeexn/Cinebee-server!38
+
+[33mcommit ee82b02f750fc505e424124a7822345d4773bcfe[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 10 15:12:26 2021 +0700
+
+    server.php
+
+[33mcommit 9a72a7db93809b38947ae7e0f164b00bbf51e975[m
+Merge: 5037dc6 b4ef005
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 10 15:10:27 2021 +0700
+
+    Merge branch 'dev' into combo-an
+
+[33mcommit 5037dc6e100e777a0b041aab1eb8a5f42c3d9c2b[m
+Author: TruongAn-Webdesigner <71300924+TruongAn-Webdesigner@users.noreply.github.com>
+Date:   Sat Oct 9 20:12:07 2021 +0700
+
+    Thêm price cho data Item, thay đổi factory combo
+
+[33mcommit 937b6d6691298c89da0b0537c606f9b61a8a343c[m
+Author: ThuyDung2001 <dunglttps14010@fpt.edu.vn>
+Date:   Wed Oct 6 11:36:32 2021 +0700
+
+    blogthumb
+
+[33mcommit 432455334d323571a09f6fc2b97e6a39eb380ca3[m
+Author: ThuyDung2001 <dunglttps14010@fpt.edu.vn>
+Date:   Tue Oct 5 22:49:05 2021 +0700
+
+    blog + category
+
+[33mcommit 4970a4a0dff101448c31910a76acd918ac8c532a[m
+Author: ThuyDung2001 <dunglttps14010@fpt.edu.vn>
+Date:   Tue Oct 5 09:53:29 2021 +0700
+
+    update rules employee
+
+[33mcommit c6bd4f5e618594f9a68f2aafca22dee26594bdfb[m
+Merge: bb24a7b b4ef005
+Author: ThuyDung2001 <dunglttps14010@fpt.edu.vn>
+Date:   Mon Oct 4 07:54:01 2021 +0700
+
+    Merge branch 'dev' into THDung
+
+[33mcommit b4ef005405c665464eabfccc41763c474c033570[m
+Merge: 312244e 43f8949
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 14:29:56 2021 +0000
+
+    Merge branch 'hui' into 'dev'
+    
+    Upload Files to AWS3
+    
+    See merge request huynguyeexn/Cinebee-server!40
+
+[33mcommit 43f89494fa933a4edb57d60b5eac6cdc66e5c991[m[33m ([m[1;31morigin/hui[m[33m)[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 21:24:05 2021 +0700
+
+    update .env
+
+[33mcommit 0faefe1ca0a032d40d29e755535aa2690b8567ac[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 20:42:08 2021 +0700
+
+    Upload to AWS3
+
+[33mcommit 0d14bf34d3247f4e961d4abc970f2e68512e0904[m
+Merge: 4d87d23 cafc5c7
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 19:49:41 2021 +0700
+
+    Merge branch 'hui' into heroku
+
+[33mcommit cafc5c7a47589b1c21d6debd076285e2956a17db[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 19:49:08 2021 +0700
+
+    File upload to AWS3
+
+[33mcommit 4d87d23b2f2e9ce28b4b67f708f08bdaa503790b[m
+Merge: 28d6583 10ac9c0
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 11:19:00 2021 +0700
+
+    Merge branch 'hui' into heroku
+
+[33mcommit 10ac9c0f0442c035b927efa626d7c1825952c67d[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 11:18:46 2021 +0700
+
+    Genre seed
+
+[33mcommit 28d6583638d7fd3ec6d8c3a651cca96115508b17[m
+Merge: 37715f6 312244e
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sun Oct 3 10:58:13 2021 +0700
+
+    Director update + store validate request
+
+[33mcommit 312244e353adabe66d57d1a5c271bf1ad821dacb[m
+Author: hailong289 <longdhps13563@fpt.edu.vn>
+Date:   Sat Oct 2 20:41:00 2021 +0700
+
+    hidden employee
+
+[33mcommit cdf0a51e18540c35d36475952b9a07eb37cec34a[m
+Merge: 08724de 3688116
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 13:04:56 2021 +0000
+
+    Merge branch 'hui' into 'dev'
+    
+    Add edit movie director
+    
+    See merge request huynguyeexn/Cinebee-server!39
+
+[33mcommit 3688116c2a22135ed82f974ff960d4d283853e3e[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 20:00:49 2021 +0700
+
+    Director update + store validate request
+
+[33mcommit 54d9be23476b7b71468fb5ec2066ba471327a922[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 19:53:40 2021 +0700
+
+    Add edit movie director
+
+[33mcommit b31113acf43482d3bf8d68b7309ef598e1086583[m
+Author: TruongAn-Webdesigner <71300924+TruongAn-Webdesigner@users.noreply.github.com>
+Date:   Sat Oct 2 15:23:15 2021 +0700
+
+    Thêm Combo, ComboItem, ComboTicket
+
+[33mcommit cbd5478fc107dd749a08f854ac06e7cbc35e1ad8[m
+Merge: 9cea217 08724de
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 11:44:44 2021 +0700
+
+    Merge branch 'dev' into hui
+
+[33mcommit 08724de6740912d81cb5906a6c2502108a2981d4[m
+Merge: 4609f3f 4c8bc00
+Author: HUi <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 04:43:44 2021 +0000
+
+    Merge branch 'auth_L' into 'dev'
+    
+    Authentication
+    
+    See merge request huynguyeexn/Cinebee-server!37
+
+[33mcommit 4c8bc00ed3fb70142eb3840ef01092f50d97ec9a[m[33m ([m[1;31morigin/auth_L[m[33m)[m
+Author: hailong289 <longdhps13563@fpt.edu.vn>
+Date:   Sat Oct 2 11:23:53 2021 +0700
+
+    update
+
+[33mcommit 9cea21705232f783cc7a8ea6a5d19cfcc668e173[m
+Author: hui <huynguyeexn@gmail.com>
+Date:   Sat Oct 2 10:54:06 2021 +0700
+
+    List Filter
+
+[33mcommit 89c14b4f6ae97062e253b39a1f040d752

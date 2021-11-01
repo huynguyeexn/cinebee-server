@@ -18,6 +18,7 @@ class CreateSeatsTable extends Migration
             $table->string("name", 50);
             $table->unsignedTinyInteger("row");
             $table->unsignedTinyInteger("col");
+            $table->unsignedTinyInteger("seat_status_id")->nullable();
 
             $table
                 ->foreignId("room_id")
@@ -26,12 +27,6 @@ class CreateSeatsTable extends Migration
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
 
-            $table
-                ->foreignId("seat_status_id")
-                ->nullable()
-                ->constrained()
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
 
             $table->softDeletes();
             $table->timestamps();

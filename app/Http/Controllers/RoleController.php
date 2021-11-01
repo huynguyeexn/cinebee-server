@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\Role\permissions;
 use App\Repositories\Role\RoleRepositoryInterface;
 use Illuminate\Http\Request;
+
 class RoleController extends Controller
 {
     /**
@@ -76,14 +77,12 @@ class RoleController extends Controller
          */
         return $this->RoleRepo->getList($request);
     }
-    public function getListPermissions(){
+
+    public function getListPermissions()
+    {
         $data = permissions::all();
-        return ['data'=>$data];
+        return ['data' => $data, 'pagination' => []];
     }
-//    public function deleted(ListRequest $request)
-//    {
-//        return $this->RoleRepo->getDeletedList($request);
-//    }
 
     public function store(Request $request)
     {
@@ -96,8 +95,9 @@ class RoleController extends Controller
          *     required=true,
          *     @OA\JsonContent(
          *       type="string",
-         *       required={"name", "permission"},
+         *       required={"name","code", "permission"},
          *       @OA\Property(property="name", type="string"),
+         *       @OA\Property(property="code", type="string"),
          *       @OA\Property(property="permission", type="[]"),
          *       example={"name": "Tên quyền", "permission": "Nhận mảng[]"}
          *     )
@@ -109,7 +109,8 @@ class RoleController extends Controller
          */
         $attributes = [
             'role' => $request->name,
-            'permission' => $request->permission,
+            'code' => $request->code,
+            'permissions' => $request->permissions,
         ];
 
         return $this->RoleRepo->storeRolePermission($attributes);
@@ -117,19 +118,20 @@ class RoleController extends Controller
 
     public function getById($id)
     {
-        return $this->RoleRepo->getById_role_pe($id);
+        return $this->RoleRepo->getById($id);
     }
-//
+
     public function update(Request $request, $id)
     {
         $attributes = [
             'name' => $request->name,
-            'permission' => $request->permission,
+            'code' => $request->code,
+            'permissions' => $request->permissions,
         ];
 
         return $this->RoleRepo->update_role_pe($id, $attributes);
     }
-//
+
     public function delete($id)
     {
         /**
@@ -150,20 +152,4 @@ class RoleController extends Controller
          */
         return $this->RoleRepo->delete_role_pe($id);
     }
-//
-//    public function remove($id)
-//    {
-
-//        return $this->RoleRepo->remove($id);
-//    }
-//
-//    public function restore(Role $Role, $id)
-//    {
-//        return $this->RoleRepo->restore($id);
-//    }
-//
-//    public function employees($id)
-//    {
-//        return $this->RoleRepo->getEmployees($id);
-//    }
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Seat;
 
 use App\Models\Room;
-use App\Models\SeatStatus;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -23,17 +22,16 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Room $room, SeatStatus $seatStatus)
+    public function rules(Room $room)
     {
         $roomName = $room->getTable();
-        $seatStatusName = $seatStatus->getTable();
         return [
             //
             "name" => "required|string|max:20",
             "col" => "required|integer|max:255",
             "row" => "required|integer|max:255",
             "room_id" => "required|integer|exists:$roomName,id",
-            "seat_status_id" => "required|integer|exists:$seatStatusName,id",
+            "seat_status_id" => "required|integer",
         ];
     }
 }

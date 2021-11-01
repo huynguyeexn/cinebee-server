@@ -17,7 +17,7 @@ class EmployeeSeed extends Seeder
     public function run()
     {
         try {
-            Employee::factory(50)->create();
+            Employee::factory(10)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

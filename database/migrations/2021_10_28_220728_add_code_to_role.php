@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
-class CinemaStatus extends Migration
+class AddCodeToRole extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +13,9 @@ class CinemaStatus extends Migration
      */
     public function up()
     {
-        Schema::table('cinema_statuses', function (Blueprint $table) {
+        Schema::table('role', function (Blueprint $table) {
             //
-            $table->string('slug')->unique();
+            $table->string('code')->nullable();
         });
     }
 
@@ -27,8 +26,9 @@ class CinemaStatus extends Migration
      */
     public function down()
     {
-        Schema::table('slug', function (Blueprint $table) {
+        Schema::table('role', function (Blueprint $table) {
             //
+            $table->dropColumn('code');
         });
     }
 }

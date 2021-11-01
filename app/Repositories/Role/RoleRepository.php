@@ -5,49 +5,61 @@ namespace App\Repositories\Role;
 use App\Models\Role;
 use App\Repositories\BaseRepository;
 use Illuminate\Support\Facades\DB;
+
 class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
     public function getModel()
     {
         return Role::class;
     }
-    public function storeRolePermission($attributes = []){
+    public function storeRolePermission($attributes = [])
+    {
         $role = $attributes['role'];
         $permission = $attributes['permission'];
-        $id = $this->model::create(['name'=>$role]);
-        $Rolenew = $this->model::find($id->id);
-        $records = $Rolenew->premission()->attach($permission);
+        $id = $this->model::create(['name' => $role]);
+
+        $newRole = $this->model::find($id->id);
+        $records = $newRole->permissionsFull()->attach($permission);
         return $records;
     }
-    public function getById_role_pe($id){
-        $role = $this->model::with('premission')->find($id);
+    public function getById_role_pe($id)
+    {
+        $role = $this->model::with('permissionsFull')->find($id);
         return $role;
     }
-    public function update_role_pe($id,$attributes = []){
-        $role = tap($this->model->findOrFail($id))->update($attributes);
-        $Rolenew = $this->model::find($role->id);
-        $records = $Rolenew->premission()->sync($attributes['permission']);
-        return $records;
+    public function update_role_pe($id, $attributes = [])
+    {
+        $role = $this->model::findOrFail($id);
+
+        $role->permissionsFull()->sync($attributes['permissions']);
+
+        $role->update([
+            'code' => $attributes['code'],
+            'name' => $attributes['name'],
+        ]);
+
+        return $role;
     }
-    public function delete_role_pe($id){
+    public function delete_role_pe($id)
+    {
         $role = tap($this->model->findOrFail($id))->delete();
         $records = DB::table('permission_role')->where('role_id', $role->id)->delete();
         return $records;
     }
-//    public function delete($id)
-//    {
-//        try {
-//            $record = tap($this->model->findOrFail($id))->delete();
-//            if ($record) {
-//                return response([
-//                    'message' => 'Employee Role has been move to trash!',
-//                    'data' => $record,
-//                ], 200);
-//            }
-//        } catch (\Throwable $th) {
-//            throw $th;
-//        }
-//    }
+    //    public function delete($id)
+    //    {
+    //        try {
+    //            $record = tap($this->model->findOrFail($id))->delete();
+    //            if ($record) {
+    //                return response([
+    //                    'message' => 'Employee Role has been move to trash!',
+    //                    'data' => $record,
+    //                ], 200);
+    //            }
+    //        } catch (\Throwable $th) {
+    //            throw $th;
+    //        }
+    //    }
 
     // public function remove($id)
     // {

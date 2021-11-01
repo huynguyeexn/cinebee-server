@@ -13,18 +13,29 @@ class Role extends Model
     use HasFactory, SoftDeletes;
     protected $table = 'role';
     protected $fillable = [
-        'name'
+        'name',
+        'code',
     ];
 
     protected $hidden = [
         'deleted_at'
     ];
 
+    protected $appends = [
+        "permissions"
+    ];
+
     public function employees()
     {
         return $this->hasMany(Employee::class);
     }
-    public function premission(){
-        return $this->belongsToMany(permissions::class,'permission_role','role_id','permission_id');
+    public function permissionsFull()
+    {
+        return $this->belongsToMany(permissions::class, 'permission_role', 'role_id', 'permission_id');
+    }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->permissionsFull->pluck('name');
     }
 }

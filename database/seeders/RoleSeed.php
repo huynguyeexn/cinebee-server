@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class EmployeeRoleSeed extends Seeder
+class RoleSeed extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,9 +16,15 @@ class EmployeeRoleSeed extends Seeder
     {
         DB::table('role')->insert([
             'name' => 'Nhân Viên',
+            'code' => 'staff',
         ]);
         DB::table('role')->insert([
             'name' => 'Quản Lý',
+            'code' => 'manager',
+        ]);
+        DB::table('role')->insert([
+            'name' => 'Super Man',
+            'code' => 'super_admin',
         ]);
     }
 }

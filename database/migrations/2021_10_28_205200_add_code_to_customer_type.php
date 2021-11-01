@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddRoleForeignToUserTable extends Migration
+class AddCodeToCustomerType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddRoleForeignToUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('customer_types', function (Blueprint $table) {
             //
-            $table->foreignId('role_id')->nullable();
+            $table->string('code')->nullable();
         });
     }
 
@@ -26,9 +26,9 @@ class AddRoleForeignToUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('customer_types', function (Blueprint $table) {
             //
-            $table->dropForeign('role_id');
+            $table->dropColumn('code');
         });
     }
 }

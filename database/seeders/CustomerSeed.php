@@ -18,7 +18,7 @@ class CustomerSeed extends Seeder
     public function run()
     {
         try {
-            Customer::factory(50)->create();
+            Customer::factory(10)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

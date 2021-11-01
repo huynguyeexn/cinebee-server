@@ -7,7 +7,6 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
-use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\Admin\AuthAdminController;
@@ -45,16 +44,9 @@ use Illuminate\Support\Facades\Auth;
 Route::prefix('accounts')->group(function () {
     // admin
     Route::group(['middleware' => ['assign.guard:admin']], function () {
-        // login admin
         Route::group(['prefix' => 'admin'], function () {
             Route::post('login', [AuthAdminController::class, 'login']);
-            Route::post('register', [AuthAdminController::class, 'register']);
-        });
-        // login staff
-        Route::group(['prefix' => 'staff'], function () {
-            Route::post('login', [AuthStaffController::class, 'login']);
-            Route::post('register', [AuthStaffController::class, 'register']);
-            // profile admin, staff
+
             Route::middleware(['check.login'])->group(function () {
                 Route::get('me', [AuthAdminController::class, 'profile']);
                 Route::get('logout', [AuthAdminController::class, 'logout']);
@@ -69,8 +61,7 @@ Route::prefix('accounts')->group(function () {
     // });
 });
 
-/**
- * REST API - actor
+/** REST API - actor
  *  long add 06-09-2021
  */
 Route::group(['middleware' => ['assign.guard:admin', 'check.login']], function () {
@@ -134,8 +125,8 @@ Route::group(['middleware' => ['assign.guard:admin', 'check.login']], function (
         // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
     });
 });
-/**
- * REST API - genre
+
+/** REST API - genre
  *  long add 06-09-2021
  */
 Route::prefix('genres')->group(function () {
@@ -167,43 +158,8 @@ Route::prefix('genres')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
 });
-/**
- * REST API - Seat Status
- *
- * @author  HUi <huynguyeexn@gmail.com>
- */
-Route::prefix('seat-status')->group(function () {
 
-    // Get list
-    Route::get('/', [SeatStatusController::class, 'index']);
-
-    // Get deleted list
-    Route::get('/deleted', [SeatStatusController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [SeatStatusController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [SeatStatusController::class, 'getById'])->whereNumber('id');
-
-    // Get by slug
-    Route::get('/{slug}', [SeatStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
-
-    // Update
-    Route::put('/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [SeatStatusController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [SeatStatusController::class, 'restore'])->whereNumber('id');
-});
-
-/**
- * REST API - Room Status
+/** REST API - Room Status
  *
  * @author  HUi <huynguyeexn@gmail.com>
  */
@@ -212,21 +168,20 @@ Route::prefix('room-status')->group(function () {
     // Get list
     Route::get('/', [RoomStatusController::class, 'index']);
 
-    // Get by ID
-    Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
+    // // Get by ID
+    // Route::get('/{id}', [RoomStatusController::class, 'getById'])->whereNumber('id');
 
-    // Create new
-    Route::post('/', [RoomStatusController::class, 'store']);
+    // // Create new
+    // Route::post('/', [RoomStatusController::class, 'store']);
 
-    // Update
-    Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
+    // // Update
+    // Route::put('/{id}', [RoomStatusController::class, 'update'])->whereNumber('id');
 
-    // Delete
-    Route::delete('{id}/delete', [RoomStatusController::class, 'delete'])->whereNumber('id');
+    // // Delete
+    // Route::delete('{id}/delete', [RoomStatusController::class, 'delete'])->whereNumber('id');
 });
 
-/**
- * REST API - Seat Status
+/** REST API - Items
  *
  * @author  TruongAn-Webdesigner <nguyentruongan0505@gmail.com>
  */
@@ -259,10 +214,7 @@ Route::prefix('items')->group(function () {
     Route::patch('{id}/restore', [ItemController::class, 'restore'])->whereNumber('id');
 });
 
-
-
-/**
- * REST API -Room
+/** REST API -Room
  *
  * @author  HUi <huynguyeexn@gmail.com>
  */
@@ -298,8 +250,7 @@ Route::prefix('rooms')->group(function () {
     Route::patch('{id}/restore', [RoomController::class, 'restore'])->whereNumber('id');
 });
 
-/**
- * REST API - Seat Status
+/** REST API - Seat
  *
  * @author  HUi <huynguyeexn@gmail.com>
  */
@@ -329,9 +280,7 @@ Route::prefix('seats')->group(function () {
     Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Role
+/** REST API - Role
  *
  * Date: 07/10/2021
  * Long sửa đổi
@@ -341,7 +290,7 @@ Route::prefix('role')->group(function () {
     // Get list
     Route::get('/', [RoleController::class, 'index']);
     // get list permission
-    Route::get('/permission', [RoleController::class, 'getListPermissions']);
+    Route::get('/permissions', [RoleController::class, 'getListPermissions']);
     // get permission
     Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
     // Get by ID
@@ -352,28 +301,9 @@ Route::prefix('role')->group(function () {
     Route::post('/', [RoleController::class, 'store']);
     // Soft Delete
     Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
-//    // Get deleted list
-//    Route::get('/deleted', [RoleController::class, 'deleted']);
-
-//
-//    // Get Employees of Employee Role
-//    Route::get('/{id}/employees', [RoleController::class, 'employees'])->whereNumber('id');
-//
-
-//
-//    // Soft Delete
-//    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
-//
-//    // Hard Delete
-//    Route::delete('{id}/remove/', [RoleController::class, 'remove'])->whereNumber('id');
-//
-//    // Restore
-//    Route::patch('{id}/restore/', [RoleController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Director
+/** REST API - Director
  *
  * Date: 11/09/2021
  * Time: 09:00 AM
@@ -411,8 +341,8 @@ Route::prefix('directors')->group(function () {
     // Get Movies
     Route::patch('{id}/movies/', [DirectorController::class, 'movies'])->whereNumber('id');
 });
-/**
- * REST API - Employee
+
+/**  REST API - Employee
  *
  * Date: 10/09/2021
  * Time: 18:00 AM
@@ -448,10 +378,7 @@ Route::prefix('employee')->group(function () {
     Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
 });
 
-
-
-/**
- * REST API - Age Rating
+/** REST API - Age Rating
  *
  * Date: 11/09/2021
  * Time: 14:00
@@ -462,35 +389,32 @@ Route::prefix('age-ratings')->group(function () {
     // Get list
     Route::get('/', [AgeRatingController::class, 'index']);
 
+    // // Get deleted list
+    // Route::get('/deleted', [AgeRatingController::class, 'deleted']);
 
-    // Get deleted list
-    Route::get('/deleted', [AgeRatingController::class, 'deleted']);
+    // // Get list movies of age rating
+    // Route::get('/{id}/movies', [AgeRatingController::class, 'movies']);
 
-    // Get list movies of age rating
-    Route::get('/{id}/movies', [AgeRatingController::class, 'movies']);
+    // // Create new
+    // Route::post('/', [AgeRatingController::class, 'store']);
 
-    // Create new
-    Route::post('/', [AgeRatingController::class, 'store']);
+    // // Get by ID
+    // Route::get('/{id}', [AgeRatingController::class, 'getById'])->whereNumber('id');
 
-    // Get by ID
-    Route::get('/{id}', [AgeRatingController::class, 'getById'])->whereNumber('id');
+    // // Update
+    // Route::put('/{id}', [AgeRatingController::class, 'update'])->whereNumber('id');
 
-    // Update
-    Route::put('/{id}', [AgeRatingController::class, 'update'])->whereNumber('id');
+    // // Soft Delete
+    // Route::delete('{id}/delete/', [AgeRatingController::class, 'delete'])->whereNumber('id');
 
-    // Soft Delete
-    Route::delete('{id}/delete/', [AgeRatingController::class, 'delete'])->whereNumber('id');
+    // // Hard Delete
+    // Route::delete('{id}/remove/', [AgeRatingController::class, 'remove'])->whereNumber('id');
 
-    // Hard Delete
-    Route::delete('{id}/remove/', [AgeRatingController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
+    // // Restore
+    // Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Movies
+/** REST API - Movies
  *
  * Date: 11/09/2021
  * Time: 15:00
@@ -535,9 +459,7 @@ Route::prefix('movies')->group(function () {
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Movie Director
+/** REST API - Movie Director
  *
  * Date: 11/09/2021
  * Time: 23:00
@@ -564,9 +486,7 @@ Route::prefix('movie-directors')->group(function () {
     Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Movie Genre
+/** REST API - Movie Genre
  *
  * Date: 12/09/2021
  * Time: 09:30
@@ -593,9 +513,7 @@ Route::prefix('movie-genres')->group(function () {
     Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Movie Actors
+/** REST API - Movie Actors
  *
  * Date: 12/09/2021
  * Time: 11:00
@@ -619,9 +537,7 @@ Route::prefix('movie-actors')->group(function () {
     Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Customer Type
+/** REST API - Customer Type
  *
  * Date: 12/09/2021
  * Time: 23:30 AM
@@ -657,10 +573,7 @@ Route::prefix('customer-types')->group(function () {
     Route::patch('{id}/restore/', [CustomerTypeController::class, 'restore'])->whereNumber('id');
 });
 
-
-
-/**
- * REST API - Customers
+/** REST API - Customers
  *
  * Date: 12/09/2021
  * Time: 23:30
@@ -693,9 +606,7 @@ Route::prefix('customers')->group(function () {
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Customers
+/** REST API - Customers
  *
  * Date: 25/09/2021
  * Time: 12:22
@@ -731,9 +642,7 @@ Route::prefix('combo')->group(function () {
     Route::delete('/{id}/remove', [ComboController::class, 'remove'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Customers
+/** REST API - Customers
  *
  * Date: 27/09/2021
  * Time: 2:22
@@ -769,10 +678,7 @@ Route::prefix('comboticket')->group(function () {
     Route::delete('/{id}/remove', [ComboTicketController::class, 'remove'])->whereNumber('id');
 });
 
-
-
-/**
- * REST API - Customers
+/** REST API - Customers
  *
  * Date: 2/10/2021
  * Time: 9:22
@@ -808,8 +714,7 @@ Route::prefix('comboitem')->group(function () {
     Route::delete('/{id}/remove', [ComboItemController::class, 'remove'])->whereNumber('id');
 });
 
-/**
- * REST API - Showtimes
+/** REST API - Showtime
  *
  * Date: 21/09/2021
  * Time: 20:30
@@ -830,10 +735,7 @@ Route::prefix('showtimes')->group(function () {
     Route::put('/', [ShowtimeController::class, 'update']);
 });
 
-
-
-/**
- * REST API - Movie Tickets
+/** REST API - Movie Tickets
  *
  * Date: 21/09/2021
  * Time: 21:30
@@ -866,8 +768,7 @@ Route::prefix('movie-tickets')->group(function () {
     Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
 });
 
-
-/** REST API - FIle Upload
+/** REST API - File Upload
  *
  * Date: 26/09/2021
  * Time: 19:30
@@ -883,7 +784,6 @@ Route::prefix('uploads')->group(function () {
     Route::get('/images', [FileUploadController::class, 'imageList']);
     Route::post('/images', [FileUploadController::class, 'imageUpload']);
 });
-
 
 /** REST API - Category
  *
@@ -921,7 +821,6 @@ Route::prefix('categories')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [CategoryController::class, 'restore'])->whereNumber('id');
 });
-
 
 /** REST API - Blog
  *

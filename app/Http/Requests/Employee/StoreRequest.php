@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Employee;
 
-use App\Models\EmployeeRole;
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -22,9 +22,9 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(EmployeeRole $employeeRole)
+    public function rules(Role $role)
     {
-        $employeeRoleName = $employeeRole->getTable();
+        $roleName = $role->getTable();
         return [
             'fullname' => "required|string|min:3|max:30",
             'username' => "required|string|min:3|max:30|unique:employees,username",
@@ -34,7 +34,7 @@ class StoreRequest extends FormRequest
             'address'  => "nullable|string|max:100|",
             'birthday' => "required|date",
             'gender'      => "required",
-            'employee_role_id' => "exists:$employeeRoleName,id",
+            'employee_role_id' => "exists:$roleName,id",
         ];
     }
 }

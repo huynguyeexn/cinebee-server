@@ -91,7 +91,7 @@ class AuthStaffController extends Controller
             'username' => $request->username,
             'password' => $request->password, 'employee_role_id' => 1
         ])) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
         return response()->json([
             'access_token' => $token,

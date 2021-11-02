@@ -48,7 +48,7 @@ class AuthAdminController extends Controller
         ]);
 
         if (!$token) {
-            return response()->json(['error' => 'Sai tên tài khoản hoặc mật khẩu'], 401);
+            return response()->json(['message' => 'Sai tên tài khoản hoặc mật khẩu'], 401);
         }
 
         return response()->json([

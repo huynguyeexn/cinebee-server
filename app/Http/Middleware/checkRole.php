@@ -33,6 +33,6 @@ class checkRole
             return $next($request);
         }
 
-        return response()->json(['error' => 'Bạn không có quyền truy cập'], 401);
+        return response()->json(['message' => 'Bạn không có quyền truy cập'], 401);
     }
 }

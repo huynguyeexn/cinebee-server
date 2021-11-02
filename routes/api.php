@@ -64,7 +64,9 @@ Route::prefix('accounts')->group(function () {
     // client
     Route::group(['middleware' => ['assign.guard:api']], function () {
         Route::post('login', [AuthController::class, 'login']);
-        Route::post('register', [AuthController::class, 'register']);
+        // Route::post('register', [AuthController::class, 'register']);
+        // Register
+        Route::post('register', [CustomerController::class, 'register']);
     });
 
     Route::group(['middleware' => ['check.login', 'assign.guard:client']], function () {

@@ -25,6 +25,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Home\AuthController;
 use App\Http\Controllers\MovieTicketController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShowtimeController;
 
 /*
@@ -856,4 +857,28 @@ Route::prefix('blogs')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [BlogController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - Role
+ *
+ * Date: 07/10/2021
+ * Long sửa đổi
+ */
+Route::prefix('role')->group(function () {
+
+    // Get list
+    Route::get('/', [RoleController::class, 'index']);
+    // get list permission
+    Route::get('/permissions', [RoleController::class, 'getListPermissions']);
+    // get permission
+    Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
+    // Get by ID
+    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
+    // Update
+    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
+    // Create new
+    Route::post('/', [RoleController::class, 'store']);
+    // Soft Delete
+    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
 });

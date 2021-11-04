@@ -111,6 +111,8 @@
                 layout: "StandaloneLayout",
 
                 persistAuthorization: {!! config('l5-swagger.defaults.persist_authorization') ? 'true' : 'false' !!},
+
+                tagsSorter: 'alpha',
             })
 
             window.ui = ui

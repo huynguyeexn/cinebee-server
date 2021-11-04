@@ -21,13 +21,11 @@ use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
-use App\Http\Controllers\Admin\AuthStaffController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Home\AuthController;
 use App\Http\Controllers\MovieTicketController;
 use App\Http\Controllers\ShowtimeController;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,13 +45,7 @@ Route::prefix('accounts')->group(function () {
         // login admin
         Route::group(['prefix' => 'admin'], function () {
             Route::post('login', [AuthAdminController::class, 'login']);
-            Route::post('register', [AuthAdminController::class, 'register']);
-        });
-        // login staff
-        Route::group(['prefix' => 'staff'], function () {
-            Route::post('login', [AuthStaffController::class, 'login']);
-            Route::post('register', [AuthStaffController::class, 'register']);
-            // profile admin, staff
+
             Route::middleware(['check.login'])->group(function () {
                 Route::get('me', [AuthAdminController::class, 'profile']);
                 Route::get('logout', [AuthAdminController::class, 'logout']);
@@ -64,7 +56,7 @@ Route::prefix('accounts')->group(function () {
     // client
     Route::group(['middleware' => ['assign.guard:api']], function () {
         Route::post('login', [AuthController::class, 'login']);
-        Route::post('register', [AuthController::class, 'register']);
+        Route::post('register', [CustomerController::class, 'register']);
     });
 
     Route::group(['middleware' => ['check.login', 'assign.guard:client']], function () {
@@ -138,6 +130,7 @@ Route::group(['middleware' => ['assign.guard:admin', 'check.login']], function (
         // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
     });
 });
+
 /**
  * REST API - genre
  *  long add 06-09-2021
@@ -229,8 +222,6 @@ Route::prefix('items')->group(function () {
     Route::patch('{id}/restore', [ItemController::class, 'restore'])->whereNumber('id');
 });
 
-
-
 /**
  * REST API -Room
  *
@@ -299,8 +290,6 @@ Route::prefix('seats')->group(function () {
     Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
 });
 
-
-
 /**
  * REST API - Director
  *
@@ -340,6 +329,7 @@ Route::prefix('directors')->group(function () {
     // Get Movies
     Route::patch('{id}/movies/', [DirectorController::class, 'movies'])->whereNumber('id');
 });
+
 /**
  * REST API - Employee
  *
@@ -376,8 +366,6 @@ Route::prefix('employee')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
 });
-
-
 
 /**
  * REST API - Age Rating
@@ -416,7 +404,6 @@ Route::prefix('age-ratings')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Movies
@@ -464,7 +451,6 @@ Route::prefix('movies')->group(function () {
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Movie Director
  *
@@ -492,7 +478,6 @@ Route::prefix('movie-directors')->group(function () {
     // Hard Delete
     Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Movie Genre
@@ -522,7 +507,6 @@ Route::prefix('movie-genres')->group(function () {
     Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Movie Actors
  *
@@ -547,7 +531,6 @@ Route::prefix('movie-actors')->group(function () {
     // Hard Delete
     Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Customer Type
@@ -586,8 +569,6 @@ Route::prefix('customer-types')->group(function () {
     Route::patch('{id}/restore/', [CustomerTypeController::class, 'restore'])->whereNumber('id');
 });
 
-
-
 /**
  * REST API - Customers
  *
@@ -621,7 +602,6 @@ Route::prefix('customers')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Customers
@@ -660,7 +640,6 @@ Route::prefix('combo')->group(function () {
     Route::delete('/{id}/remove', [ComboController::class, 'remove'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Customers
  *
@@ -697,8 +676,6 @@ Route::prefix('comboticket')->group(function () {
     // Remove
     Route::delete('/{id}/remove', [ComboTicketController::class, 'remove'])->whereNumber('id');
 });
-
-
 
 /**
  * REST API - Customers
@@ -759,8 +736,6 @@ Route::prefix('showtimes')->group(function () {
     Route::put('/', [ShowtimeController::class, 'update']);
 });
 
-
-
 /**
  * REST API - Movie Tickets
  *
@@ -795,7 +770,6 @@ Route::prefix('movie-tickets')->group(function () {
     Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
 });
 
-
 /** REST API - FIle Upload
  *
  * Date: 26/09/2021
@@ -812,7 +786,6 @@ Route::prefix('uploads')->group(function () {
     Route::get('/images', [FileUploadController::class, 'imageList']);
     Route::post('/images', [FileUploadController::class, 'imageUpload']);
 });
-
 
 /** REST API - Category
  *
@@ -850,7 +823,6 @@ Route::prefix('categories')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [CategoryController::class, 'restore'])->whereNumber('id');
 });
-
 
 /** REST API - Blog
  *

@@ -19,9 +19,9 @@ class AuthAdminController extends Controller
 
     /**
      * @OA\Post(
-     *   tags={"Admin"},
-     *   path="/api/account/admin/login",
-     *   summary="Đăng nhập quản lý",
+     *   tags={"Accounts admin"},
+     *   path="/api/accounts/admin/login",
+     *   summary="Đăng nhập hệ thống admin",
      *   @OA\RequestBody(
      *    required=true,
      *   @OA\JsonContent(
@@ -59,8 +59,8 @@ class AuthAdminController extends Controller
     }
     /**
      * @OA\Get(
-     *   tags={"Profile admin , staff"},
-     *   path="/api/account/me",
+     *   tags={"Accounts admin"},
+     *   path="/api/accounts/admin/me",
      *   summary="Thông tin tải khoản quản lý",
      *   @OA\Response(response=200, description="OK"),
      *   @OA\Response(response=401, description="Unauthorized"),
@@ -76,8 +76,8 @@ class AuthAdminController extends Controller
     }
     /**
      * @OA\Get(
-     *   tags={"Logout admin , staff"},
-     *   path="/api/account/admin/logout",
+     *   tags={"Accounts admin"},
+     *   path="/api/accounts/admin/logout",
      *   summary="Đăng xuất",
      *   @OA\Response(response=200, description="OK"),
      *   @OA\Response(response=401, description="Unauthorized"),

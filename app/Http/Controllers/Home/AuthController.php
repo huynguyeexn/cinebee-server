@@ -18,6 +18,29 @@ class AuthController extends Controller
         $this->guard = "client";
     }
 
+
+    /**
+     * @OA\Post(
+     *   tags={"Accounts"},
+     *   path="/api/accounts/login",
+     *   summary="Đăng nhập tài khoản người dùng",
+     *   @OA\RequestBody(
+     *    required=true,
+     *   @OA\JsonContent(
+     *     type="object",
+     *     required={"username","password"},
+     *     @OA\Property(property="username", type="string"),
+     *     @OA\Property(property="password", type="string"),
+     *     example={
+     *     "username":"Tên tài khoản",
+     *     "password":"Mật khẩu",
+     *     }
+     *   )),
+     *   @OA\Response(response=200, description="OK"),
+     *   @OA\Response(response=401, description="Unauthorized"),
+     *   @OA\Response(response=404, description="Not Found")
+     * )
+     */
     public function login(LoginRequest $request)
     {
 
@@ -38,6 +61,18 @@ class AuthController extends Controller
         ]);
     }
 
+
+    /**
+     * @OA\Get(
+     *   tags={"Accounts"},
+     *   path="/api/accounts/me",
+     *   summary="Thông tin tải khoản người dùng",
+     *   @OA\Response(response=200, description="OK"),
+     *   @OA\Response(response=401, description="Unauthorized"),
+     *   @OA\Response(response=404, description="Not Found"),
+     *   security={{ "bearerAuth":{}}}
+     * )
+     */
     public function profile()
     {
         $userId = Auth::user()->id;
@@ -45,6 +80,17 @@ class AuthController extends Controller
         return response()->json($user);
     }
 
+    /**
+     * @OA\Post(
+     *   tags={"Accounts"},
+     *   path="/api/accounts/logout",
+     *   summary="Đăng xuất tài khoản người dùng",
+     *   @OA\Response(response=200, description="OK"),
+     *   @OA\Response(response=401, description="Unauthorized"),
+     *   @OA\Response(response=404, description="Not Found"),
+     *   security={{ "bearerAuth":{}}}
+     * )
+     */
     public function logout()
     {
         Auth::logout();

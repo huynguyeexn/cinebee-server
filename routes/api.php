@@ -47,13 +47,7 @@ Route::prefix('accounts')->group(function () {
         // login admin
         Route::group(['prefix' => 'admin'], function () {
             Route::post('login', [AuthAdminController::class, 'login']);
-            Route::post('register', [AuthAdminController::class, 'register']);
-        });
-        // login staff
-        Route::group(['prefix' => 'staff'], function () {
-            Route::post('login', [AuthStaffController::class, 'login']);
-            Route::post('register', [AuthStaffController::class, 'register']);
-            // profile admin, staff
+
             Route::middleware(['check.login'])->group(function () {
                 Route::get('me', [AuthAdminController::class, 'profile']);
                 Route::get('logout', [AuthAdminController::class, 'logout']);
@@ -64,8 +58,6 @@ Route::prefix('accounts')->group(function () {
     // client
     Route::group(['middleware' => ['assign.guard:api']], function () {
         Route::post('login', [AuthController::class, 'login']);
-        // Route::post('register', [AuthController::class, 'register']);
-        // Register
         Route::post('register', [CustomerController::class, 'register']);
     });
 

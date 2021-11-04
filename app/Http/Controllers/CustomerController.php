@@ -193,14 +193,13 @@ class CustomerController extends Controller
         return $this->customerRepo->store($attributes);
     }
 
-
     public function register(RegisterRequest $request)
     {
         /**
          * @OA\Post(
-         *   tags={"Customers"},
-         *   path="/api/customers",
-         *   summary="Store new Customer",
+         *   tags={"Accounts"},
+         *   path="/api/accounts/register",
+         *   summary="Đăng ký tài khoản người dùng",
          *   @OA\RequestBody(
          *     required=true,
          *     @OA\JsonContent(

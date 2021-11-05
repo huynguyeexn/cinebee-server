@@ -727,6 +727,18 @@ Route::prefix('showtimes')->group(function () {
     // Get list
     Route::get('/', [ShowtimeController::class, 'index']);
 
+    // Get list present
+    Route::get('/latest', [ShowtimeController::class, 'latest']);
+
+    // Get list movie playing
+    Route::get('/movie-playing', [ShowtimeController::class, 'moviesPlaying']);
+
+    // Get list by movie
+    Route::get('/movie/{id}', [ShowtimeController::class, 'getByMovieId'])->whereNumber('id');
+
+    // Get list by date
+    Route::get('/date/{date}', [ShowtimeController::class, 'getByDate']);
+
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
 

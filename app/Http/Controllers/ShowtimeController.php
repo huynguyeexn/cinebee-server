@@ -86,6 +86,52 @@ class ShowtimeController extends Controller
         return $this->ShowtimeRepo->getById($id);
     }
 
+    public function getByMovieId($id)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Showtime"},
+         *   path="/api/showtimes/movie/{id}",
+         *   summary="Get Showtime by movie id",
+         *   @OA\Parameter(
+         *      name="id",
+         *      in="path",
+         *      required=true,
+         *      description="Movie id",
+         *      example="21",
+         *     @OA\Schema(type="number"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->ShowtimeRepo->getByMovieId($id);
+    }
+
+    public function getByDate($date)
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Showtime"},
+         *   path="/api/showtimes/movie/{date}",
+         *   summary="Get Showtime by movie date",
+         *   @OA\Parameter(
+         *      name="date",
+         *      in="path",
+         *      required=true,
+         *      description="Showtime by date",
+         *      example="21",
+         *     @OA\Schema(type="string"),
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         * )
+         */
+        return $this->ShowtimeRepo->getByDate($date);
+    }
+
     public function update(Request $request)
     {
         /**
@@ -203,5 +249,39 @@ class ShowtimeController extends Controller
          */
 
         return $this->ShowtimeRepo->getMovieTicket($id);
+    }
+
+    public function latest()
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Showtime"},
+         *   path="/api/showtimes/latest",
+         *   summary="List Showtime latest",
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->ShowtimeRepo->getLatestShowtime();
+    }
+
+    public function moviesPlaying()
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Showtime"},
+         *   path="/api/showtimes/movie-playing",
+         *   summary="List Showtime movie-playing",
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->ShowtimeRepo->getMoviesPlaying();
     }
 }

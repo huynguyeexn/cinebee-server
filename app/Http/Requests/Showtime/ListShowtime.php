@@ -23,7 +23,7 @@ class ListShowtime extends FormRequest
      *
      * @return array
      */
-    public function rules(Movie $movie,Room $room)
+    public function rules()
     {
         return [
             'date' => 'required|date_format:Y-m-d\TH:i:sP',

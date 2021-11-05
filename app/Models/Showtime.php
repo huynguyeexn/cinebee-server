@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Showtime extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'id',
@@ -24,6 +23,10 @@ class Showtime extends Model
         'deleted_at'
     ];
 
+    protected $appends = [
+        'movie', 'room'
+    ];
+
     public function movieTicket()
     {
         return $this->hasMany(MovieTicket::class);
@@ -37,5 +40,15 @@ class Showtime extends Model
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function getMovieAttribute()
+    {
+        return $this->movie()->first();
+    }
+
+    public function getRoomAttribute()
+    {
+        return $this->room()->first();
     }
 }

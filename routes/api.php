@@ -737,7 +737,7 @@ Route::prefix('showtimes')->group(function () {
     Route::get('/movie/{id}', [ShowtimeController::class, 'getByMovieId'])->whereNumber('id');
 
     // Get list by date
-    Route::get('/date/{date}', [ShowtimeController::class, 'getByDate']);
+    Route::get('/date/{date}/movie/{movie_id}', [ShowtimeController::class, 'getByDate']);
 
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');

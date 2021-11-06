@@ -14,5 +14,5 @@ interface ShowtimeRepositoryInterface extends RepositoryInterface
 
     public function getByMovieId($id);
 
-    public function getByDate($date);
+    public function getByDate($date, $movie_id);
 }

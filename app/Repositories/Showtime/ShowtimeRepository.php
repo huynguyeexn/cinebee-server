@@ -77,13 +77,13 @@ class ShowtimeRepository extends BaseRepository implements ShowtimeRepositoryInt
         ], 200);
     }
 
-    public function getByDate($date)
+    public function getByDate($date, $movie_id)
     {
 
         $from = date(Carbon::parse($date)->toDateString());
         $to = date(Carbon::parse($from)->addDays(1)->toDateString());
 
-        $data = $this->model->whereBetween('start', [$from, $to])->where('start', '>=', Carbon::now()->sub('hour', 1))->get();
+        $data = $this->model->whereBetween('start', [$from, $to])->where('start', '>=', Carbon::now()->sub('hour', 1))->where('movie_id', $movie_id)->get();
         return response()->json([
             'data' => $data,
             'total' => $data->count(),

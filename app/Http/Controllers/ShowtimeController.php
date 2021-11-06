@@ -109,7 +109,7 @@ class ShowtimeController extends Controller
         return $this->ShowtimeRepo->getByMovieId($id);
     }
 
-    public function getByDate($date)
+    public function getByDate($date, $movie_id)
     {
         /**
          * @OA\Get(
@@ -129,7 +129,7 @@ class ShowtimeController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->ShowtimeRepo->getByDate($date);
+        return $this->ShowtimeRepo->getByDate($date, $movie_id);
     }
 
     public function update(Request $request)

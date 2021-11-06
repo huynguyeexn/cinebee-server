@@ -22,11 +22,9 @@ class Room extends Model
         'delete_at'
     ];
 
-    // public function roomStatus()
-    // {
-    //     return $this->belongsTo(RoomStatus::class);
-    // }
-
+    protected $appends = [
+        'seats',
+    ];
 
     public function seats()
     {
@@ -36,5 +34,10 @@ class Room extends Model
     public function showtime()
     {
         return $this->hasMany(Showtime::class);
+    }
+
+    public function getSeatsAttribute()
+    {
+        return $this->seats()->get();
     }
 }

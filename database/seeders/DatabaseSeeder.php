@@ -56,6 +56,9 @@ class DatabaseSeeder extends Seeder
 
             PermissionRole::class,
             permissionSeed::class,
+
+            PaymentStatusSeed::class,
+            PaymentSeed::class
         ]);
     }
 }

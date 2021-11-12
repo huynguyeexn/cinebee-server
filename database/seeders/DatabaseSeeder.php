@@ -34,6 +34,11 @@ class DatabaseSeeder extends Seeder
 
             CustomerTypeSeed::class,
             CustomerSeed::class,
+            PermissionRole::class,
+            permissionSeed::class,
+
+            PaymentStatusSeed::class,
+            PaymentSeed::class
         ]);
     }
 }

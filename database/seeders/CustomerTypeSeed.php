@@ -16,9 +16,11 @@ class CustomerTypeSeed extends Seeder
     {
         DB::table('customer_types')->insert([
             'name' => 'Vip',
+            'code' => 'vip',
         ]);
         DB::table('customer_types')->insert([
             'name' => 'Thường',
+            'code' => 'normal',
         ]);
     }
 }

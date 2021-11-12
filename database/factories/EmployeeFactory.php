@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Employee;
-use App\Models\EmployeeRole;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +33,7 @@ class EmployeeFactory extends Factory
             'id_card'          => $this->faker->uuid(),
             'birthday'         => $this->faker->date('Y-m-d', '2000/1/1'),
             'gender'              => array_rand(['male', 'female']),
-            'employee_role_id' => EmployeeRole::select('id')->inRandomOrder()->first(),
+            'employee_role_id' => Role::select('id')->inRandomOrder()->first(),
         ];
     }
 }

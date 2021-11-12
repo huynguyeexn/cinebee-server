@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Customer\RegisterRequest;
 use App\Http\Requests\Customer\StoreRequest;
 use App\Http\Requests\Customer\UpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Repositories\Customer\CustomerRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -187,6 +189,44 @@ class CustomerController extends Controller
             'birthday'  => \Carbon\Carbon::parse($request->birthday),
             'gender'      => $request->gender,
             'customer_type_id' => $request->customer_type_id,
+        ];
+        return $this->customerRepo->store($attributes);
+    }
+
+    public function register(RegisterRequest $request)
+    {
+        /**
+         * @OA\Post(
+         *   tags={"Accounts"},
+         *   path="/api/accounts/register",
+         *   summary="Đăng ký tài khoản người dùng",
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={ "fullname", "username", "password"},
+         *       @OA\Property(property="fullname", type="string"),
+         *       @OA\Property(property="username", type="string"),
+         *       @OA\Property(property="password", type="string"),
+         *       @OA\Property(property="email",    type="string"),
+         *       example={
+         *          "fullname": "Leonie Maggio",
+         *          "username": "Leonie",
+         *          "password": "Leonie123",
+         *          "email": "Leonie@gmail.com",
+         *       }
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'fullname' => $request->fullname,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'email'    => $request->email,
         ];
         return $this->customerRepo->store($attributes);
     }

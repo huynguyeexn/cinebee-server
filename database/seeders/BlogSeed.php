@@ -18,7 +18,7 @@ class BlogSeed extends Seeder
     public function run()
     {
         try {
-            Blog::factory(50)->create();
+            Blog::factory(10)->create();
         } catch (Extension $e) {
 
             if ($this->failures > 5) {

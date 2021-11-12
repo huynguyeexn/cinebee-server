@@ -77,11 +77,6 @@ class GenreSeed extends Seeder
                 'updated_at' => Carbon::now()
             ]);
             DB::table('genres')->insert([
-                'name' => 'hề hước', 'slug' => 'he-huoc-vcl',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
-            ]);
-            DB::table('genres')->insert([
                 'name' => 'Bí Ẩn', 'slug' => 'bi-an',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()

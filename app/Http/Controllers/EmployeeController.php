@@ -7,8 +7,7 @@ use App\Http\Requests\Employee\UpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Models\Employee;
 use App\Repositories\Employee\EmployeeRepositoryInterface;
-use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\This;
+use Illuminate\Support\Facades\Hash;
 use Ramsey\Uuid\Nonstandard\Uuid;
 
 class EmployeeController extends Controller
@@ -179,7 +178,7 @@ class EmployeeController extends Controller
         $attributes = [
             'fullname' => $request->fullname,
             'username' => $request->username,
-            'password' => $request->password,
+            'password' => Hash::make($request->password),
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,
@@ -234,7 +233,6 @@ class EmployeeController extends Controller
          *       required={ "fullname", "username", "password", "phone", "email", "address", "id_card", "birthday", "gender", "employee_role_id"},
          *       @OA\Property(property="fullname", type="string"),
          *       @OA\Property(property="username", type="string"),
-         *       @OA\Property(property="password", type="string"),
          *       @OA\Property(property="phone",    type="number"),
          *       @OA\Property(property="email",    type="string"),
          *       @OA\Property(property="address",  type="string"),
@@ -264,7 +262,6 @@ class EmployeeController extends Controller
         $attributes = [
             'fullname' => $request->fullname,
             'username' => $request->username,
-            'password' => $request->password,
             'phone'    => $request->phone,
             'email'    => $request->email,
             'address'  => $request->address,

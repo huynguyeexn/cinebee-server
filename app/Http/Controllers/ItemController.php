@@ -339,6 +339,7 @@ class ItemController extends Controller
         try {
             $data = [
                 'name' => $request->name,
+                'price' => $request->price,
                 'slug' => $request->slug,
             ];
             return tap($item->findOrFail($id))->update($data);

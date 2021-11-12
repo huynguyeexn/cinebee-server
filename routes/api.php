@@ -1,15 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\EmployeeRoleController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomStatusController;
 use App\Http\Controllers\SeatController;
-use App\Http\Controllers\SeatStatusController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\Admin\AuthAdminController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\AgeRatingController;
 use App\Http\Controllers\ComboController;
@@ -23,15 +21,21 @@ use App\Http\Controllers\MovieActorController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\MovieDirectorController;
 use App\Http\Controllers\MovieGenreController;
-use App\Http\Controllers\MovieTicketController;
-use App\Http\Controllers\Admin\AuthStaffController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\CategoryController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PaymentStatusController;
+use App\Http\Controllers\Admin\AuthStaffController;
 use Illuminate\Support\Facades\Auth;
-
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Home\AuthController;
+use App\Http\Controllers\MovieTicketController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ShowtimeController;
+use App\Http\Controllers\SocialAuth\FacebookController;
+use App\Http\Controllers\SocialAuth\GoogleController;
+use AWS\CRT\Log;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -44,102 +48,104 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::prefix('auth')->group(function () {
+Route::prefix('accounts')->group(function () {
     // admin
     Route::group(['middleware' => ['assign.guard:admin']], function () {
         // login admin
         Route::group(['prefix' => 'admin'], function () {
             Route::post('login', [AuthAdminController::class, 'login']);
-            Route::post('register', [AuthAdminController::class, 'register']);
-        });
-        // login staff
-        Route::group(['prefix' => 'staff'], function () {
-            Route::post('login', [AuthStaffController::class, 'login']);
-            Route::post('register', [AuthStaffController::class, 'register']);
-        });
-        // profile admin, staff
-        Route::middleware(['check.login'])->group(function () {
-            Route::get('profile', [AuthAdminController::class, 'profile']);
-            Route::get('logout', [AuthAdminController::class, 'logout']);
+
+            Route::middleware(['check.login'])->group(function () {
+                Route::get('me', [AuthAdminController::class, 'profile']);
+                Route::get('logout', [AuthAdminController::class, 'logout']);
+            });
         });
     });
+
     // client
-    // Route::group(['middleware' => ['assign.guard:api']],function ()
-    // {
-    // 	Route::post('login_user', [AuthController::class, 'login_user']);
-    //     Route::post('register_user', [AuthController::class, 'register_user']);
-    // });
+    Route::group(['middleware' => ['assign.guard:api']], function () {
+        Route::post('login', [AuthController::class, 'login']);
+        Route::post('register', [CustomerController::class, 'register']);
+    });
 
+    Route::group(['middleware' => ['check.login', 'assign.guard:client']], function () {
+        Route::get('me', [AuthController::class, 'profile']);
+        Route::get('logout', [AuthController::class, 'logout']);
+    });
 
+    // Social Login
+    Route::get('auth/google/url', [GoogleController::class, 'loginUrl']);
+    Route::get('auth/google',  [GoogleController::class, 'loginCallback']);
+    Route::get('auth/facebook/url', [FacebookController::class, 'loginUrl']);
+    Route::get('auth/facebook',  [FacebookController::class, 'loginCallback']);
 });
 
 /**
  * REST API - actor
  *  long add 06-09-2021
  */
-// Route::group(['middleware' => ['assign.guard:admin','check.login']],function ()  tạm thời comment lại
-// {
-Route::prefix('actors')->group(function () {
+Route::group(['middleware' => ['assign.guard:admin', 'check.login']], function () {
+    Route::prefix('actors')->group(function () {
+        Route::get('/', [ActorController::class, 'index']);
 
-    Route::get('/', [ActorController::class, 'index']);
+        // Get deleted list
+        Route::get('/deleted', [ActorController::class, 'deleted']);
 
-    // Get deleted list
-    Route::get('/deleted', [ActorController::class, 'deleted']);
+        // Create new
+        Route::post('/', [ActorController::class, 'store']);
 
-    // Create new
-    Route::post('/', [ActorController::class, 'store']);
+        // Get by ID
+        Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
 
-    // Get by ID
-    Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id');
+        // Get by slug
+        Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
 
-    // Get by slug
-    Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
+        // Get Movie of actor
+        Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
 
-    // Get Movie of actor
-    Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+        // Update
+        Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
 
-    // Update
-    Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id');
+        // Soft Delete
+        Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
 
-    // Soft Delete
-    Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id');
+        // Hard Delete
+        Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
 
-    // Hard Delete
-    Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id');
+        // Restore
+        Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
+        // tạm thời comment lại
+        // Route::get('/', [ActorController::class, 'index'])->middleware('checkRole:list-actors');
 
-    // Restore
-    Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id');
-    // tạm thời comment lại
-    // Route::get('/', [ActorController::class, 'index'])->middleware('checkRole:list-actors');
+        // // Get deleted list
+        // Route::get('/deleted', [ActorController::class, 'deleted'])->middleware('checkRole:list-actors');
 
-    // // Get deleted list
-    // Route::get('/deleted', [ActorController::class, 'deleted'])->middleware('checkRole:list-actors');
+        // // Create new
+        // Route::post('/', [ActorController::class, 'store'])->middleware('checkRole:add-actors');
 
-    // // Create new
-    // Route::post('/', [ActorController::class, 'store'])->middleware('checkRole:add-actors');
+        // // Get by ID
+        // Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id')->middleware('checkRole:edit-actors');
 
-    // // Get by ID
-    // Route::get('/{id}', [ActorController::class, 'getById'])->whereNumber('id')->middleware('checkRole:edit-actors');
+        // // Get by slug
+        // Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$'])->middleware('checkRole:edit-actors');
 
-    // // Get by slug
-    // Route::get('/{slug}', [ActorController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$'])->middleware('checkRole:edit-actors');
+        // // Get Movie of actor
+        // Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
 
-    // // Get Movie of actor
-    // Route::get('/{id}/movies', [ActorController::class, 'movies'])->whereNumber('id');
+        // // Update
+        // Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id')->middleware('checkRole:update-actors');
 
-    // // Update
-    // Route::put('/{id}', [ActorController::class, 'update'])->whereNumber('id')->middleware('checkRole:update-actors');
+        // // Soft Delete
+        // Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id')->middleware('checkRole:delete-actors');
 
-    // // Soft Delete
-    // Route::delete('{id}/delete/', [ActorController::class, 'delete'])->whereNumber('id')->middleware('checkRole:delete-actors');
+        // // Hard Delete
+        // Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id')->middleware('checkRole:delete-actors');
 
-    // // Hard Delete
-    // Route::delete('{id}/remove/', [ActorController::class, 'remove'])->whereNumber('id')->middleware('checkRole:delete-actors');
-
-    // // Restore
-    // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
+        // // Restore
+        // Route::patch('{id}/restore/', [ActorController::class, 'restore'])->whereNumber('id')->middleware('checkRole:delete-actors');
+    });
 });
-// });
+
 /**
  * REST API - genre
  *  long add 06-09-2021
@@ -172,40 +178,6 @@ Route::prefix('genres')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [GenreController::class, 'restore'])->whereNumber('id');
-});
-/**
- * REST API - Seat Status
- *
- * @author  HUi <huynguyeexn@gmail.com>
- */
-Route::prefix('seat-status')->group(function () {
-
-    // Get list
-    Route::get('/', [SeatStatusController::class, 'index']);
-
-    // Get deleted list
-    Route::get('/deleted', [SeatStatusController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [SeatStatusController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [SeatStatusController::class, 'getById'])->whereNumber('id');
-
-    // Get by slug
-    Route::get('/{slug}', [SeatStatusController::class, 'getBySlug'])->where(['slug' => '^[a-z0-9-]+$']);
-
-    // Update
-    Route::put('/{id}', [SeatStatusController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [SeatStatusController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [SeatStatusController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [SeatStatusController::class, 'restore'])->whereNumber('id');
 });
 
 /**
@@ -264,8 +236,6 @@ Route::prefix('items')->group(function () {
     // Restore
     Route::patch('{id}/restore', [ItemController::class, 'restore'])->whereNumber('id');
 });
-
-
 
 /**
  * REST API -Room
@@ -335,45 +305,6 @@ Route::prefix('seats')->group(function () {
     Route::patch('{id}/restore', [SeatController::class, 'restore'])->whereNumber('id');
 });
 
-
-/**
- * REST API - Employee Role
- *
- * Date: 08/09/2021
- * Time: 13:00 AM
- * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
- */
-Route::prefix('employee-roles')->group(function () {
-
-    // Get list
-    Route::get('/', [EmployeeRoleController::class, 'index']);
-
-    // Get deleted list
-    Route::get('/deleted', [EmployeeRoleController::class, 'deleted']);
-
-    // Create new
-    Route::post('/', [EmployeeRoleController::class, 'store']);
-
-    // Get by ID
-    Route::get('/{id}', [EmployeeRoleController::class, 'getById'])->whereNumber('id');
-
-    // Get Employees of Employee Role
-    Route::get('/{id}/employees', [EmployeeRoleController::class, 'employees'])->whereNumber('id');
-
-    // Update
-    Route::put('/{id}', [EmployeeRoleController::class, 'update'])->whereNumber('id');
-
-    // Soft Delete
-    Route::delete('{id}/delete/', [EmployeeRoleController::class, 'delete'])->whereNumber('id');
-
-    // Hard Delete
-    Route::delete('{id}/remove/', [EmployeeRoleController::class, 'remove'])->whereNumber('id');
-
-    // Restore
-    Route::patch('{id}/restore/', [EmployeeRoleController::class, 'restore'])->whereNumber('id');
-});
-
-
 /**
  * REST API - Director
  *
@@ -413,6 +344,7 @@ Route::prefix('directors')->group(function () {
     // Get Movies
     Route::patch('{id}/movies/', [DirectorController::class, 'movies'])->whereNumber('id');
 });
+
 /**
  * REST API - Employee
  *
@@ -449,8 +381,6 @@ Route::prefix('employee')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [EmployeeController::class, 'restore'])->whereNumber('id');
 });
-
-
 
 /**
  * REST API - Age Rating
@@ -489,7 +419,6 @@ Route::prefix('age-ratings')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [AgeRatingController::class, 'restore'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Movies
@@ -537,7 +466,6 @@ Route::prefix('movies')->group(function () {
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Movie Director
  *
@@ -565,7 +493,6 @@ Route::prefix('movie-directors')->group(function () {
     // Hard Delete
     Route::delete('{id}/remove/', [MovieDirectorController::class, 'remove'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Movie Genre
@@ -595,7 +522,6 @@ Route::prefix('movie-genres')->group(function () {
     Route::delete('{id}/remove/', [MovieGenreController::class, 'remove'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Movie Actors
  *
@@ -620,7 +546,6 @@ Route::prefix('movie-actors')->group(function () {
     // Hard Delete
     Route::delete('{id}/remove/', [MovieActorController::class, 'remove'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Customer Type
@@ -659,8 +584,6 @@ Route::prefix('customer-types')->group(function () {
     Route::patch('{id}/restore/', [CustomerTypeController::class, 'restore'])->whereNumber('id');
 });
 
-
-
 /**
  * REST API - Customers
  *
@@ -694,7 +617,6 @@ Route::prefix('customers')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [CustomerController::class, 'restore'])->whereNumber('id');
 });
-
 
 /**
  * REST API - Customers
@@ -733,7 +655,6 @@ Route::prefix('combo')->group(function () {
     Route::delete('/{id}/remove', [ComboController::class, 'remove'])->whereNumber('id');
 });
 
-
 /**
  * REST API - Customers
  *
@@ -770,8 +691,6 @@ Route::prefix('comboticket')->group(function () {
     // Remove
     Route::delete('/{id}/remove', [ComboTicketController::class, 'remove'])->whereNumber('id');
 });
-
-
 
 /**
  * REST API - Customers
@@ -822,6 +741,18 @@ Route::prefix('showtimes')->group(function () {
     // Get list
     Route::get('/', [ShowtimeController::class, 'index']);
 
+    // Get list present
+    Route::get('/latest', [ShowtimeController::class, 'latest']);
+
+    // Get list movie playing
+    Route::get('/movie-playing', [ShowtimeController::class, 'moviesPlaying']);
+
+    // Get list by movie
+    Route::get('/movie/{id}', [ShowtimeController::class, 'getByMovieId'])->whereNumber('id');
+
+    // Get list by date
+    Route::get('/date/{date}/movie/{movie_id}', [ShowtimeController::class, 'getByDate']);
+
     // Get by ID
     Route::get('/{id}', [ShowtimeController::class, 'getById'])->whereNumber('id');
 
@@ -831,8 +762,6 @@ Route::prefix('showtimes')->group(function () {
     // Update
     Route::put('/', [ShowtimeController::class, 'update']);
 });
-
-
 
 /**
  * REST API - Movie Tickets
@@ -868,7 +797,6 @@ Route::prefix('movie-tickets')->group(function () {
     Route::patch('{id}/restore/', [MovieTicketController::class, 'restore'])->whereNumber('id');
 });
 
-
 /** REST API - FIle Upload
  *
  * Date: 26/09/2021
@@ -885,7 +813,6 @@ Route::prefix('uploads')->group(function () {
     Route::get('/images', [FileUploadController::class, 'imageList']);
     Route::post('/images', [FileUploadController::class, 'imageUpload']);
 });
-
 
 /** REST API - Category
  *
@@ -923,7 +850,6 @@ Route::prefix('categories')->group(function () {
     // Restore
     Route::patch('{id}/restore/', [CategoryController::class, 'restore'])->whereNumber('id');
 });
-
 
 /** REST API - Blog
  *
@@ -1068,4 +994,28 @@ Route::prefix('orders')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [OrderController::class, 'restore'])->whereNumber('id');
+});
+
+
+/** REST API - Role
+ *
+ * Date: 07/10/2021
+ * Long sửa đổi
+ */
+Route::prefix('role')->group(function () {
+
+    // Get list
+    Route::get('/', [RoleController::class, 'index']);
+    // get list permission
+    Route::get('/permissions', [RoleController::class, 'getListPermissions']);
+    // get permission
+    Route::get('/permission/{name}', [RoleController::class, 'getPermissions']);
+    // Get by ID
+    Route::get('/{id}', [RoleController::class, 'getById'])->whereNumber('id');
+    // Update
+    Route::put('/{id}', [RoleController::class, 'update'])->whereNumber('id');
+    // Create new
+    Route::post('/', [RoleController::class, 'store']);
+    // Soft Delete
+    Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
 });

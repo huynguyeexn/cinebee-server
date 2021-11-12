@@ -18,7 +18,7 @@ class UserSeed extends Seeder
     {
         //
         try {
-            User::factory(50)->create();
+            User::factory(10)->create();
         } catch (Exception $e) {
 
             if ($this->failures > 5) {

@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -31,10 +30,18 @@ class Employee extends Authenticatable implements JWTSubject
         'password'
     ];
 
-    public function employeeRoles()
+    protected $appends = ['permissions'];
+
+    public function Role()
     {
-        return $this->belongsto(EmployeeRole::class,'employee_role_id');
+        return $this->belongsTo(Role::class, 'employee_role_id');
     }
+
+    public function getPermissionsAttribute()
+    {
+        return $this->Role->permissions;
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

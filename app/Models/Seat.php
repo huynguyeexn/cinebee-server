@@ -11,15 +11,16 @@ class Seat extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "name",
-        "row",
-        "col",
+        "label",
+        "index",
         "room_id",
+        "customer_id",
+        "customer_username",
         "seat_status_id",
     ];
 
     public function room()
     {
-        return $this->belongsto(RoomStatus::class);
+        return $this->belongsTo(RoomStatus::class);
     }
 }

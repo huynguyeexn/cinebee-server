@@ -43,10 +43,17 @@ return [
 
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'users',
+            'provider' => 'client',
             'hash' => false,
         ],
-        'admin' => [ 
+
+        'client' => [
+            'driver' => 'jwt',
+            'provider' => 'client',
+            'hash' => false,
+        ],
+
+        'admin' => [
             'driver' => 'jwt',
             'provider' => 'admin',
             'hash' => false,
@@ -71,9 +78,9 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'client' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Customer::class,
         ],
         'admin' => [ // Add new staff provider
             'driver' => 'eloquent',

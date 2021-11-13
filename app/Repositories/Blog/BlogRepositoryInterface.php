@@ -6,5 +6,5 @@ use App\Repositories\RepositoryInterface;
 
 interface BlogRepositoryInterface extends RepositoryInterface
 {
-    //
+    public function getById_n($id);
 }

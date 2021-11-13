@@ -30,6 +30,9 @@ class FileUpload extends Model
     {
         return $this->belongsToMany(Combo::class, 'combo_files');
     }
+    public function BlogFile(){
+        return $this->belongsToMany(Blog::class,'blog_thumbs');
+    }
     public function getThumbUrlAttribute()
     {
         return $this->url;

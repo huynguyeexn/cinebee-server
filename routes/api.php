@@ -342,6 +342,8 @@ Route::prefix('employee')->group(function () {
 
     // Get list
     Route::get('/', [EmployeeController::class, 'index']);
+    //get all 
+Route::get('/all',[EmployeeController::class,'getALlEmployee']);
 
     // Get deleted list
     Route::get('/deleted', [EmployeeController::class, 'deleted']);
@@ -811,7 +813,8 @@ Route::prefix('categories')->group(function () {
 
     // Get list
     Route::get('/', [CategoryController::class, 'index']);
-
+     // Get all
+    Route::get('/all',[CategoryController::class,'getAllCategory']);
     // Get deleted list
     Route::get('/deleted', [CategoryController::class, 'deleted']);
 

@@ -7,6 +7,7 @@ use App\Http\Requests\Blog\UpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Models\Blog;
 use App\Repositories\Blog\BlogRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -172,18 +173,31 @@ class BlogController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+       
         $attributes = [
-            'title'         => $request->title,
-            'slug'          => $request->slug,
-            'summary'       => $request->summary,
-            'date'          => $request->date,
-            'views'         => $request->views,
-            'content'       => $request->content,
-            'show'          => $request->show,
-            'category_id' => $request->categories_id,
+            'title' => $request->title,
+            'slug'  => $request->slug,
+            'summary' => $request->summary,
+            'date'  => date('Y-m-d H:i:s'),
+            'content' => htmlspecialchars($request->content),
+            'show'  => $request->show,
+            'category_id' => $request->category_id,
             'employee_id'   => $request->employee_id
         ];
-        return $this->blogRepo->store($attributes);
+        
+        try {
+            $blog =  Blog::create($attributes);
+            $blog->files()->attach($request->background_rq);
+            if ($blog) {
+                return response([
+                    'message' => 'Nhập dữ liệu thành công!',
+                    'data' => $blog,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        // return $this->blogRepo->store($attributes);
     }
 
     public function getById($id)
@@ -206,7 +220,7 @@ class BlogController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
-        return $this->blogRepo->getById($id);
+        return $this->blogRepo->getById_n($id);
     }
 
     public function update(UpdateRequest $request, $id)
@@ -255,18 +269,31 @@ class BlogController extends Controller
          * )
          */
         $attributes = [
-            'title'         => $request->title,
-            'slug'          => $request->slug,
-            'summary'       => $request->summary,
-            'date'          => $request->date,
-            'views'         => $request->views,
-            'content'       => $request->content,
-            'show'          => $request->show,
-            'category_id' => $request->categories_id,
+            'title' => $request->title,
+            'slug'  => $request->slug,
+            'summary' => $request->summary,
+            'date'  => date('Y-m-d H:i:s'),
+            'content' => htmlspecialchars($request->content),
+            'show'  => $request->show,
+            'category_id' => $request->category_id,
             'employee_id'   => $request->employee_id
         ];
+        
+        try {
+            $blog = Blog::findOrFail($id);
+            $blog->files()->sync($request->background_rq);
+            $blog->update($attributes);
+            if ($blog) {
+                return response([
+                    'message' => 'Cập nhật dữ liệu thành công!',
+                    'data' => $blog,
+                ], 200);
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 
-        return $this->blogRepo->update($id, $attributes);
+        // return $this->blogRepo->update($id, $attributes);
     }
 
     public function delete($id)

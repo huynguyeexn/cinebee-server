@@ -7,4 +7,5 @@ use App\Repositories\RepositoryInterface;
 interface CategoryRepositoryInterface extends RepositoryInterface
 {
     public function getBlogs($id);
+    public function getALL();
 }

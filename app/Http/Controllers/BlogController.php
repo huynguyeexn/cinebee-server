@@ -314,6 +314,7 @@ class BlogController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
+        
         return $this->blogRepo->delete($id);
     }
 

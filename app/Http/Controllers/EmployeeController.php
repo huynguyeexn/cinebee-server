@@ -78,6 +78,10 @@ class EmployeeController extends Controller
         return $this->employeeRepo->getList($request);
     }
 
+    public function getALlEmployee(){
+        return $this->employeeRepo->getAll();
+    }
+
     public function deleted(ListRequest $request)
     {
         /**

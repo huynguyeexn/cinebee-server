@@ -77,6 +77,10 @@ class CategoryController extends Controller
         return $this->categoryRepo->getList($request);
     }
 
+    public function getAllCategory(){
+        return $this->categoryRepo->getALL();
+    }
+
     public function deleted(ListRequest $request)
     {
         /**

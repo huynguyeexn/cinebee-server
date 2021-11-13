@@ -27,6 +27,10 @@ use App\Http\Controllers\Home\AuthController;
 use App\Http\Controllers\MovieTicketController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ShowtimeController;
+use App\Http\Controllers\SocialAuth\FacebookController;
+use App\Http\Controllers\SocialAuth\GoogleController;
+use AWS\CRT\Log;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +68,12 @@ Route::prefix('accounts')->group(function () {
         Route::get('me', [AuthController::class, 'profile']);
         Route::get('logout', [AuthController::class, 'logout']);
     });
+
+    // Social Login
+    Route::get('auth/google/url', [GoogleController::class, 'loginUrl']);
+    Route::get('auth/google',  [GoogleController::class, 'loginCallback']);
+    Route::get('auth/facebook/url', [FacebookController::class, 'loginUrl']);
+    Route::get('auth/facebook',  [FacebookController::class, 'loginCallback']);
 });
 
 /**

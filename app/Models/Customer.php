@@ -42,4 +42,9 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function socialAccounts()
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
 }

@@ -13,39 +13,74 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
         return Payment::class;
     }
 
-    public function createPayment($attributes){
+    public function createPayment($attributes)
+    {
+        // Fake Order ID
         $alphabet = "abcdefghigklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ123456789";
-        $code = '';
-        for($i = 0; $i < 15; $i++){$code .= $alphabet[rand(0,strlen($alphabet) - 1)];}
-        $vnp_TxnRef = $code;
-        $vnp_Amount = $attributes['amount'] * 100;
+        $orderId = '';
+        for ($i = 0; $i < 15; $i++) {
+            $orderId .= $alphabet[rand(0, strlen($alphabet) - 1)];
+        }
+        // End Fake Order ID
+
+        //
         $vnp_BankCode = $attributes['bank_code'];
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $vnp_Locale = 'vn';
+        //Order info
+        $vnp_TxnRef = $orderId;
+        $vnp_OrderInfo = 'Nội dung thanh toán';
+        // $vnp_OrderType = $_POST['order_type'];
+        $vnp_Amount = $attributes['amount'] * 100;
+        //Billing
+        // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
+        // $vnp_Bill_Email = $_POST['txt_billing_email'];
+        // $fullName = trim($_POST['txt_billing_fullname']);
+        // if (isset($fullName) && trim($fullName) != '') {
+        //     $name = explode(' ', $fullName);
+        //     $vnp_Bill_FirstName = array_shift($name);
+        //     $vnp_Bill_LastName = array_pop($name);
+        // }
+        // $vnp_Bill_Address=$_POST['txt_inv_addr1'];
+        // $vnp_Bill_City=$_POST['txt_bill_city'];
+        // $vnp_Bill_Country=$_POST['txt_bill_country'];
+        // $vnp_Bill_State=$_POST['txt_bill_state'];
+        // Invoice
+        // $vnp_Inv_Phone=$_POST['txt_inv_mobile'];
+        // $vnp_Inv_Email=$_POST['txt_inv_email'];
+        // $vnp_Inv_Customer=$_POST['txt_inv_customer'];
+        // $vnp_Inv_Address=$_POST['txt_inv_addr1'];
+        // $vnp_Inv_Company=$_POST['txt_inv_company'];
+        // $vnp_Inv_Taxcode=$_POST['txt_inv_taxcode'];
+        // $vnp_Inv_Type=$_POST['cbo_inv_type'];
+
         $inputData = array(
-            "vnp_Version" => "2.1.0",
-            "vnp_TmnCode" => env('VNP_TIME_CODE'),
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_ReturnUrl" => '',
-            "vnp_TxnRef" => $vnp_TxnRef,
+            "vnp_Version" => "2.1.0", // Required
+            "vnp_TmnCode" => env('VNP_TIME_CODE'), // Required
+            "vnp_Amount" => $vnp_Amount, // Required
+            "vnp_Command" => "pay", // Required
+            "vnp_CreateDate" => date('YmdHis'), // Required
+            "vnp_CurrCode" => "VND", // Required
+            "vnp_IpAddr" => $vnp_IpAddr, // Required
+            "vnp_ReturnUrl" => env('VNP_CALLBACK_URL'), // Required
+            "vnp_TxnRef" => $vnp_TxnRef, // Required
+            "vnp_Locale" => $vnp_Locale, // Required
+            "vnp_OrderInfo" => $vnp_OrderInfo, // Required
         );
 
         if (isset($vnp_BankCode) && $vnp_BankCode != "") {
             $inputData['code_bank'] = $vnp_BankCode;
         }
-
+        var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
-        $hashdata = "";
+        $hashData = "";
         foreach ($inputData as $key => $value) {
             if ($i == 1) {
-                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                $hashData .= '&' . urlencode($key) . "=" . urlencode($value);
             } else {
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
+                $hashData .= urlencode($key) . "=" . urlencode($value);
                 $i = 1;
             }
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
@@ -53,18 +88,16 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
 
         $vnp_Url = env('VNP_URL') . "?" . $query;
         if (env('VNP_HASH_SECRET')) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, env('VNP_HASH_SECRET'));//
+            $vnpSecureHash =   hash_hmac('sha512', $hashData, env('VNP_HASH_SECRET')); // Required
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 
-        $returnData = array('code' => '00'
-            , 'message' => 'success'
-            , 'data' => $vnp_Url);
-            if (isset($_POST['redirect'])) {
-                header('Location: ' . $vnp_Url);
-                die();
-            } else {
-                echo json_encode($returnData);
-            }
+        $returnData = array(
+            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
+        );
+
+        return response()->json([
+            'data' => $returnData,
+        ], 200);
     }
 }

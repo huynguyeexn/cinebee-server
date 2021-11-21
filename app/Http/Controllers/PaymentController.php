@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\Payment\StorePaymentRequest;
 use App\Http\Requests\Payment\StoreRequest;
 use App\Http\Requests\Payment\UpdateRequest;
 use App\Models\Payment;
 use App\Repositories\Payment\PaymentRepositoryInterface;
+use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
@@ -307,5 +307,44 @@ class PaymentController extends Controller
          * )
          */
         return $this->paymentRepo->restore($id);
+    }
+
+    public function createPayment(Request $request)
+    {
+        /**
+         * @OA\Post(
+         *   tags={"Payment"},
+         *   path="/api/payments/create",
+         *   summary="Create a Payment",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\RequestBody(
+         *     required=true,
+         *     @OA\JsonContent(
+         *       type="string",
+         *       required={ "amount", "bank_code"},
+         *       @OA\Property(property="amount", type="integer"),
+         *       @OA\Property(property="bank_code", type="string"),
+         *       example={
+         *          "amount": 30,
+         *          "bank_code": 'TPBANK',
+         *       }
+         *     )
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        $attributes = [
+            'amount' => $request->amount,
+            'bank_code' => $request->bank_code,
+        ];
+
+        return $this->paymentRepo->createPayment($attributes);
     }
 }

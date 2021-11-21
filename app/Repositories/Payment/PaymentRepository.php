@@ -17,14 +17,10 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
         $alphabet = "abcdefghigklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ123456789";
         $code = '';
         for($i = 0; $i < 15; $i++){$code .= $alphabet[rand(0,strlen($alphabet) - 1)];}
-        $vnp_TxnRef = $code; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = $attributes['order_desc'];
-        $vnp_OrderType = $attributes['order_type'];
+        $vnp_TxnRef = $code;
         $vnp_Amount = $attributes['amount'] * 100;
-        $vnp_Locale = $attributes['language'];
         $vnp_BankCode = $attributes['bank_code'];
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-
         $inputData = array(
             "vnp_Version" => "2.1.0",
             "vnp_TmnCode" => env('VNP_TIME_CODE'),
@@ -33,9 +29,6 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             "vnp_CreateDate" => date('YmdHis'),
             "vnp_CurrCode" => "VND",
             "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "note" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
             "vnp_ReturnUrl" => '',
             "vnp_TxnRef" => $vnp_TxnRef,
         );
@@ -58,11 +51,12 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             $query .= urlencode($key) . "=" . urlencode($value) . '&';
         }
 
-        $vnp_Url = env('VNP_URL ') . "?" . $query;
+        $vnp_Url = env('VNP_URL') . "?" . $query;
         if (env('VNP_HASH_SECRET')) {
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, env('VNP_HASH_SECRET'));//
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
+
         $returnData = array('code' => '00'
             , 'message' => 'success'
             , 'data' => $vnp_Url);

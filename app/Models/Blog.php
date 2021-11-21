@@ -30,7 +30,10 @@ class Blog extends Model
     {
         return $this->belongsto(Category::class,"category_id");
     }
-
+    public function files()
+    {
+        return $this->belongsToMany(FileUpload::class, 'blog_thumbs')->withPivot('file_upload_id');
+    }
     public function employees()
     {
         return $this->belongsto(Employee::class);

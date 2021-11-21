@@ -27,4 +27,10 @@ class EmployeeRepository extends BaseRepository implements EmployeeRepositoryInt
             'last_page' => 1,
         ], 200);
     }
+    public function getALL(){
+        $data = $this->model::all();
+        return [
+            'data' => $data,
+        ];
+    }
 }

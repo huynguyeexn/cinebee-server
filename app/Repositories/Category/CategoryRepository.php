@@ -27,4 +27,10 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             'last_page' => 1,
         ], 200);
     }
+    public function getALL(){
+        $data = $this->model::all();
+        return[
+            'data'=>$data,
+        ];
+    }
 }

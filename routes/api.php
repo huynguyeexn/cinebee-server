@@ -356,7 +356,7 @@ Route::prefix('employee')->group(function () {
 
     // Get list
     Route::get('/', [EmployeeController::class, 'index']);
-    //get all 
+    //get all
 Route::get('/all',[EmployeeController::class,'getALlEmployee']);
 
     // Get deleted list
@@ -944,6 +944,9 @@ Route::prefix('payments')->group(function () {
 
     //Create Payment
     Route::post('/online', [PaymentController::class, 'createPayment']);
+
+    //Create Payment
+    Route::get('/vnpay/callback', [PaymentController::class, 'getPayment']);
 
     // Create new
     Route::post('/', [PaymentController::class, 'store']);

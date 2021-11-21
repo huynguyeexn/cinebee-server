@@ -164,7 +164,7 @@ class PaymentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $code_transaction = strtoupper(substr(md5($request->order_id),8));
+        $code_transaction = strtoupper(substr(md5($request->order_id), 8));
         $attributes = [
             'order_id' => $request->order_id,
             'payment_status_id' => $request->payment_status_id,
@@ -343,8 +343,14 @@ class PaymentController extends Controller
         $attributes = [
             'amount' => $request->amount,
             'bank_code' => $request->bank_code,
+            'order_code' => $request->order_code,
         ];
 
         return $this->paymentRepo->createPayment($attributes);
+    }
+
+    public function getPayment(Request $request)
+    {
+        return $this->paymentRepo->getPayment($request);
     }
 }

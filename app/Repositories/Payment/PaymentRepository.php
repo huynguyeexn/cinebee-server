@@ -28,7 +28,7 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
         $vnp_Locale = 'vn';
         //Order info
-        $vnp_TxnRef = $orderId;
+        $vnp_TxnRef = $attributes['order_code'];
         $vnp_OrderInfo = 'Nội dung thanh toán';
         // $vnp_OrderType = $_POST['order_type'];
         $vnp_Amount = $attributes['amount'] * 100;
@@ -66,12 +66,9 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             "vnp_TxnRef" => $vnp_TxnRef, // Required
             "vnp_Locale" => $vnp_Locale, // Required
             "vnp_OrderInfo" => $vnp_OrderInfo, // Required
+            "vnp_BankCode" => $vnp_BankCode
         );
 
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['code_bank'] = $vnp_BankCode;
-        }
-        var_dump($inputData);
         ksort($inputData);
         $query = "";
         $i = 0;
@@ -92,12 +89,15 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
 
-        $returnData = array(
-            'code' => '00', 'message' => 'success', 'data' => $vnp_Url
-        );
-
         return response()->json([
-            'data' => $returnData,
+            'data' => $vnp_Url,
+        ], 200);
+    }
+
+    public function getPayment(Request $request)
+    {
+        return response()->json([
+            'data' => $request->all(),
         ], 200);
     }
 }

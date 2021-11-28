@@ -466,6 +466,9 @@ Route::prefix('movies')->group(function () {
 
     // Restore
     Route::patch('{id}/restore/', [MovieController::class, 'restore'])->whereNumber('id');
+
+    // Movies coming soon
+    Route::patch('coming', [MovieController::class, 'coming']);
 });
 
 /**

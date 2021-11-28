@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\Order\StoreRequest;
 use App\Http\Requests\Order\UpdateRequest;
+use App\Models\MovieTicket;
 use App\Models\Order;
+use App\Models\Showtime;
 use App\Repositories\Order\OrderRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -162,13 +167,49 @@ class OrderController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $attributes = [
-            'total' => $request->total,
-            'booking_at' => $request->booking_at,
-            'employee_id' => $request->employee_id,
-            'customer_id' => $request->customer_id,
-        ];
-        return $this->orderRepo->store($attributes);
+        $id = null;
+
+        DB::transaction(function () use ($request, &$id) {
+
+            $attributes = [
+                'seats' => $request->seats,
+                'showtime_id' => $request->showtime_id,
+                'customer_id' => Auth::user()->id,
+                'booking_at' => Carbon::now(),
+                'timeout' => Carbon::now()->addMinutes(10),
+            ];
+
+            $showtime = Showtime::find($attributes['showtime_id']);
+            $attributes['price'] = $showtime->room->price;
+
+
+            $order = Order::create([
+                'total' => $attributes['price'] * count($attributes['seats']),
+                'booking_at' => $attributes['booking_at'],
+                'customer_id' => $attributes['customer_id'],
+                'timeout' => $attributes['timeout'],
+                'showtime_id' => $showtime->id,
+            ]);
+
+            foreach ($attributes['seats'] as $seat) {
+                $seatInfo = $showtime->room->seats()->where('id', $seat)->first();
+                $order->movieTickets()->create([
+                    'price' => $attributes['price'],
+                    'seat_name' => $seatInfo->label,
+                    'room_name' => $showtime->room->name,
+                    'seat_id' => $seat,
+                ]);
+            }
+
+            $id = $order->id;
+        });
+
+        return response([
+            'message' => 'ok',
+            'data' => Order::find($id),
+        ], 200);
+
+        // return $this->orderRepo->store($attributes);
     }
 
     public function getById($id)
@@ -191,6 +232,14 @@ class OrderController extends Controller
          *   @OA\Response(response=404, description="Not Found"),
          * )
          */
+
+        // $result = Order::whereNotNull('timeout')->where('timeout', '<', Carbon::now())->where('showtime_id', $id)->pluck('id')->toArray();
+
+        // return response([
+        //     'message' => 'ok',
+        //     'data' => $result,
+        // ], 200);
+
         return $this->orderRepo->getById($id);
     }
 
@@ -300,5 +349,46 @@ class OrderController extends Controller
          * )
          */
         return $this->orderRepo->restore($id);
+    }
+
+    public function confirm($id)
+    {
+        /**
+         * @OA\Patch(
+         *   tags={"Order"},
+         *   path="/api/orders/{id}/confirm",
+         *   summary="Confirm Order",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        // Status
+        // 0: Closed
+        // 1: Pending
+        // 2: Completed
+        // 3: Refunded
+        // 4: Failed
+        $order = Order::findOrFail($id);
+        if ($order->status == 1) {
+            $order->status = 2;
+            $order->timeout =  null;
+            $order->save();
+            return response([
+                'message' => 'Thanh toán thành công',
+                'data' => $order,
+            ], 200);
+        } else {
+            return response([
+                'message' => 'Đơn hàng được thanh toán',
+                'data' => $order,
+            ], 200);
+        }
     }
 }

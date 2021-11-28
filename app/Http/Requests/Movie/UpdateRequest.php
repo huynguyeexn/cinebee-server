@@ -29,9 +29,9 @@ class UpdateRequest extends FormRequest
             //
             'name' => "string|max:100|required",
             'slug' => "string|required",
-            'trailer' => "string",
+            'trailer' => "string|nullable",
             'thumbnail' => "string",
-            'description' => "string",
+            'description' => "string|nullable",
             'release_date' => "date",
             'running_time' => "numeric",
             'age_rating_id' => "required|integer|exists:$ageRatingId,id",

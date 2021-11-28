@@ -5,6 +5,7 @@ namespace App\Repositories\Payment;
 use App\Models\Payment;
 use App\Repositories\BaseRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentRepository extends BaseRepository implements PaymentRepositoryInterface
 {
@@ -15,14 +16,6 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
 
     public function createPayment($attributes)
     {
-        // Fake Order ID
-        $alphabet = "abcdefghigklmnopqrstuvwxyzABCDEFGHIKLMNOPQRSTUVWXYZ123456789";
-        $orderId = '';
-        for ($i = 0; $i < 15; $i++) {
-            $orderId .= $alphabet[rand(0, strlen($alphabet) - 1)];
-        }
-        // End Fake Order ID
-
         //
         $vnp_BankCode = $attributes['bank_code'];
         $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -30,7 +23,8 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
         //Order info
         $vnp_TxnRef = $attributes['order_code'];
         $vnp_OrderInfo = 'Nội dung thanh toán';
-        // $vnp_OrderType = $_POST['order_type'];
+        // Now add 5 minutes to current time
+        $vnp_ExpireDate = date('YmdHis', strtotime('+5 minutes'));
         $vnp_Amount = $attributes['amount'] * 100;
         //Billing
         // $vnp_Bill_Mobile = $_POST['txt_billing_mobile'];
@@ -66,7 +60,8 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             "vnp_TxnRef" => $vnp_TxnRef, // Required
             "vnp_Locale" => $vnp_Locale, // Required
             "vnp_OrderInfo" => $vnp_OrderInfo, // Required
-            "vnp_BankCode" => $vnp_BankCode
+            "vnp_BankCode" => $vnp_BankCode,
+            "vnp_ExpireDate" => $vnp_ExpireDate,
         );
 
         ksort($inputData);
@@ -88,6 +83,8 @@ class PaymentRepository extends BaseRepository implements PaymentRepositoryInter
             $vnpSecureHash =   hash_hmac('sha512', $hashData, env('VNP_HASH_SECRET')); // Required
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
+
+        Log::info('vnp_Url', [$vnp_Url]);
 
         return response()->json([
             'data' => $vnp_Url,

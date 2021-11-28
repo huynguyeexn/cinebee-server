@@ -993,6 +993,9 @@ Route::prefix('orders')->group(function () {
     Route::get('/{id}', [OrderController::class, 'getById'])->whereNumber('id');
 
     // Update
+    Route::post('/{id}/confirm', [OrderController::class, 'confirm'])->whereNumber('id');
+
+    // Update
     Route::put('/{id}', [OrderController::class, 'update'])->whereNumber('id');
 
     // Soft Delete

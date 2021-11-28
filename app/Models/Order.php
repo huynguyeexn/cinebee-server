@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,10 +16,18 @@ class Order extends Model
         'booking_at',
         'employee_id',
         'customer_id',
+        'showtime_id',
+        'timeout',
     ];
+
+    protected $dates = ['timeout', 'booking_at'];
 
     protected $hidden = [
         'deleted_at'
+    ];
+
+    protected $appends = [
+        'movieTickets', 'payments', 'showtime'
     ];
 
     public function employees()
@@ -31,6 +40,11 @@ class Order extends Model
         return $this->belongsTo(Customer::class, 'customer_id');
     }
 
+    public function showtime()
+    {
+        return $this->belongsTo(Showtime::class, 'showtime_id');
+    }
+
     public function comboTickets()
     {
         return $this->hasMany(ComboTicket::class);
@@ -38,12 +52,26 @@ class Order extends Model
 
     public function movieTickets()
     {
-        return $this->hasMany(movieTickets::class);
+        return $this->hasMany(MovieTicket::class);
     }
 
     public function payments()
     {
         return $this->hasOne(Payment::class);
+    }
+
+    public function getMovieTicketsAttribute()
+    {
+        return $this->movieTickets()->get();
+    }
+
+    public function getPaymentsAttribute()
+    {
+        return $this->payments()->get();
+    }
+
+    public function getShowtimeAttribute() {
+        return $this->showtime()->first();
     }
 
 }

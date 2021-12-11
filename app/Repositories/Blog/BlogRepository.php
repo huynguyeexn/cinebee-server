@@ -27,7 +27,6 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
                 'employee_id'   => $blog->employee_id,
                 'background' => $file,
                 'background_rq'=> [$file[0]->id]
-       
             ];
             return $data;
         } catch (\Throwable $th) {

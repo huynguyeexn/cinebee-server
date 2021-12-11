@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
         $categoryId = $category->getTable();
         $employeeId = $employee->getTable();
         return [
-            'title'         => "required|string|min:3|max:30",
+            'title'         => "required|string|min:3|max:100",
             'slug'          => "unique:blogs,slug|string|required",
             'summary'       => "nullable|string",
             'date'          => "nullable|date",

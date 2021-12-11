@@ -27,7 +27,7 @@ class Order extends Model
     ];
 
     protected $appends = [
-        'movieTickets', 'payments', 'showtime'
+        'movieTickets', 'payments', 'showtime', 'customer'
     ];
 
     public function employees()
@@ -74,4 +74,7 @@ class Order extends Model
         return $this->showtime()->first();
     }
 
+    public function getCustomerAttribute() {
+        return $this->customers()->first();
+    }
 }

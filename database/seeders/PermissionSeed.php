@@ -14,6 +14,7 @@ class PermissionSeed extends Seeder
      */
     public function run()
     {
+        DB::table('permissions')->truncate();
         $array1 = ['list', 'create', 'edit', 'update', 'delete', 'restore'];
         $actors = 'actors';
         $genres = 'genres';

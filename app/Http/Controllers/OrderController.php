@@ -182,7 +182,6 @@ class OrderController extends Controller
             $showtime = Showtime::find($attributes['showtime_id']);
             $attributes['price'] = $showtime->room->price;
 
-
             $order = Order::create([
                 'total' => $attributes['price'] * count($attributes['seats']),
                 'booking_at' => $attributes['booking_at'],
@@ -379,6 +378,7 @@ class OrderController extends Controller
         if ($order->status == 1) {
             $order->status = 2;
             $order->timeout =  null;
+            $order->verify_code = uniqid("order_code_$order->id", true);
             $order->save();
             return response([
                 'message' => 'Thanh toán thành công',

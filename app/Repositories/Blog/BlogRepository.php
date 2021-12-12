@@ -15,6 +15,10 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
         try {
             $blog = $this->model->findOrFail($id);
             $file = $this->model->findOrFail($id)->files;
+            $file_new = [];
+            if(is_array($file)){
+                $file_new = [$file[0]->id];
+            }
             $data = [
                 'id' => $id,
                 'title' => $blog->title,
@@ -26,7 +30,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
                 'category_id' => $blog->category_id,
                 'employee_id'   => $blog->employee_id,
                 'background' => $file,
-                'background_rq'=> [$file[0]->id]
+                'background_rq'=> $file_new ?? []
        
             ];
             return $data;

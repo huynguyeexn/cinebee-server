@@ -75,9 +75,8 @@ class BlogController extends Controller
          *
          * )
          */
-        return $this->blogRepo->getList($request);
+        return $this->blogRepo->getList($request,'files');
     }
-
     public function deleted(ListRequest $request)
     {
         /**

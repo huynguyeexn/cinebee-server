@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\RemovePendingOrderCron::class,
     ];
 
     /**
@@ -25,6 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('RemovePendingOrder:cron')
+                ->dailyAt('02:00')
+                ->timezone('Vietnam/Hanoi');
     }
 
     /**

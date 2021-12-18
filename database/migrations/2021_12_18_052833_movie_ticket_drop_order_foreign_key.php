@@ -2,10 +2,9 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class OrderDropSoftDelete extends Migration
+class MovieTicketDropOrderForeignKey extends Migration
 {
     /**
      * Run the migrations.
@@ -14,9 +13,11 @@ class OrderDropSoftDelete extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropSoftDeletes();
+        Schema::table('movie_tickets', function (Blueprint $table) {
+            //
+            if (Schema::hasColumn('movie_tickets', 'order_id')){
+                $table->dropColumn('order_id');
+            }
         });
     }
 
@@ -27,10 +28,6 @@ class OrderDropSoftDelete extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('orders', function (Blueprint $table) {
-            DB::table('orders')->truncate();
-            $table->softDeletes();
-        });
+
     }
 }

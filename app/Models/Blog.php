@@ -26,9 +26,13 @@ class Blog extends Model
         'deleted_at'
     ];
 
+    protected $appends = [
+        'category', 'author'
+    ];
+
     public function categories()
     {
-        return $this->belongsto(Category::class,"category_id");
+        return $this->belongsTo(Category::class,"category_id");
     }
     public function files()
     {
@@ -36,6 +40,14 @@ class Blog extends Model
     }
     public function employees()
     {
-        return $this->belongsto(Employee::class);
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function getCategoryAttribute() {
+        return $this->categories()->first();
+    }
+
+    public function getAuthorAttribute() {
+        return $this->employees()->first();
     }
 }

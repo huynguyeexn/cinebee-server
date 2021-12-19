@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Str;
 class OrderController extends Controller
 {
     /**
@@ -378,7 +378,7 @@ class OrderController extends Controller
         if ($order->status == 1) {
             $order->status = 2;
             $order->timeout =  null;
-            $order->verify_code = uniqid("order_code_$order->id", true);
+            $order->verify_code = strtoupper(Str::random(12));
             $order->save();
             return response([
                 'message' => 'Thanh toán thành công',

@@ -36,7 +36,8 @@ class DatabaseSeeder extends Seeder
             CustomerSeed::class,
 
             PaymentStatusSeed::class,
-            PaymentSeed::class
+            PaymentSeed::class,
+            CommentSeed::class
         ]);
     }
 }

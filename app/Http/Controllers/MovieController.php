@@ -601,4 +601,29 @@ class MovieController extends Controller
 
         return $this->movieRepo->getShowtimes($id);
     }
+
+
+    public function comments($id,ListRequest $request )
+    {
+        /**
+         * @OA\Get(
+         *   tags={"Movies"},
+         *   path="/api/movies/{id}/comments",
+         *   summary="List Comments of Movie",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *      description="Movie ID",
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found"),
+         *
+         * )
+         */
+
+        return $this->movieRepo->getComments($id, $request);
+    }
 }

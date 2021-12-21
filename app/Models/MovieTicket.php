@@ -12,29 +12,24 @@ class MovieTicket extends Model
 
     protected $fillable = [
         'get_at',
-        'price',
         'order_id',
-        'showtime_id',
-        'room_id',
+        'price',
         'seat_id',
+        'room_name',
+        'seat_name',
     ];
 
     protected $hidden = [
         'deleted_at'
     ];
 
-    public function showtimes()
-    {
-        return $this->belongsto(Showtime::class);
-    }
-
     public function seats()
     {
-        return $this->belongsto(Seat::class);
+        return $this->belongsTo(Seat::class);
     }
 
     public function orders()
     {
-        return $this->belongsto(Order::class, "order_id");
+        return $this->belongsTo(Order::class, "order_id");
     }
 }

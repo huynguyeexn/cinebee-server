@@ -13,6 +13,7 @@ class CreateTableMovieTickets extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('movie_tickets');
         Schema::create('movie_tickets', function (Blueprint $table) {
             $table->id();
             $table->dateTime('get_at');

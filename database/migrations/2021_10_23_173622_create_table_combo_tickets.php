@@ -13,6 +13,7 @@ class CreateTableComboTickets extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('combo_tickets');
         Schema::create('combo_tickets', function (Blueprint $table) {
             $table->id();
             $table->timestamp('get_at');

@@ -16,6 +16,7 @@ class PermissionRole extends Seeder
      */
     public function run()
     {
+        DB::table('permission_role')->truncate();
         $permission = permissions::all('id');
         $role = Role::where('code', 'super_admin')->first();
         foreach ($permission as $id) {

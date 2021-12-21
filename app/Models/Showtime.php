@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,12 +25,12 @@ class Showtime extends Model
     ];
 
     protected $appends = [
-        'movie', 'room'
+        'movie', 'room', 'invalidSeats'
     ];
 
-    public function movieTicket()
+    public function orders()
     {
-        return $this->hasMany(MovieTicket::class);
+        return $this->hasMany(Order::class);
     }
 
     public function movie()
@@ -50,5 +51,18 @@ class Showtime extends Model
     public function getRoomAttribute()
     {
         return $this->room()->first();
+    }
+
+    public function getInvalidSeatsAttribute() {
+        $orders = Order::where('timeout', '>', Carbon::now())
+        ->orWhereNull('timeout')
+        ->where('showtime_id', $this->id)->pluck('id')->toArray();
+        $result = [];
+        foreach ($orders as $order) {
+            $seats = MovieTicket::where('order_id', $order)->pluck('seat_id')->toArray();
+            $result = array_merge($result, $seats);
+        }
+
+        return $result;
     }
 }

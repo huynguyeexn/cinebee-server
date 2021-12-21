@@ -28,10 +28,9 @@ class StoreRequest extends FormRequest
         $employeeId = $employee->getTable();
         $customerId = $customer->getTable();
         return [
-            'total'                   => "required|integer",
-            'booking_at'              => "required|date",
-            'employee_id'             => "required|integer|exists:$employeeId,id",
-            'customer_id'             => "required|integer|exists:$customerId,id",
+            'seats' => "array|required",
+            'showtime_id' => "required|exists:showtimes,id",
+            'employee_id' => "integer|exists:$employeeId,id|nullable",
         ];
     }
 }

@@ -14,29 +14,40 @@ class PermissionSeed extends Seeder
      */
     public function run()
     {
+        DB::table('permissions')->truncate();
         $array1 = ['list', 'create', 'edit', 'update', 'delete', 'restore'];
         $actors = 'actors';
         $genres = 'genres';
-        $seat_status = 'seat-status';
-        $room_status = 'room-status';
+        $seat_status = 'seat_status';
+        $room_status = 'room_status';
         $items = 'items';
         $rooms = 'rooms';
         $seats = 'seats';
         $roles = 'role';
         $directors = 'directors';
         $employee = 'employee';
-        $age_ratings = 'age-ratings';
+        $age_ratings = 'age_ratings';
         $movies = 'movies';
-        $movie_directors = 'movie-directors';
-        $movie_genres = 'movie-genres';
-        $movie_actors = 'movie-actors';
-        $customer_types = 'customer-types';
+        $movie_directors = 'movie_directors';
+        $movie_genres = 'movie_genres';
+        $movie_actors = 'movie_actors';
+        $customer_types = 'customer_types';
         $customers = 'customers';
+        $orders = 'orders';
+        $blogs = 'blogs';
+        $combo_tickets = 'combo_tickets';
+        $movie_tickets = 'movie_tickets';
+        $payments = 'payments';
+        $combo = 'combo';
+        $categories = 'categories';
+
         $array2 = [
             $actors, $genres, $seat_status,
             $room_status, $items, $rooms, $seats, $roles,
             $employee, $directors, $age_ratings, $movies, $movie_directors,
-            $movie_actors, $movie_genres, $customer_types, $customers
+            $movie_actors, $movie_genres, $customer_types, $customers,
+            $orders, $blogs, $combo_tickets, $movie_tickets, $payments,
+            $combo, $categories
         ];
         $display_name = "";
         foreach ($array2 as $ar2) {
@@ -67,3 +78,4 @@ class PermissionSeed extends Seeder
         }
     }
 }
+;

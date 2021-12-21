@@ -376,4 +376,25 @@ class CustomerController extends Controller
          */
         return $this->customerRepo->restore($id);
     }
+
+    public function order($id)
+    {
+        /**
+         * @OA\Patch(
+         *   tags={"Customers"},
+         *   path="/api/customers/{id}/order",
+         *   summary="Customer Order",
+         *   @OA\Parameter(
+         *     name="id",
+         *     in="path",
+         *     required=true,
+         *     @OA\Schema(type="string")
+         *   ),
+         *   @OA\Response(response=200, description="OK"),
+         *   @OA\Response(response=401, description="Unauthorized"),
+         *   @OA\Response(response=404, description="Not Found")
+         * )
+         */
+        return $this->customerRepo->getOrders($id);
+    }
 }

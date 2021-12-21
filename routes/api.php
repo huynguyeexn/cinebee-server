@@ -613,6 +613,9 @@ Route::prefix('customers')->group(function () {
     // Update
     Route::put('/{id}', [CustomerController::class, 'update'])->whereNumber('id');
 
+    // Orders
+    Route::get('/{id}/order', [CustomerController::class, 'order'])->whereNumber('id');
+
     // Soft Delete
     Route::delete('{id}/delete/', [CustomerController::class, 'delete'])->whereNumber('id');
 
@@ -991,6 +994,9 @@ Route::prefix('orders')->group(function () {
 
     // Get by ID
     Route::get('/{id}', [OrderController::class, 'getById'])->whereNumber('id');
+
+    // Update
+    Route::post('/{id}/confirm', [OrderController::class, 'confirm'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [OrderController::class, 'update'])->whereNumber('id');

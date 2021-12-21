@@ -23,11 +23,10 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
                 'date'  => $blog->date,
                 'content' => htmlspecialchars_decode($blog->content),
                 'show'  => $blog->show,
-                'category_id' => $blog->category_id,
-                'employee_id'   => $blog->employee_id,
                 'background' => $file,
-                'background_rq'=> [$file[0]->id]
-       
+                'background_rq'=> isset($file[0]) ? [$file[0]->id] : [],
+                'category' => $blog->category,
+                'author' => $blog->author,
             ];
             return $data;
         } catch (\Throwable $th) {

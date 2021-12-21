@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\AuthStaffController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Home\AuthController;
 use App\Http\Controllers\MovieTicketController;
 use App\Http\Controllers\RoleController;
@@ -454,6 +455,9 @@ Route::prefix('movies')->group(function () {
 
     // Get showtime of movie
     Route::get('/{id}/showtimes', [MovieController::class, 'showtimes'])->whereNumber('id');
+
+    // Get Comment By movie
+    Route::get('/{id}/comments', [MovieController::class, 'comments'])->whereNumber('id');
 
     // Update
     Route::put('/{id}', [MovieController::class, 'update'])->whereNumber('id');
@@ -1033,4 +1037,24 @@ Route::prefix('role')->group(function () {
     Route::post('/', [RoleController::class, 'store']);
     // Soft Delete
     Route::delete('{id}/delete/', [RoleController::class, 'delete'])->whereNumber('id');
+});
+
+
+
+/** REST API - Comment
+ *
+ * Date: 20/12/2021
+ * Time: 14:30
+ * @author  DungLe-Webdesigner <dungle21092001@gmail.com>
+ */
+Route::prefix('comments')->group(function () {
+
+    // Get list
+    Route::get('/', [CommentController::class, 'index']);
+
+    // Create new
+    Route::post('/', [CommentController::class, 'store']);
+
+    // Soft Delete
+    Route::delete('{id}/delete/', [CommentController::class, 'delete'])->whereNumber('id');
 });

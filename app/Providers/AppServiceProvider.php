@@ -117,6 +117,10 @@ class AppServiceProvider extends ServiceProvider
             \App\Repositories\Showtime\ShowtimeRepositoryInterface::class,
             \App\Repositories\Showtime\ShowtimeRepository::class,
         );
+        $this->app->singleton(
+            \App\Repositories\Comment\CommentRepositoryInterface::class,
+            \App\Repositories\Comment\CommentRepository::class,
+        );
     }
 
     /**

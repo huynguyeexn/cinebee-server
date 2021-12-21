@@ -38,7 +38,8 @@ class DatabaseSeeder extends Seeder
             permissionSeed::class,
 
             PaymentStatusSeed::class,
-            PaymentSeed::class
+            PaymentSeed::class,
+            CommentSeed::class
         ]);
     }
 }

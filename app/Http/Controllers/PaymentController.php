@@ -331,7 +331,7 @@ class PaymentController extends Controller
          *       @OA\Property(property="bank_code", type="string"),
          *       example={
          *          "amount": 30,
-         *          "bank_code": 'TPBANK',
+         *          "bank_code": "TPBANK",
          *       }
          *     )
          *   ),

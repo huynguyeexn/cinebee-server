@@ -58,6 +58,7 @@ class Movie extends Model
         return $this->belongsToMany(FileUpload::class, 'movie_files')->where('movie_files.type', 'like', 'backdrop');
     }
 
+
     public function getGenresAttribute()
     {
         return $this->genresFull->pluck('id');
@@ -82,5 +83,10 @@ class Movie extends Model
     public function showtime()
     {
         return $this->hasMany(Showtime::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }

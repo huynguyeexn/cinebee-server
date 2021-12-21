@@ -23,7 +23,7 @@ class RoleSeed extends Seeder
             'code' => 'manager',
         ]);
         DB::table('role')->insert([
-            'name' => 'Super Man',
+            'name' => 'Super Admin',
             'code' => 'super_admin',
         ]);
     }

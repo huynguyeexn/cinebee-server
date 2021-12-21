@@ -24,7 +24,7 @@ class BlogRepository extends BaseRepository implements BlogRepositoryInterface
                 'content' => htmlspecialchars_decode($blog->content),
                 'show'  => $blog->show,
                 'background' => $file,
-                'background_rq'=> [$file[0]->id],
+                'background_rq'=> isset($file[0]) ? [$file[0]->id] : [],
                 'category' => $blog->category,
                 'author' => $blog->author,
             ];

@@ -14,7 +14,7 @@ class CustomerRepository extends BaseRepository implements CustomerRepositoryInt
 
     public function getOrders($id)
     {
-        $data = $this->model->findOrFail($id)->orders;
+        $data = $this->model->findOrFail($id)->orders()->where('status', '!=', '1')->get();
         $count = $data->count();
         return response()->json([
             'data' => $data,

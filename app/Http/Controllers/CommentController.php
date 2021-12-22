@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Comment\StoreRequest;
 use App\Http\Requests\ListRequest;
 use App\Repositories\Comment\CommentRepositoryInterface;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -137,7 +138,7 @@ class CommentController extends Controller
         return $this->CommentRepo->getDeletedList($request);
     }
 
-    public function store(StoreRequest $request)
+    public function store(Request $request)
     {
         /**
          * @OA\Post(
@@ -169,15 +170,25 @@ class CommentController extends Controller
          *   @OA\Response(response=404, description="Not Found")
          * )
          */
-        $attributes = [
-            'comment_at' => $request->comment_at,
-            'content' => $request->content,
-            'like' => $request->like,
-            'dislike'    => $request->dislike,
-            'customer_id'    => $request->customer_id,
-            'movie_id'    => $request->movie_id,
-        ];
-        return $this->CommentRepo->store($attributes);
+
+        $id = \Auth::user()->id;
+
+        if ($id) {
+            $attributes = [
+                'comment_at' => Carbon::now(),
+                'content' => $request->content,
+                'like' => 0,
+                'dislike'    => 0,
+                'customer_id'    =>  $id,
+                'movie_id'    => $request->movie_id,
+                'status' => 1,
+            ];
+            return $this->CommentRepo->store($attributes);
+        } else {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
     }
 
     public function getById($id)

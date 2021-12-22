@@ -28,7 +28,7 @@ class UpdateRequest extends FormRequest
         $categoryId = $category->getTable();
         $employeeId = $employee->getTable();
         return [
-            'title'         => "required|string|min:3|max:30",
+            'title'         => "required|string|min:3|max:255",
             'slug'          => "unique:blogs,slug,$this->id,id|string|required",
             'summary'       => "nullable|string",
             'date'          => "nullable|date",
